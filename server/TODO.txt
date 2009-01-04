@@ -1,0 +1,26 @@
+= TODO =
+  = Server APIs =
+
+
+  == Faceted Urls ==
+  GET  url_facets/url/{username}/{url}                -> url_facet_list
+
+  POST url_facets/urls/{username} (urls=url_list)     -> (url1 => url_facet_list, url2 = url_facet_list)
+  Gets facet information for several urls at once
+  
+  PUT facet/url/{username}/{url} (facet_id_list) -> url_facet
+  Add facets to a url
+  
+  DELETE facet/{username}/url/facet_id
+  Removes a facet from a url
+  
+  
+  == Feeds ==
+  GET feeds/user/{username} -> opml
+  opml + attribute of oface_feed_id
+  
+  POST feed/register (username, feed_url) -> feed
+  Register a feed ( feed retruned includes it's feed_id )
+  
+  DELETE feeds/user/feed/{feed_id}
+  Remove a feed
