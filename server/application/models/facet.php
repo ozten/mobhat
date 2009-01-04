@@ -7,12 +7,15 @@ class Facet_Model extends Model {
     parent::__construct();
   }
   public function get_facets($username){
-    return array(array("description" => "Seattle Friends"),
+    $query = $this->db->query("SELECT id, description, created FROM facets");
+    return $query->result_array(FALSE);
+/*    return array(array("description" => "Seattle Friends"),
                  array("description" => "Internet Friends"),
                  array("description" => "Webdevs"),
                  array("description" => "Arty"),
                  array("description" => "Mozillians"),
                  array("description" => "Foodies"));
+*/
   }
   public function set_facets($username, $newFacets){
     return get_facets($username);

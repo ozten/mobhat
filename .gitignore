@@ -1,1 +1,2 @@
 server/application/logs/*
+server/application/config/database.php
