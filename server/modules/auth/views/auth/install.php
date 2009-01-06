@@ -1,17 +1,15 @@
-DROP TABLE IF EXISTS facets;
-CREATE TABLE facets ( 
-  id INTEGER NOT NULL AUTO_INCREMENT, 
-  description CHAR(20) NOT NULL, 
-  created TIMESTAMP DEFAULT NOW(), 
-  PRIMARY KEY (id), 
-  CONSTRAINT description_index UNIQUE (description, id) 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+<?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
+<div class="box">
 
-INSERT INTO facets (description) VALUES ('Everybody');
+<p>The following tables must be installed in your database: <code>users</code>, <code>roles</code>, <code>roles_users</code>, and <code>user_tokens</code>. If you have not already installed these tables, please run the installation query below.</p>
 
-SELECT * FROM facets;
+<p>After the tables have been installed, <?php echo html::anchor('auth_demo/create', 'create a user') ?>.</p>
 
--- Start Kohana Auth Module SQL
+<p><em>This query is MySQL-specific, but should be easy to adapt to an database that supports foreign keys.</em></p>
+
+<p><strong>Please note :</strong> The database schema below does not contain prefixes before table names. If you require prefixes please ensure you edit this SQL code before executing within your database.</p>
+
+<?php echo form::textarea('query', <<<EOF
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(32) NOT NULL,
@@ -60,4 +58,7 @@ ALTER TABLE `roles_users`
 
 ALTER TABLE `user_tokens`
   ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
---- End Kohana Auth Module SQL
+EOF
+, 'style="width:90%;height:30em;padding:0.5em"') ?>
+
+</div>

@@ -19,14 +19,26 @@
   
 */
 class Facets_Controller extends Template_Controller {
-
+  /* temporarily playing with authentication */
+  function __construct(){
+    parent::__construct();
+    $this->session = Session::instance();	
+    $authentic=new Auth;
+    if (!$authentic->logged_in()){
+      $this->session->set("requested_url","/". url::current() ); // this will redirect from the login page back to this page/
+      url::redirect('/auth_demo/login_form');
+    }else{			
+      $this->user = Session::instance()->get('auth_user'); //now you have access to user information stored in the database
+    }
+  }
+    
   // Set the name of the template to use
   public $template = 'kohana/template';
 
   public function current($username) {
+    Kohana::log('info', "Looks like they are logged in " . $this->user->id . " " . $this->user->username);
     $this->auto_render=false;
-		
-    //Kohana::log('info', );
+    
     $facet = new Facet_Model;
     
     if( request::method() == "get"){
