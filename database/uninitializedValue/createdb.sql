@@ -61,3 +61,14 @@ ALTER TABLE `roles_users`
 ALTER TABLE `user_tokens`
   ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 --- End Kohana Auth Module SQL
+CREATE TABLE test_oface.facets_user (
+        id INTEGER NOT NULL AUTO_INCREMENT,
+        facet_id INTEGER NOT NULL,
+        user_id INT(11) UNSIGNED NOT NULL,
+        username VARCHAR(32) NOT NULL default '',
+
+        PRIMARY KEY (id),
+        CONSTRAINT facets_user_facet FOREIGN KEY (facet_id) REFERENCES test_oface.facets (id),
+        CONSTRAINT facets_user_user FOREIGN KEY (username) REFERENCES test_oface.users (username)       
+    )
+    ENGINE=InnoDB DEFAULT CHARSET=utf8;

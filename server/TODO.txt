@@ -24,3 +24,6 @@
   
   DELETE feeds/user/feed/{feed_id}
   Remove a feed
+
+ = General =
+ Integrate with openid

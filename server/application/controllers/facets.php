@@ -22,7 +22,8 @@ class Facets_Controller extends Template_Controller {
   /* temporarily playing with authentication */
   function __construct(){
     parent::__construct();
-    $this->session = Session::instance();	
+    $this->session = Session::instance();
+    /*
     $authentic=new Auth;
     if (!$authentic->logged_in()){
       $this->session->set("requested_url","/". url::current() ); // this will redirect from the login page back to this page/
@@ -30,31 +31,40 @@ class Facets_Controller extends Template_Controller {
     }else{			
       $this->user = Session::instance()->get('auth_user'); //now you have access to user information stored in the database
     }
+    */
   }
     
   // Set the name of the template to use
   public $template = 'kohana/template';
 
+  /**
+   $.ajax( {url:'/facets/current/ozten', type:'PUT', data: JSON.stringify(["AllMyFriends", "You"])} ); 
+   */
   public function current($username) {
-    Kohana::log('info', "Looks like they are logged in " . $this->user->id . " " . $this->user->username);
+    //Kohana::log('info', "Looks like they are logged in " . $this->user->id . " " . $this->user->username);
     $this->auto_render=false;
     
     $facet = new Facet_Model;
-    
     if( request::method() == "get"){
       $this->_get_current($username, $facet);
     }else if(request::method() == "put"){
-      $this->_set_current($username, $facet);
+      
+      $putdata = fopen("php://input", "r");
+      $thedata = "";
+      while ($data = fread($putdata, 1024)){
+	$thedata = $thedata . $data;
+      }
+      $this->_set_current($username, json_decode($thedata), $facet);
     }
   }
   public function _get_current($username, $facet){
     echo json_encode($facet->get_facets($username));
   }
   
-  public function _set_current($username, $facet){
-    $newFacets = json_decode(@file_get_contents("php://input"));
-    $facet->set_facets($username, $newFacets);
-    echo json_encode($facet->get_facets($username));
-
+  public function _set_current($username, $newFacets, $model){
+    Kohana::log('info', "Still Got this far... dong put" . Kohana::debug($newFacets));
+    //$newFacets = json_decode(@file_get_contents("php://input"));
+    $model->set_facets($username, $newFacets);
+    //echo json_encode($facet->get_facets($username));
   }
 }
