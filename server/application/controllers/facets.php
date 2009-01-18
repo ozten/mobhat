@@ -88,7 +88,8 @@ class Facets_Controller extends Template_Controller {
 	    return array(true, "");
 	  }else{
 		$msg = "proofing facets, expected atleast on valid facet " . Kohana::debug($newFacets);
-		Kohana::log('alert', $msg);      
+		Kohana::log('alert', $msg);
+		//TODO set response to error code 4xx?
 		return array(false, $msg);
 	  }
     }else{
