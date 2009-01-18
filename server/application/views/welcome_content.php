@@ -16,8 +16,9 @@
 
 								<ul id='switcher-facetlist'>
 										<li id="template"></li>
-								</ul>		
-						</div>
-				</div><input id="switchinput" value="" >
+								</ul>
+						<input id="switchinput" value="" />
+						</div>				        
+				</div>
 		</div>
 <script src="/static/js/demo.js" type="text/javascript"></script>

@@ -91,24 +91,25 @@ function noOp(event){
 }
 
 /* Controller */
+function chooseFacetCallback(json, status){
+                console.info(json);
+                console.info(status);
+                updateCurrent(json);
+                showCurrent();
+                console.info("done");
+}
 function handleswitcherFacetlist(event){
   var data = event.data;
   console.info("facetChosen event");
   console.info(data);
   //facetsChosen(newFacets);
   facetsChosen([data['description']],
-               
-        function(json, status){
-                console.info(json);
-                console.info(status);
-                updateCurrent(json);
-                showCurrent();
-        }, noOp);
+        chooseFacetCallback, noOp);
   $('#all-facets').hide();        
 }
 
 function switchinputHandler(){
-        facetsChosen($('#switchinput').attr('value').split(','), noOp, noOp);
+        facetsChosen($('#switchinput').attr('value').split(','), chooseFacetCallback, noOp);
         
 }
 $(document).ready(function() {
