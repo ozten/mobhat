@@ -1,21 +1,23 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
-<script src="http://www.google.com/jsapi"></script>
-<script src="/static/js/lib/json2.js"></script>
-<script>
-  // Load jQuery
-  google.load("jquery", "1");
-</script>
-<div class="box">
-	<p>This is the default Kohana index page. You may also access this page as <code><?php echo html::anchor('welcome/index', 'welcome/index') ?></code>.</p>
+		<div class="box">
+				<p>This is the Oface demo page. You may also access this page as <code><?php echo html::anchor('welcome/index', 'welcome/index') ?></code>.</p>
 
-	<p>
-		To change what gets displayed for this page, edit <code>application/controllers/welcome.php</code>.<br />
-		To change this text, edit <code>application/views/welcome_content.php</code>.
-	</p>
-</div>
+				<p>This demo assumes you are the user ozten. Here is ozten's switcher:</p>
 
-<ul>
-<?php foreach ($links as $title => $url): ?>
-	<li><?php echo ($title === 'License') ? html::file_anchor($url, html::specialchars($title)) : html::anchor($url, html::specialchars($title)) ?></li>
-<?php endforeach ?>
-</ul>
+				<div id="switcher">
+						<div id="current-facets">
+								<h4>Current Facets</h4>
+								<ul id="switcher-current-facets">
+										<li class=""></li>		
+								</ul>
+						</div>
+						<div id="all-facets" style="display: none">
+								<h4>All Facets</h4>
+
+								<ul id='switcher-facetlist'>
+										<li id="template"></li>
+								</ul>		
+						</div>
+				</div><input id="switchinput" value="" >
+		</div>
+<script src="/static/js/demo.js" type="text/javascript"></script>

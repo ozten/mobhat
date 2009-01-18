@@ -1,6 +1,37 @@
 = TODO =
   = Server APIs =
-
+  There should be a facet audit trail?
+  
+  
+  facets
+  
+  users
+  
+  facets_user
+  
+  A -> B -> AC -> B -> A ->D
+  get facet -> D
+  all facets -> 3A, 2B, 1D
+  
+  What's interesting?
+  grouping
+  date
+  
+  facet used event...
+  facet_id, user_id, start_date, end_date
+  
+  
+  
+  possible algorythms...
+  total time in facet
+  total # of times choosing a facet
+  time of day
+  
+  
+  facets/current/username
+  
+  facets/weighted/username - All of the user's facets in weighted order (paginated for long tail)
+   -- simple weight... number of times used? amount of time spent in that facet? etc?
 
   == Faceted Urls ==
   GET  url_facets/url/{username}/{url}                -> url_facet_list

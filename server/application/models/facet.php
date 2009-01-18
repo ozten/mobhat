@@ -6,14 +6,24 @@ class Facet_Model extends Model {
     // load database library into $this->db (can be omitted if not required)
     parent::__construct();
   }
-  public function get_facets($username){
+  public function current_facets($username){
     $query = $this->db->query("SELECT facets.id, facets.description, facets.created " .
                               "FROM facets " .
                               "JOIN facets_user ON facets.id = facets_user.facet_id " .
-                              "WHERE facets_user.username = '" . $username . "'");
+                              "WHERE facets_user.username = '" . $username . "' AND " .
+                              "  facets_user.end_date IS NULL");
     return $query->result_array(FALSE);
-
   }
+  public function weighted_facets($username){
+    $sql = "SELECT facet_id AS id, facets.description, count(facet_id) AS weight " .
+           "FROM facets_user  " .
+           "JOIN facets ON facets_user.facet_id = facets.id  " .
+           "WHERE username = '$username' " .
+           "GROUP BY facet_id  " .
+           "ORDER BY weight DESC ";
+    return $this->db->query($sql)->result_array(FALSE);
+  }
+  
   public function set_facets($username, $newFacets){
     $newFacetIds = array();
     $facetsToInsert = array();
@@ -47,9 +57,9 @@ class Facet_Model extends Model {
       Kohana::log('info', "Searching for ids gives us " . Kohana::debug($query));
     }
     $userId = User_Model::username_to_id($username, $this->db);
-    $this->delete_from($userId);
+    $this->remove_old_facets($userId);
     foreach($newFacetIds as $id){
-      $sql = "INSERT INTO facets_user (facet_id, user_id, username) VALUES (" . $id . ", " . $userId . ", '" . $username . "')";
+      $sql = "INSERT INTO facets_user (facet_id, user_id, username, start_date) VALUES (" . $id . ", " . $userId . ", '" . $username . "', NOW())";
       Kohana::log('info', $sql);
       $this->db->query($sql);
     }
@@ -59,9 +69,9 @@ class Facet_Model extends Model {
     return $newFacets;
   }
   
-  public function delete_from($user_id){
-    $user = new User_Model();
-    $this->db->query("DELETE FROM facets_user WHERE user_id = " . $user_id);
+  public function remove_old_facets($user_id){
+    $this->db->query("UPDATE facets_user SET end_date = NOW() WHERE user_id = " . $user_id . " " .
+                     "AND end_date IS NULL");
   }
 }
 ?>

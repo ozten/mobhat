@@ -46,25 +46,77 @@ class Facets_Controller extends Template_Controller {
     
     $facet = new Facet_Model;
     if( request::method() == "get"){
+		
       $this->_get_current($username, $facet);
     }else if(request::method() == "put"){
       
       $putdata = fopen("php://input", "r");
       $thedata = "";
       while ($data = fread($putdata, 1024)){
-	$thedata = $thedata . $data;
+	    $thedata = $thedata . $data;
       }
-      $this->_set_current($username, json_decode($thedata), $facet);
+	  $newFacets = json_decode($thedata);
+	  $proof = $this->proof($newFacets);
+	  if($proof[0]){
+		Kohana::lang('info', Kohana::debug($newFacets));
+        $this->_set_current($username, $newFacets, $facet);
+	  }else{
+		echo json_encode(array("errMsg" => $proof[1]));
+	  }
     }
   }
+  
   public function _get_current($username, $facet){
-    echo json_encode($facet->get_facets($username));
+    echo json_encode($facet->current_facets($username));
+  }
+  
+  /**
+   * returns an array [success, errorMessage]
+   */
+  public function proof(&$newFacets){
+    if(is_array($newFacets)){
+      $newFacets = array_unique($newFacets);
+      for($i = 0; $i < count($newFacets); $i++){
+		if( empty($newFacets[$i]) ){
+				unset($newFacets[$i]);				
+		} else {
+		        $newFacets[$i] = trim($newFacets[$i]);
+				
+		}
+	  }
+	  if( count($newFacets) > 0 ){
+	    return array(true, "");
+	  }else{
+		$msg = "proofing facets, expected atleast on valid facet " . Kohana::debug($newFacets);
+		Kohana::log('alert', $msg);      
+		return array(false, $msg);
+	  }
+    }else{
+		$msg = "proofing facets, expected array but got " . Kohana::debug($newFacets);
+      Kohana::log('alert', $msg);
+      return array(false, $msg);
+	}
   }
   
   public function _set_current($username, $newFacets, $model){
     Kohana::log('info', "Still Got this far... dong put" . Kohana::debug($newFacets));
     //$newFacets = json_decode(@file_get_contents("php://input"));
     $model->set_facets($username, $newFacets);
-    //echo json_encode($facet->get_facets($username));
+    echo json_encode($model->current_facets($username));
+  }
+  
+  /**
+   $.ajax( {url:'/facets/weighted/ozten', type:'GET'});
+   */
+  public function weighted($username) {
+		sleep(1);
+	$this->auto_render=false;
+    
+    $facet = new Facet_Model;
+    if( request::method() == "get"){
+		
+      Kohana::log('info', Kohana::debug($facet->weighted_facets($username)));
+      echo json_encode($facet->weighted_facets($username));
+    }
   }
 }

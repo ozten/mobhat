@@ -61,14 +61,34 @@ ALTER TABLE `roles_users`
 ALTER TABLE `user_tokens`
   ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 --- End Kohana Auth Module SQL
-CREATE TABLE test_oface.facets_user (
+
+CREATE TABLE facets_user (
         id INTEGER NOT NULL AUTO_INCREMENT,
         facet_id INTEGER NOT NULL,
         user_id INT(11) UNSIGNED NOT NULL,
         username VARCHAR(32) NOT NULL default '',
 
         PRIMARY KEY (id),
-        CONSTRAINT facets_user_facet FOREIGN KEY (facet_id) REFERENCES test_oface.facets (id),
-        CONSTRAINT facets_user_user FOREIGN KEY (username) REFERENCES test_oface.users (username)       
-    )
-    ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        CONSTRAINT facets_user_facet FOREIGN KEY (facet_id) REFERENCES facets (id),
+        CONSTRAINT facets_user_user FOREIGN KEY (username) REFERENCES users (username)       
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--DROP TABLE urls;
+CREATE TABLE urls (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    url VARCHAR(2048) NOT NULL,
+    hash VARCHAR(32) NOT NULL,
+    user_fk INT(10) UNSIGNED NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT urls_user_fk FOREIGN KEY (user_fk) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE facets_urls (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    facet_fk INTEGER,
+    url_fk INTEGER,
+    PRIMARY KEY (id),
+    CONSTRAINT facets_urls_facet_fk FOREIGN KEY (facet_fk) REFERENCES facets (id),
+    CONSTRAINT facets_urls_url_fk FOREIGN KEY (url_fk) REFERENCES urls (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

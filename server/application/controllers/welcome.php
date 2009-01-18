@@ -15,7 +15,7 @@ class Welcome_Controller extends Template_Controller {
 	const ALLOW_PRODUCTION = FALSE;
 
 	// Set the name of the template to use
-	public $template = 'kohana/template';
+	public $template = 'oface/template';
 
 	public function index()
 	{
@@ -25,19 +25,7 @@ class Welcome_Controller extends Template_Controller {
 		// You can assign anything variable to a view by using standard OOP
 		// methods. In my welcome view, the $title variable will be assigned
 		// the value I give it here.
-		$this->template->title = 'Welcome to Kohana!';
-
-		// An array of links to display. Assiging variables to views is completely
-		// asyncronous. Variables can be set in any order, and can be any type
-		// of data, including objects.
-		$this->template->content->links = array
-		(
-			'Home Page'     => 'http://kohanaphp.com/',
-			'Documentation' => 'http://docs.kohanaphp.com/',
-			'Forum'         => 'http://forum.kohanaphp.com/',
-			'License'       => 'Kohana License.html',
-			'Donate'        => 'http://kohanaphp.com/donate.html',
-		);
+		$this->template->title = 'OFace demo';		
 	}
 
 	public function __call($method, $arguments)
