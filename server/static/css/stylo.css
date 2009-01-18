@@ -1,0 +1,31 @@
+
+#switcher{
+    background-color: #FFF;
+}
+#switcher-facetlist, #switcher-current-facets{
+    list-style-type: none;
+    border: solid 1px #333;
+    margin: 0px;
+    background-color: #666;
+    color: #FFF;
+    
+}
+#switcher-facetlist li, #switcher-current-facets li{
+    display: inline;
+    padding: 0em 0.2em;
+    background-color: #DDD;
+    color: #333;
+    border-top: solid 1px #666;
+    border-right: solid 2px #333;
+    border-bottom: solid 2px #333;
+    border-left: solid 1px #666;
+    
+}
+#switcher{
+    background-color: #FFF;
+}
+
+#all-facets{ background-color: blue; color: #FFF;
+  padding: 0.3em;
+  border: solid 1px 3px;
+}
