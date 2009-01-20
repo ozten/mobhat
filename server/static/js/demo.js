@@ -60,103 +60,111 @@ Oface.Models.Facet = {
                 this.currentFacets = $.grep(this.currentFacets, notTheFacet);
                 this.allFacets = $.grep(this.allFacets, notTheFacet);
 
-                showCurrent();
-                showAll();
+                Oface.Views.Facet.showCurrent();
+                Oface.Views.Facet.showAll();
         },
-};
+}; //End Oface.Models.Facet
+Oface.Views = Oface.Views || {};
+/** view
+ *   Mostly in HTML this is the bits of code to manipulate the view
+ */
+Oface.Views.Facet = {
+        foo: 'Bar',
+        showAll: function() {
+                var currentFacets = Oface.Models.Facet.currentFacets;
+                var allFacets = Oface.Models.Facet.allFacets;
+                var liTemplate = $('#switcher-facetlist li:first').clone();
+                $('#switcher-facetlist li').replaceWith('');
+                liTemplate.attr('class', '');
 
-/* view
-   Mostly in HTML this is the bits of code to manipulate the view
-*/
-function showAll() {
-        var currentFacets = Oface.Models.Facet.currentFacets;
-        var allFacets = Oface.Models.Facet.allFacets;
-        var liTemplate = $('#switcher-facetlist li:first').clone();
-        $('#switcher-facetlist li').replaceWith('');
-        liTemplate.attr('class', '');
-
-        for (var i = 0; i < allFacets.length; i++) {
-                var li = liTemplate.clone();
-                li.addClass('weight' + allFacets[i]['weight']);
-                li.bind('click', allFacets[i], handleswitcherFacetlist);
-                if (Oface.Models.Facet.isCurrent(allFacets[i], currentFacets)) {
-                        cli = li li.addClass("current").find('.remove-facet-a').hide();
-                        console.info("Yes, is current");
-                } else {
-                        li.find('.remove-facet-a').show();
-                        console.info("No not current " + allFacets[i]);
+                for (var i = 0; i < allFacets.length; i++) {
+                        var li = liTemplate.clone();
+                        li.addClass('weight' + allFacets[i]['weight']);
+                        li.bind('click', allFacets[i], handleswitcherFacetlist);
+                        if (Oface.Models.Facet.isCurrent(allFacets[i], currentFacets)) {
+                                cli = li.addClass("current").find('.remove-facet-a').hide();
+                                console.info("Yes, is current");
+                        } else {
+                                li.find('.remove-facet-a').show();
+                                console.info("No not current " + allFacets[i]);
+                        }
+                        //li.text(allFacets[i]['description']);
+                        li.find('.facetitem').text(allFacets[i]['description']);
+                        li.find('.remove-facet-a').bind('click', {
+                                facet: allFacets[i]['description']
+                        },
+                        function(event) {
+                                Oface.Models.Facet.removeUserFacet('ozten', event.data.facet);
+                                return false;
+                        });
+                        $('#switcher-facetlist').append(li);
                 }
-                //li.text(allFacets[i]['description']);
-                li.find('.facetitem').text(allFacets[i]['description']);
-                li.find('.remove-facet-a').bind('click', {
-                        facet: allFacets[i]['description']
-                },
-                function(event) {
-                        Oface.Models.Facet.removeUserFacet('ozten', event.data.facet);
-                        return false;
+                var p = $('#current-facets').position();
+                $('#all-facets').css({
+                        position: 'absolute',
+                        'top': p.top,
+                        'left': p.left
                 });
-                $('#switcher-facetlist').append(li);
+                $('#all-facets').show();
+        },
+        showCurrent: function() {
+                var currentFacets = Oface.Models.Facet.currentFacets;
+                var liTemplate = $('#switcher-current-facets li:first').clone();
+                $('#switcher-current-facets li').replaceWith('');
+                liTemplate.attr('class', '');
+                for (var i = 0; i < currentFacets.length; i++) {
+                        var li = liTemplate.clone();
+                        li.addClass('weight' + currentFacets[i]['weight']);
+                        li.addClass("current");
+                        li.text(currentFacets[i]['description']);
+                        $('#switcher-current-facets').append(li);
+                }
+                $('#switcher-current-facets li').click(this.showAll);
         }
-        var p = $('#current-facets').position();
-        $('#all-facets').css({
-                position: 'absolute',
-                'top': p.top,
-                'left': p.left
-        });
-        $('#all-facets').show();
-}
 
-function showCurrent() {
-        var currentFacets = Oface.Models.Facet.currentFacets;
-        var liTemplate = $('#switcher-current-facets li:first').clone();
-        $('#switcher-current-facets li').replaceWith('');
-        liTemplate.attr('class', '');
-        for (var i = 0; i < currentFacets.length; i++) {
-                var li = liTemplate.clone();
-                li.addClass('weight' + currentFacets[i]['weight']);
-                li.addClass("current");
-                li.text(currentFacets[i]['description']);
-                $('#switcher-current-facets').append(li);
+
+
+}; //END Oface.Views.Facet
+
+Oface.Util = Oface.Util || {
+        
+        noOp: function(event){
+                //no op
         }
-        $('#switcher-current-facets li').click(showAll);
-}
-
-function noOp(event) {
-
-}
+}; //END Oface.Util
 
 /* Controller */
 function chooseFacetCallback(json, status) {
         console.info(json);
         console.info(status);
         Oface.Models.Facet.updateCurrent(json);
-        showCurrent();
+        Oface.Views.Facet.showCurrent();
         console.info("done");
 }
 function handleswitcherFacetlist(event) {
         var data = event.data;
         console.info("facetChosen event");
         console.info(data);
-        Oface.Models.Facet.facetsChosen([data['description']], chooseFacetCallback, noOp);
+        Oface.Models.Facet.facetsChosen([data['description']], chooseFacetCallback, Oface.Util.noOp);
         $('#all-facets').hide();
 }
 
 function switchinputHandler() {
-        Oface.Models.Facet.facetsChosen($('#switchinput').attr('value').split(','), chooseFacetCallback, noOp);
+        Oface.Models.Facet.facetsChosen($('#switchinput').attr('value').split(','), chooseFacetCallback, Oface.Util.noOp);
 
 }
 $(document).ready(function() {
         $.get('/facets/current/ozten', {},
         function(json) {
                 Oface.Models.Facet.updateCurrent(json);
-                showCurrent();
+                Oface.Views.Facet.showCurrent();
 
         },
         "json");
         $.get('/facets/weighted/ozten', {},
         function(json) {
                 Oface.Models.Facet.updateAll(json);
-                //showAll();
+                //Oface.Views.Facet.showAll();
         },
         "json");
         /* add behaviors */
