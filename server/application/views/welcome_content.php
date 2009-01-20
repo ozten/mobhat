@@ -8,14 +8,14 @@
 						<div id="current-facets">
 								<h4>Current Facets</h4>
 								<ul id="switcher-current-facets">
-										<li class=""></li>		
+										<li class=""></li>
 								</ul>
 						</div>
 						<div id="all-facets" style="display: none">
 								<h4>All Facets</h4>
 
 								<ul id='switcher-facetlist'>
-										<li id="template"></li>
+										<li id="template"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
 								</ul>
 						<input id="switchinput" value="" />
 						</div>				        

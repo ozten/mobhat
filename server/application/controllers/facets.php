@@ -87,12 +87,16 @@ class Facets_Controller extends Template_Controller {
 	  if( count($newFacets) > 0 ){
 	    return array(true, "");
 	  }else{
+		//Bad Request
+		header('http_response_code', true, 400);
 		$msg = "proofing facets, expected atleast on valid facet " . Kohana::debug($newFacets);
 		Kohana::log('alert', $msg);
 		//TODO set response to error code 4xx?
 		return array(false, $msg);
 	  }
     }else{
+		//Bad Request
+		header('http_response_code', true, 400);
 		$msg = "proofing facets, expected array but got " . Kohana::debug($newFacets);
       Kohana::log('alert', $msg);
       return array(false, $msg);
@@ -119,5 +123,22 @@ class Facets_Controller extends Template_Controller {
       Kohana::log('info', Kohana::debug($facet->weighted_facets($username)));
       echo json_encode($facet->weighted_facets($username));
     }
+  }
+  
+  /*
+   $.ajax( {url:'/facets/u/ozten/foo', type:'DELETE'});
+  */
+  public function u($username, $facet){
+		$this->auto_render=false;
+		$facetDb = new Facet_Model;
+		Kohana::log('info', request::method());
+		if( request::method() == "delete"){
+		  $facetDb->remove_user_facet($username, $facet);
+		}else{
+				//Not Implemented
+				header('http_response_code', true, 501);
+				echo "Unsupported Operation";		
+		}
+		
   }
 }

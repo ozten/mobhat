@@ -42,6 +42,20 @@ function facetsChosen(facets, forTheWin, fail){
         error: fail});
 }
 
+function removeUserFacet(username, facet){
+    //Don't let overall LI think we want to switch to this facets...
+    $.ajax( {url:'/facets/u/' + username + '/' + facet, type:'DELETE'});
+    
+    function notTheFacet(aFacet, index){
+        return aFacet['description'] != facet;
+    }
+    currentFacets = $.grep(currentFacets, notTheFacet);
+    allFacets = $.grep(allFacets, notTheFacet);
+    
+    showCurrent();
+    showAll();
+}
+
 /* view
    Mostly in HTML this is the bits of code to manipulate the view
 */
@@ -57,9 +71,14 @@ function showAll() {
                 li.bind('click', allFacets[i], handleswitcherFacetlist);
                 if (isCurrent(allFacets[i], currentFacets)) {
                         li.addClass("current");
+                        li.find('.remove-facet-a').empty();
                 }
-                li.text(allFacets[i]['description']);
-
+                //li.text(allFacets[i]['description']);
+                li.find('.facetitem').text(allFacets[i]['description']);
+                li.find('.remove-facet-a').bind('click', {facet: allFacets[i]['description']}, function(event){
+                        removeUserFacet('ozten', event.data.facet);                        
+                        return false;
+                        });
                 $('#switcher-facetlist').append(li);
         }
         var p = $('#current-facets').position();

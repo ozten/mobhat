@@ -73,5 +73,17 @@ class Facet_Model extends Model {
     $this->db->query("UPDATE facets_user SET end_date = NOW() WHERE user_id = " . $user_id . " " .
                      "AND end_date IS NULL");
   }
+  /**
+   * $user - username of the user
+   * $facet - facet description
+   */
+  public function remove_user_facet($username, $facet){
+    $sql = "DELETE FROM facets_user WHERE facets_user.username = '$username' " .
+    "AND facets_user.facet_id = ( " .
+    "  SELECT id FROM facets WHERE facets.description = '$facet');";
+    Kohana::log('info', $sql);
+    $query = $this->db->query($sql);
+    Kohana::log('info', $query->count());
+  }
 }
 ?>
