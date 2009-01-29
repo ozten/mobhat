@@ -6,7 +6,7 @@ Oface.Models = Oface.Models || {};
   reads and updates
   from service
 */
-Oface.Models.Facet = {
+Oface.Models.Facet = Oface.Models.Facet || {
         currentFacets: [],
         allFacets: [],
 
@@ -21,6 +21,8 @@ Oface.Models.Facet = {
         /* internal */
         updateAll: function(newFacets) {
                 this.allFacets = newFacets;
+                
+                
         },
 
         isCurrent: function(needle, haystack) {
@@ -62,13 +64,13 @@ Oface.Models.Facet = {
 
                 Oface.Views.Facet.showCurrent();
                 Oface.Views.Facet.showAll();
-        },
+        }
 }; //End Oface.Models.Facet
 Oface.Views = Oface.Views || {};
 /** view
  *   Mostly in HTML this is the bits of code to manipulate the view
  */
-Oface.Views.Facet = {
+Oface.Views.Facet = Oface.Views.Facet || {
         foo: 'Bar',
         showAll: function() {
                 var currentFacets = Oface.Models.Facet.currentFacets;
@@ -80,7 +82,7 @@ Oface.Views.Facet = {
                 for (var i = 0; i < allFacets.length; i++) {
                         var li = liTemplate.clone();
                         li.addClass('weight' + allFacets[i]['weight']);
-                        li.bind('click', allFacets[i], handleswitcherFacetlist);
+                        li.bind('click', allFacets[i], Oface.Controllers.Facet.handleswitcherFacetlist);
                         if (Oface.Models.Facet.isCurrent(allFacets[i], currentFacets)) {
                                 cli = li.addClass("current").find('.remove-facet-a').hide();
                                 console.info("Yes, is current");
@@ -120,39 +122,43 @@ Oface.Views.Facet = {
                         $('#switcher-current-facets').append(li);
                 }
                 $('#switcher-current-facets li').click(this.showAll);
+                
         }
 
-
-
 }; //END Oface.Views.Facet
-
 Oface.Util = Oface.Util || {
-        
-        noOp: function(event){
+
+        noOp: function(event) {
                 //no op
         }
 }; //END Oface.Util
-
 /* Controller */
-function chooseFacetCallback(json, status) {
-        console.info(json);
-        console.info(status);
-        Oface.Models.Facet.updateCurrent(json);
-        Oface.Views.Facet.showCurrent();
-        console.info("done");
-}
-function handleswitcherFacetlist(event) {
-        var data = event.data;
-        console.info("facetChosen event");
-        console.info(data);
-        Oface.Models.Facet.facetsChosen([data['description']], chooseFacetCallback, Oface.Util.noOp);
-        $('#all-facets').hide();
-}
+Oface.Controllers = Oface.Controllers || {};
+Oface.Controllers.Facet = Oface.Controllers.Facet || {
+        chooseFacetCallback: function(json, status) {
+                console.info(json);
+                console.info(status);
+                Oface.Models.Facet.updateCurrent(json);
+                Oface.Views.Facet.showCurrent();
+                console.info("done");
+        },
+        handleswitcherFacetlist: function(event) {
+                that = this;
+                var data = event.data;
+                console.info("facetChosen event");
+                console.info(data);
+                Oface.Models.Facet.facetsChosen([data['description']], Oface.Controllers.Facet.chooseFacetCallback, Oface.Util.noOp);
+                $('#all-facets').hide();
+        },
 
-function switchinputHandler() {
-        Oface.Models.Facet.facetsChosen($('#switchinput').attr('value').split(','), chooseFacetCallback, Oface.Util.noOp);
-
-}
+        switchinputHandler: function() {
+                Oface.Models.Facet.facetsChosen($('#switchinput').attr('value').split(','), Oface.Controllers.Facet.chooseFacetCallback, Oface.Util.noOp);
+                
+        },
+        allFacetsCloseHandler: function() {
+                $('#all-facets').hide();
+        }
+} // END Oface.Controllers.Facet 
 $(document).ready(function() {
         $.get('/facets/current/ozten', {},
         function(json) {
@@ -164,10 +170,11 @@ $(document).ready(function() {
         $.get('/facets/weighted/ozten', {},
         function(json) {
                 Oface.Models.Facet.updateAll(json);
-                //Oface.Views.Facet.showAll();
+                Oface.Views.Facet.showAll();
         },
         "json");
         /* add behaviors */
-        $('#switchinput').bind('blur', switchinputHandler);
-
+        $('#switchinput').bind('blur', Oface.Controllers.Facet.switchinputHandler);
+        $('#all-facets-close').bind('click', Oface.Controllers.Facet.allFacetsCloseHandler);
+        
 });

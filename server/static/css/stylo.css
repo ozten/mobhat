@@ -1,4 +1,7 @@
-
+#switcher-current-facets{
+    width: 100px;
+    overflow: hidden;
+}
 #switcher{
     background-color: #FFF;
 }
@@ -25,7 +28,19 @@
     background-color: #FFF;
 }
 
-#all-facets{ background-color: blue; color: #FFF;
+#all-facets{
+  background-color: grey;
+  color: #FFF;
   padding: 0.3em;
   border: solid 1px 3px;
+  text-align: center;
+}
+#all-facets h4{
+    width: 80px;
+    margin: 0px auto;  
+}
+#all-facets-close{
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }

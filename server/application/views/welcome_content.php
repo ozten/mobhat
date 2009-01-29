@@ -17,7 +17,8 @@
 								<ul id='switcher-facetlist'>
 										<li id="template"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
 								</ul>
-						Add A New Facet: <input id="switchinput" value="" />
+						<label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
+						<button id="all-facets-close">Close</button>
 						</div>				        
 				</div>
 		</div>
