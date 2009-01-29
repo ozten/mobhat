@@ -114,27 +114,50 @@ CmdUtils.CreateCommand({
     */
     //after async
     var data = urls.slice(0);
+    var facets = [["webdev"],["art"],["family"]];
     for(var i = 0; i < data.length; i++){
-      if(i < 15){
-        data[i].facets = ['webdev'];
-      } else if(i < 30){
-        data[i].facets = ['art'];
-      } else{
-        data[i].facets = ['family'];
+      if(i < 4){
+        data[i].facets = facets[0];
+      } else {
+        data[i].facets = facets[Math.round(Math.random() * 2)];
       }
     }
     
+    var prevFacet = "";
+    var t = null;
+    var prevItemCount = 0;
+    [CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
     for(var i=0; i < data.length; i++){
-      var a = jQuery('div.title a[href=' + data[i].url + ']', tab.document);
-      if(a.length == 1){
-        CmdUtils.log('match');
+      /* Grab an item by url (this varies by webapp)
+      *  bubble up the DOM until you reach the FriendFeed container */
+      CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url);
+      
+      var selector = 'div.title a[href=' + data[i].url + ']';      
+      if(data[i].url.indexOf('twitter') >= 0){
+        selector = 'div[viewinlink=' + data[i].url + ']';
+      }else if(data[i].url.indexOf('friendfeed.com/e/') >= 0){
+        CmdUtils.log("Ya friendFeed ho");
+        // http://friendfeed.com/e/fdb550f2-869e-4a1c-b4ce-11d2d9d4d282  
+        // is not present in the html... it is dynamically added to the
+        // More menu item as 'Link to this entry'
+        var eid = /^http.?:\/\/.*friendfeed\.com\/e\/(.*)$/.exec(data[i].url)[1];
+        selector = 'div[eid=' + eid + ']';
+        
+      }else if(data[i].url.indexOf('flickr.com/') >= 0 &&
+               jQuery(selector, tab.document).length != 1){
+        // flickr is either in the default format or this
+        // format when several are collapsed together...
+        selector = 'div.container a[href=' + data[i].url + ']';
+      }
+      CmdUtils.log("selector=" + selector);
+      var a = jQuery(selector, tab.document);
+      if(a.length == 1){        
         var d = a.parent();
 
         while( d.length && ! d.hasClass('cluster')){      
-          var d = d.parent();
+          d = d.parent();
         }
         //update this div...
-        CmdUtils.log(d);
         var c = "oface-" + data[i].facets[0] + "-facet";
         if(! d.hasClass(c)){
           d.addClass(c);
@@ -142,27 +165,48 @@ CmdUtils.CreateCommand({
         if(! d.hasClass('oface')){
           d.addClass('oface');
         }
-        d.append("<h6 class='toggler'>" + data[i].facets[0] + "</h6>");
-        CmdUtils.log('this far now');
-        CmdUtils.log(jQuery('h6', d).length);
-        jQuery('h6', d).click(that.switchFacetDisplay);
+        
+        if(prevFacet != data[i].facets[0]){
+          CmdUtils.log("from " + prevFacet + " to " + data[i].facets[0]);
+          if(t) jQuery('span.count', t).text(prevItemCount);
+          prevItemCount = 0;
+          t = jQuery("<h4><span class='facet-name'>" + (data[i].facets[0]) + "</span> <span class='count'>x</span></h4> ", tab.document);
+          t.css({
+             'class': 'toggler',
+            'border': 'solid 1px grey'
+          });
+          d.before(t);
+          t.click(that.switchFacetDisplay);          
+        }
+        prevFacet = data[i].facets[0];
+        prevItemCount++;
       }else{
         //href=http://www.flickr.com/photos/wigfur/3229310456/
-        //CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found nothing");
-      }
-    }
+        CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
+      } //if(a.length == 1){
+    } // for(var i=0; i < data.length; i++){
     var currentFacet = 'webdev';
     var missed = jQuery('div.cluster', tab.document).not('.oface');
     CmdUtils.log("Missed " + missed.length + "items");
-    missed.hide();
-    jQuery('div.cluster.oface', tab.document).not('.oface-' + currentFacet + '-facet').hide()
-    CmdUtils.log(data);
-    CmdUtils.log(tab);
+    //missed.hide();
+    //jQuery('div.cluster.oface', tab.document).not('.oface-' + currentFacet + '-facet').hide()
+    
     //jQuery('div', tab.document).css('border', 'solid 1px red');
-
+    
+    jQuery('.oface-webdev-facet', tab.document).css('background-color', 'red');
+    jQuery('.oface-art-facet', tab.document).css('background-color', 'blue');
+    jQuery('.oface-family-facet', tab.document).css('background-color', 'yellow');
+    jQuery('.oface-webdev-facet.oface-art-facet', tab.document).css('background-color', 'purple');
+    jQuery('.oface-webdev-facet.oface-family-facet', tab.document).css('background-color', 'orange');
+    jQuery('.oface-art-facet.oface-family-facet', tab.document).css('background-color', 'green');
+    
+    
   },
-  switchFacetDisplay: function(facet){
-    facet = 'art';
+  switchFacetDisplay: function(){
+    /**
+     * this - is the 6.toggler the user clicked
+    */    
+    var facet = jQuery('span.facet-name', this).text();
     var doc = Application.activeWindow.activeTab.document;
     jQuery('div.cluster.oface', doc).not('.oface-' + facet + '-facet').hide()
     jQuery('div.cluster', doc).not('.oface').hide();
