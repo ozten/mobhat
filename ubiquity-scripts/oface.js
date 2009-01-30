@@ -116,7 +116,7 @@ CmdUtils.CreateCommand({
     var data = urls.slice(0);
     var facets = [["webdev"],["art"],["family"]];
     for(var i = 0; i < data.length; i++){
-      if(i < 4){
+      if(i < 10){
         data[i].facets = facets[0];
       } else {
         data[i].facets = facets[Math.round(Math.random() * 2)];
@@ -130,13 +130,11 @@ CmdUtils.CreateCommand({
     for(var i=0; i < data.length; i++){
       /* Grab an item by url (this varies by webapp)
       *  bubble up the DOM until you reach the FriendFeed container */
-      CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url);
       
       var selector = 'div.title a[href=' + data[i].url + ']';      
       if(data[i].url.indexOf('twitter') >= 0){
         selector = 'div[viewinlink=' + data[i].url + ']';
-      }else if(data[i].url.indexOf('friendfeed.com/e/') >= 0){
-        CmdUtils.log("Ya friendFeed ho");
+      }else if(data[i].url.indexOf('friendfeed.com/e/') >= 0){        
         // http://friendfeed.com/e/fdb550f2-869e-4a1c-b4ce-11d2d9d4d282  
         // is not present in the html... it is dynamically added to the
         // More menu item as 'Link to this entry'
@@ -149,25 +147,25 @@ CmdUtils.CreateCommand({
         // format when several are collapsed together...
         selector = 'div.container a[href=' + data[i].url + ']';
       }
-      CmdUtils.log("selector=" + selector);
+      //CmdUtils.log("selector=" + selector);
       var a = jQuery(selector, tab.document);
-      if(a.length == 1){        
-        var d = a.parent();
-
-        while( d.length && ! d.hasClass('cluster')){      
-          d = d.parent();
+      if(a.length == 1){
+        var success;
+        var entry;
+        var cluster;
+        [success, entry  ] = that.findAndTagByClass(a,'entry', data[i].facets);
+        if(! success ){
+          //Flickr uses tr as it's container...
+          CmdUtils.log("WARNING, might have found an entry div for anchor tag " + data[i].url);
         }
-        //update this div...
-        var c = "oface-" + data[i].facets[0] + "-facet";
-        if(! d.hasClass(c)){
-          d.addClass(c);
+        [success, cluster] = that.findAndTagByClass(a,'cluster', data[i].facets);
+        if(! success ){
+          CmdUtils.log("ERROR, expected to find a cluster div for anchor tag " + data[i].url);
         }
-        if(! d.hasClass('oface')){
-          d.addClass('oface');
-        }
-        
-        if(prevFacet != data[i].facets[0]){
-          CmdUtils.log("from " + prevFacet + " to " + data[i].facets[0]);
+        if(! cluster.hasClass('oface')){
+          cluster.addClass('oface');
+        }        
+        if(prevFacet != data[i].facets[0]){          
           if(t) jQuery('span.count', t).text(prevItemCount);
           prevItemCount = 0;
           t = jQuery("<h4><span class='facet-name'>" + (data[i].facets[0]) + "</span> <span class='count'>x</span></h4> ", tab.document);
@@ -175,7 +173,7 @@ CmdUtils.CreateCommand({
              'class': 'toggler',
             'border': 'solid 1px grey'
           });
-          d.before(t);
+          cluster.before(t);
           t.click(that.switchFacetDisplay);          
         }
         prevFacet = data[i].facets[0];
@@ -202,13 +200,39 @@ CmdUtils.CreateCommand({
     
     
   },
+  findAndTag: function(element, containerClassName, facets, matchFn){
+    var cluster = element;//.parent();
+        while( cluster.length && ! matchFn(cluster)){      
+          cluster = cluster.parent();
+        }
+        if(cluster.length > 0){
+          //update this div...
+          var c = "oface-" + facets[0] + "-facet";
+          if(! cluster.hasClass(c)){            
+            cluster.addClass(c);
+          }        
+          return [true, cluster];
+        }else{
+          return [false, element];
+        }
+  },
+  findAndTagByClass: function(element, containerClassName, facets){
+    return this.findAndTag(element, containerClassName, facets, function(cluster){
+      return cluster.hasClass(containerClassName);
+      });    
+  },findAndTagByClass: function(element, containerClassName, facets){
+    return this.findAndTag(element, containerClassName, facets, function(cluster){
+      return cluster.hasClass(containerClassName);
+      });    
+  },
   switchFacetDisplay: function(){
     /**
      * this - is the 6.toggler the user clicked
     */    
     var facet = jQuery('span.facet-name', this).text();
     var doc = Application.activeWindow.activeTab.document;
-    jQuery('div.cluster.oface', doc).not('.oface-' + facet + '-facet').hide()
+    jQuery('div.cluster.oface, div.entry', doc).not('.oface-' + facet + '-facet').hide();
+    jQuery('div.entry.oface-' + facet + '-facet:hidden', doc).show();
     jQuery('div.cluster', doc).not('.oface').hide();
     
     jQuery('div.cluster.oface-' + facet + '-facet', doc).show();
