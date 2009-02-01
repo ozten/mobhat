@@ -117,7 +117,7 @@ CmdUtils.CreateCommand({
     var data = urls.slice(0);
     var facets = [["webdev"],["art"],["family"]];
     for(var i = 0; i < data.length; i++){
-      if(i < 10){
+      if(i < 0){
         data[i].facets = facets[0];
       } else {
         data[i].facets = facets[Math.round(Math.random() * 2)];
@@ -239,15 +239,16 @@ CmdUtils.CreateCommand({
     var facet = jQuery('span.facet-name', this).text();
     
     jQuery('h4.facet', doc).show();
-    jQuery('h4.facet.' + facet, doc).hide();
+    jQuery('h4.facet.' + facet, doc).hide('slow');
     
-    jQuery('#oface-enabler span.current-facet').text(facet);
+    jQuery('#oface-enabler span.current-facet', doc).text(facet);
     
-    jQuery('div.cluster.oface, div.entry', doc).not('.oface-' + facet + '-facet').hide();
-    jQuery('div.entry.oface-' + facet + '-facet:hidden', doc).show();
-    jQuery('div.cluster', doc).not('.oface').hide();
+    jQuery('div.entry.oface-' + facet + '-facet:hidden, div.cluster.oface-' + facet + '-facet', doc).show('slow');    
+    jQuery('div.cluster.oface, div.entry', doc).not('.oface-' + facet + '-facet').hide('slow');
     
-    jQuery('div.cluster.oface-' + facet + '-facet', doc).show();
+    //jQuery('div.cluster', doc).not('.oface').hide('slow');
+    
+    
     
   },
   md5: function(str){
@@ -287,20 +288,19 @@ CmdUtils.CreateCommand({
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
       var ofaceEnabler = $("<h3 id='oface-enabler' title='Click to Change'>Oface is " +
                            "<span class='status'>Enabled</span> " +
-                           "<span class='current-facet'>Webdev</span>" +
+                           "<span class='current-facet'>webdev</span>" +
                            "</h3>", doc)
                         .click(ofaceToggler);
       $('#feed1', doc).prepend(ofaceEnabler);
       $('h3#oface-enabler span.current-facet', doc).css('margin-left', '30px');
     }
     CmdUtils.log('addOfaceEnabled called');
-    
-    
   }
 });
 var divId = 'feed1';
 var oFaceIsEnabled = true;
 var lastSeenFacetHeadings = null;
+var lastHiddenItems = null;
 function ofaceToggler(){
   var $ = jQuery;
   var doc = Application.activeWindow.activeTab.document;
@@ -309,7 +309,8 @@ function ofaceToggler(){
     $('h3#oface-enabler span.status', doc).text("Disabled");
     $('h3#oface-enabler span.current-facet', doc).hide();
 
-    lastSeenFacetHeadings = $('h4.facet:visible').hide();
+    lastSeenFacetHeadings = $('h4.facet:visible', doc).hide();
+    lastHiddenItems = $('div.oface:hidden', doc).show();
     //TODO rename class oface to oface-cluster and add a new one oface-entry
     $('.oface:hidden').show();
     oFaceIsEnabled = false;
@@ -317,7 +318,8 @@ function ofaceToggler(){
     $('h3#oface-enabler span.status', doc).text("Enabled");
     $('h3#oface-enabler span.current-facet', doc).show();
     lastSeenFacetHeadings.show();
-    //TODO finish
+    lastHiddenItems.hide();
+    //TODO finish disabling oface
     oFaceIsEnabled = true;
   }
 }
