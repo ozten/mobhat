@@ -1,3 +1,4 @@
+;(function(){
 //Growl displayMessage
 //Replace selected text CmdUtils.setSelection("You selected: "+input.html);
 //Application - FUEL Application - http://developer.mozilla.org/en/docs/FUEL 
@@ -126,6 +127,7 @@ CmdUtils.CreateCommand({
     var prevFacet = "";
     var t = null;
     var prevItemCount = 0;
+    that.addOfaceEnabled();
     [CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
     for(var i=0; i < data.length; i++){
       /* Grab an item by url (this varies by webapp)
@@ -168,13 +170,17 @@ CmdUtils.CreateCommand({
         if(prevFacet != data[i].facets[0]){          
           if(t) jQuery('span.count', t).text(prevItemCount);
           prevItemCount = 0;
-          t = jQuery("<h4><span class='facet-name'>" + (data[i].facets[0]) + "</span> <span class='count'>x</span></h4> ", tab.document);
+          t = jQuery("<h4 class='facet " + data[i].facets[0] +
+                     "'><span class='facet-name'>" + (data[i].facets[0]) + "</span> <span class='count'>x</span></h4> ", tab.document);
           t.css({
              'class': 'toggler',
-            'border': 'solid 1px grey'
+            'border': 'solid 1px grey',
+            'float' : 'left',
+            'margin-right': '10px'
           });
           cluster.before(t);
-          t.click(that.switchFacetDisplay);          
+          t.click(that.switchFacetDisplay);
+          jQuery('div.cluster, div.pager', tab.document).css('clear', 'left');
         }
         prevFacet = data[i].facets[0];
         prevItemCount++;
@@ -190,14 +196,14 @@ CmdUtils.CreateCommand({
     //jQuery('div.cluster.oface', tab.document).not('.oface-' + currentFacet + '-facet').hide()
     
     //jQuery('div', tab.document).css('border', 'solid 1px red');
-    
+    /*
     jQuery('.oface-webdev-facet', tab.document).css('background-color', 'red');
     jQuery('.oface-art-facet', tab.document).css('background-color', 'blue');
     jQuery('.oface-family-facet', tab.document).css('background-color', 'yellow');
     jQuery('.oface-webdev-facet.oface-art-facet', tab.document).css('background-color', 'purple');
     jQuery('.oface-webdev-facet.oface-family-facet', tab.document).css('background-color', 'orange');
     jQuery('.oface-art-facet.oface-family-facet', tab.document).css('background-color', 'green');
-    
+    */
     
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
@@ -228,9 +234,15 @@ CmdUtils.CreateCommand({
   switchFacetDisplay: function(){
     /**
      * this - is the 6.toggler the user clicked
-    */    
+    */
+    var doc = Application.activeWindow.activeTab.document;    
     var facet = jQuery('span.facet-name', this).text();
-    var doc = Application.activeWindow.activeTab.document;
+    
+    jQuery('h4.facet', doc).show();
+    jQuery('h4.facet.' + facet, doc).hide();
+    
+    jQuery('#oface-enabler span.current-facet').text(facet);
+    
     jQuery('div.cluster.oface, div.entry', doc).not('.oface-' + facet + '-facet').hide();
     jQuery('div.entry.oface-' + facet + '-facet:hidden', doc).show();
     jQuery('div.cluster', doc).not('.oface').hide();
@@ -265,5 +277,49 @@ CmdUtils.CreateCommand({
 
     // convert the binary hash data to a hex string.
     return [toHexString(hash.charCodeAt(i)) for (i in hash)].join("");
+  },
+  addOfaceEnabled: function(){
+    
+    
+    var $ = jQuery;
+    var doc = Application.activeWindow.activeTab.document;
+    
+    if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
+      var ofaceEnabler = $("<h3 id='oface-enabler' title='Click to Change'>Oface is " +
+                           "<span class='status'>Enabled</span> " +
+                           "<span class='current-facet'>Webdev</span>" +
+                           "</h3>", doc)
+                        .click(ofaceToggler);
+      $('#feed1', doc).prepend(ofaceEnabler);
+      $('h3#oface-enabler span.current-facet', doc).css('margin-left', '30px');
+    }
+    CmdUtils.log('addOfaceEnabled called');
+    
+    
   }
 });
+var divId = 'feed1';
+var oFaceIsEnabled = true;
+var lastSeenFacetHeadings = null;
+function ofaceToggler(){
+  var $ = jQuery;
+  var doc = Application.activeWindow.activeTab.document;
+
+  if(oFaceIsEnabled){
+    $('h3#oface-enabler span.status', doc).text("Disabled");
+    $('h3#oface-enabler span.current-facet', doc).hide();
+
+    lastSeenFacetHeadings = $('h4.facet:visible').hide();
+    //TODO rename class oface to oface-cluster and add a new one oface-entry
+    $('.oface:hidden').show();
+    oFaceIsEnabled = false;
+  }else{
+    $('h3#oface-enabler span.status', doc).text("Enabled");
+    $('h3#oface-enabler span.current-facet', doc).show();
+    lastSeenFacetHeadings.show();
+    //TODO finish
+    oFaceIsEnabled = true;
+  }
+}
+  CmdUtils.log('oface.js is being loaded');
+})();
