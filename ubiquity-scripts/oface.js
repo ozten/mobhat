@@ -32,11 +32,9 @@ var ofaceObj = {
   name: "fetch-feed-oface",
   xenv: "http://friendfeed.com",
   env: "http://oface.ubuntu/static/test_files/",
-  preview: function(pblock, input){
-    CmdUtils.log('preview called with ' + pblock);
+  preview: function(pblock, input){    
     var tab = Application.activeWindow.activeTab;
     var url = this.env + jQuery('link[type=application/atom+xml]', tab.document).attr('href');
-    CmdUtils.log(url);
     var that = this;
     var h = {
         url: url,
@@ -109,14 +107,23 @@ var ofaceObj = {
       } else {
         data[i].facets = facets[Math.round(Math.random() * 2)];
       }
-      CmdUtils.log(i + ' ' + data[i].facets[0]);
     }
     
+    
+    that.addOfaceEnabled();
+    that.updateDisplayWithFacets(data, tab, that);
+    var currentFacet = 'art';
+    //simulate click on facet heading
+    that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0));
+    var missed = jQuery('div.cluster', tab.document).not('.oface');
+    CmdUtils.log("Missed " + missed.length + "items, turning em red");
+    jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');            
+  },
+  updateDisplayWithFacets: function(data, tab, that){
     var prevFacet = "";
     var t = null;
     var prevItemCount = 0;
-    that.addOfaceEnabled();
-    [CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
+    //[CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
     for(var i=0; i < data.length; i++){
       /* Grab an item by url (this varies by webapp)
       *  bubble up the DOM until you reach the FriendFeed container */
@@ -177,22 +184,6 @@ var ofaceObj = {
         CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
       } //if(a.length == 1){
     } // for(var i=0; i < data.length; i++){
-    var currentFacet = 'webdev';
-    var missed = jQuery('div.cluster', tab.document).not('.oface');
-    CmdUtils.log("Missed " + missed.length + "items");
-    //missed.hide();
-    //jQuery('div.cluster.oface', tab.document).not('.oface-' + currentFacet + '-facet').hide()
-    
-    //jQuery('div', tab.document).css('border', 'solid 1px red');
-    /*
-    jQuery('.oface-webdev-facet', tab.document).css('background-color', 'red');
-    jQuery('.oface-art-facet', tab.document).css('background-color', 'blue');
-    jQuery('.oface-family-facet', tab.document).css('background-color', 'yellow');
-    jQuery('.oface-webdev-facet.oface-art-facet', tab.document).css('background-color', 'purple');
-    jQuery('.oface-webdev-facet.oface-family-facet', tab.document).css('background-color', 'orange');
-    jQuery('.oface-art-facet.oface-family-facet', tab.document).css('background-color', 'green');
-    */
-    
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
     var cluster = element;//.parent();
@@ -223,6 +214,7 @@ var ofaceObj = {
     /**
      * this - is the 6.toggler the user clicked
     */
+    
     var doc = Application.activeWindow.activeTab.document;    
     var facet = jQuery('span.facet-name', this).text();
     
@@ -276,37 +268,26 @@ var ofaceObj = {
   },
   addOfaceEnabled: function(){
     
-    CmdUtils.log(jQuery);
-    CmdUtils.log(Application);
     var $ = jQuery;
     var doc = Application.activeWindow.activeTab.document;
-    CmdUtils.log(doc);
-    CmdUtils.log($('#' + divId + ' h3#oface-enabler', doc).length);
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
       var ofaceEnabler = $("<h3 id='oface-enabler' title='Click to Change'>Oface is " +
                            "<span class='status'>Enabled</span> " +
                            "<span class='current-facet'>webdev</span>" +
                            "</h3>", doc)
                         .click(ofaceToggler);
-      CmdUtils.log('addOfaceEnabled');
-    
-      CmdUtils.log(ofaceEnabler);
       $('#feed1', doc).prepend(ofaceEnabler);
       $('h3#oface-enabler span.current-facet', doc).css('margin-left', '30px');
     }else{
       CmdUtils.log('Already have the widget');
     
     }
-    CmdUtils.log('addOfaceEnabled called');
   }
 };
 function pageLoad_fetchFeedOface(){
-  CmdUtils.log('pageLoad_fetchFeedOface3 really called');
   var loc = Application.activeWindow.activeTab.document.location;
   
   var enabledFor = 'http://oface.ubuntu/static/test_files/ff-pattyok.html';
-  CmdUtils.log(enabledFor);
-  CmdUtils.log(loc.href);
   if(loc.href.indexOf(enabledFor) != -1){
       ofaceObj.preview.call(ofaceObj);
   }
