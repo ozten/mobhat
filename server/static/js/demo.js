@@ -170,7 +170,7 @@ $(document).ready(function() {
         $.get('/facets/weighted/ozten', {},
         function(json) {
                 Oface.Models.Facet.updateAll(json);
-                Oface.Views.Facet.showAll();
+                //Oface.Views.Facet.showAll();
         },
         "json");
         /* add behaviors */

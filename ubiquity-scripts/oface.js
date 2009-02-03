@@ -1,61 +1,42 @@
-;(function(){
-//Growl displayMessage
-//Replace selected text CmdUtils.setSelection("You selected: "+input.html);
-//Application - FUEL Application - http://developer.mozilla.org/en/docs/FUEL 
-/* This is a template command */
-CmdUtils.CreateCommand({
-  feedIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJDSURBVHjajJJNSBRhGMd/887MzrQxRSLbFuYhoUhEKsMo8paHUKFLdBDrUIdunvq4RdClOq8Hb0FBSAVCUhFR1CGD/MrIJYqs1kLUXd382N356plZFOrUO/MMz/vO83+e93n+f+1zF+kQBoOQNLBJg0CTj7z/rvWjGbEOIwKp9O7WkhtQc/wMWrlIkP8Kc1lMS8eyFHpkpo5SgWCCVO7Z5JARhuz1Qg29fh87u6/9VWL1/SPc4Qy6n8c0FehiXin6dcCQaylDMhqGz8ydS2hKkmxNkWxowWnuBLHK6G2C8X6UJkBlxUmNqLYyNbzF74QLDrgFgh9LLE0NsPKxjW1Hz2EdPIubsOFdH2HgbwAlC4S19dT13o+3pS+vcSfvUcq9YnbwA6muW9hNpym/FWBxfh0CZkKGkPBZeJFhcWQAu6EN52QGZ/8prEKW+cdXq0039UiLXhUYzdjebOJQQI30UXp6mZn+Dtam32Afu0iyrgUvN0r+ZQbr8HncSpUVJfwRhBWC0hyGV8CxXBL5SWYf9sYBidYLIG2V87/ifVjTWAX6AlxeK2C0X8e58hOr/Qa2XJ3iLMWxB1h72tHs7bgryzHAN2o2gJorTrLxRHVazd0o4TXiyV2Yjs90uzauGvvppmqcLjwmbZ3V7BO2HOrBnbgrQRqWUgTZ5+Snx4WeKfzCCrmb3axODKNH+vvUyWjqyK4DiKQ0eXSpFsgVvLJQWpH+xSpr4otg/HI0TR/t97cxTUS+QxIMRTLi/9ZYJPI/AgwAoc3W7ZrqR2IAAAAASUVORK5CYII%3D",
-  name: "discover-feeds-oface",
-  icon: this.feedIcon,
-  homepage: "http://ozten.com/",
-  author: {
-    name: "Your Name",
-    email: "you@example.com"
-  },
-  license: "GPL",
-  description: "Lists Feeds that this page contains",
-  help: "how to use your command",
-  preview: function(pblock, input) {
-    //var d = context.chromeWindow.window.document;
-    var d = CmdUtils.getDocument();
-    var links = d.getElementsByTagName('link');
-    var template = "<h4>Feeds</h4>";
-    var data = {};
-    var type = {
-      'application/rss+xml': 'RSS',
-      "application/atom+xml": "Atom"
-    };
-    var numFeeds = 0;
-    template += "<ul>";
-    for (var i = 0; i < links.length; i++) {
-      var link = links[i];
-      var title = links[i].title || "Untitled Feed";
-      
-      if (link.type == "application/atom+xml" || link.type == "application/rss+xml") {
-        numFeeds += 1;
-        template += "<li ><img src='" + this.feedIcon + "' /> " + " <a href='" + link.href + "'>" + title + "</a> <small>(" + type[links[i].type]  + ")</small></li>";
-        //CmdUtils.log(links[i].title + " " + links[i].href);
-      }
-      template += "</ul>";
+;
 
-    }
-    if (numFeeds == 0) {
-      template = "None Feeds discovered";
-    }
-    pblock.innerHTML = CmdUtils.renderTemplate(template, data);
-    var doc = Application.activeWindow.activeTab.document;
-    jQuery('div.cluster', doc).css('border', 'solid 1px grey');
+var divId = 'feed1';
+var oFaceIsEnabled = true;
+var lastSeenFacetHeadings = null;
+var lastHiddenItems = null;
+
+function ofaceToggler(){
+  var $ = jQuery;
+  var doc = Application.activeWindow.activeTab.document;
+
+  if(oFaceIsEnabled){
+    $('h3#oface-enabler span.status', doc).text("Disabled");
+    $('h3#oface-enabler span.current-facet', doc).hide();
+
+    lastSeenFacetHeadings = $('h4.facet:visible', doc).hide();
+    lastHiddenItems = $('div.oface:hidden', doc).show();
+    //TODO rename class oface to oface-cluster and add a new one oface-entry
+    $('.oface:hidden').show();
+    oFaceIsEnabled = false;
+  }else{
+    $('h3#oface-enabler span.status', doc).text("Enabled");
+    $('h3#oface-enabler span.current-facet', doc).show();
+    lastSeenFacetHeadings.show();
+    lastHiddenItems.hide();
+    //TODO finish disabling oface
+    oFaceIsEnabled = true;
   }
-});
+}
 
-CmdUtils.CreateCommand({
+var ofaceObj = {
   name: "fetch-feed-oface",
   xenv: "http://friendfeed.com",
   env: "http://oface.ubuntu/static/test_files/",
   preview: function(pblock, input){
+    CmdUtils.log('preview called with ' + pblock);
     var tab = Application.activeWindow.activeTab;
     var url = this.env + jQuery('link[type=application/atom+xml]', tab.document).attr('href');
-    //CmdUtils.log(url);
+    CmdUtils.log(url);
     var that = this;
     var h = {
         url: url,
@@ -64,7 +45,7 @@ CmdUtils.CreateCommand({
           CmdUtils.log(data);
           //CmdUtils.log('sucessfully fetched feed');
           var urls = that.processFeedForUrls(data.documentElement, tab, that);
-          //CmdUtils.log(urls);
+          CmdUtils.log(urls);
           that.feedFacets(that, tab, pblock, urls);
           //CmdUtils.log(urls);          
         },
@@ -75,7 +56,9 @@ CmdUtils.CreateCommand({
         }
       };
     jQuery.ajax(h, tab);
-    pblock.innerHTML = "Loading";
+    if(pblock){
+      pblock.innerHTML = "Loading";
+    }
   },
   processFeedForUrls: function(feed, tab, that){
     var entries = jQuery('entry link', feed);
@@ -117,11 +100,16 @@ CmdUtils.CreateCommand({
     var data = urls.slice(0);
     var facets = [["webdev"],["art"],["family"]];
     for(var i = 0; i < data.length; i++){
-      if(i < 0){
+      if(i == 0 || i == 6){
         data[i].facets = facets[0];
+      } else if(i == 1 || i == 5 ){
+        data[i].facets = facets[2];
+      } else if(i >= 2 && i < 5 ){
+        data[i].facets = facets[1];
       } else {
         data[i].facets = facets[Math.round(Math.random() * 2)];
       }
+      CmdUtils.log(i + ' ' + data[i].facets[0]);
     }
     
     var prevFacet = "";
@@ -238,6 +226,13 @@ CmdUtils.CreateCommand({
     var doc = Application.activeWindow.activeTab.document;    
     var facet = jQuery('span.facet-name', this).text();
     
+    jQuery.ajax({
+                        url: 'http://oface.ubuntu/facets/current/ozten',
+                        type: 'PUT',
+                        data: '["' + facet + '"]',
+                        dataType: "json"                        
+                }, doc);
+    
     jQuery('h4.facet', doc).show();
     jQuery('h4.facet.' + facet, doc).hide('slow');
     
@@ -281,47 +276,97 @@ CmdUtils.CreateCommand({
   },
   addOfaceEnabled: function(){
     
-    
+    CmdUtils.log(jQuery);
+    CmdUtils.log(Application);
     var $ = jQuery;
     var doc = Application.activeWindow.activeTab.document;
-    
+    CmdUtils.log(doc);
+    CmdUtils.log($('#' + divId + ' h3#oface-enabler', doc).length);
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
       var ofaceEnabler = $("<h3 id='oface-enabler' title='Click to Change'>Oface is " +
                            "<span class='status'>Enabled</span> " +
                            "<span class='current-facet'>webdev</span>" +
                            "</h3>", doc)
                         .click(ofaceToggler);
+      CmdUtils.log('addOfaceEnabled');
+    
+      CmdUtils.log(ofaceEnabler);
       $('#feed1', doc).prepend(ofaceEnabler);
       $('h3#oface-enabler span.current-facet', doc).css('margin-left', '30px');
+    }else{
+      CmdUtils.log('Already have the widget');
+    
     }
     CmdUtils.log('addOfaceEnabled called');
   }
-});
-var divId = 'feed1';
-var oFaceIsEnabled = true;
-var lastSeenFacetHeadings = null;
-var lastHiddenItems = null;
-function ofaceToggler(){
-  var $ = jQuery;
-  var doc = Application.activeWindow.activeTab.document;
-
-  if(oFaceIsEnabled){
-    $('h3#oface-enabler span.status', doc).text("Disabled");
-    $('h3#oface-enabler span.current-facet', doc).hide();
-
-    lastSeenFacetHeadings = $('h4.facet:visible', doc).hide();
-    lastHiddenItems = $('div.oface:hidden', doc).show();
-    //TODO rename class oface to oface-cluster and add a new one oface-entry
-    $('.oface:hidden').show();
-    oFaceIsEnabled = false;
-  }else{
-    $('h3#oface-enabler span.status', doc).text("Enabled");
-    $('h3#oface-enabler span.current-facet', doc).show();
-    lastSeenFacetHeadings.show();
-    lastHiddenItems.hide();
-    //TODO finish disabling oface
-    oFaceIsEnabled = true;
+};
+function pageLoad_fetchFeedOface(){
+  CmdUtils.log('pageLoad_fetchFeedOface3 really called');
+  var loc = Application.activeWindow.activeTab.document.location;
+  
+  var enabledFor = 'http://oface.ubuntu/static/test_files/ff-pattyok.html';
+  CmdUtils.log(enabledFor);
+  CmdUtils.log(loc.href);
+  if(loc.href.indexOf(enabledFor) != -1){
+      ofaceObj.preview.call(ofaceObj);
   }
+
 }
-  CmdUtils.log('oface.js is being loaded');
+;(function(){
+
+//Growl displayMessage
+//Replace selected text CmdUtils.setSelection("You selected: "+input.html);
+//Application - FUEL Application - http://developer.mozilla.org/en/docs/FUEL 
+/* This is a template command */
+CmdUtils.CreateCommand({
+  feedIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJDSURBVHjajJJNSBRhGMd/887MzrQxRSLbFuYhoUhEKsMo8paHUKFLdBDrUIdunvq4RdClOq8Hb0FBSAVCUhFR1CGD/MrIJYqs1kLUXd382N356plZFOrUO/MMz/vO83+e93n+f+1zF+kQBoOQNLBJg0CTj7z/rvWjGbEOIwKp9O7WkhtQc/wMWrlIkP8Kc1lMS8eyFHpkpo5SgWCCVO7Z5JARhuz1Qg29fh87u6/9VWL1/SPc4Qy6n8c0FehiXin6dcCQaylDMhqGz8ydS2hKkmxNkWxowWnuBLHK6G2C8X6UJkBlxUmNqLYyNbzF74QLDrgFgh9LLE0NsPKxjW1Hz2EdPIubsOFdH2HgbwAlC4S19dT13o+3pS+vcSfvUcq9YnbwA6muW9hNpym/FWBxfh0CZkKGkPBZeJFhcWQAu6EN52QGZ/8prEKW+cdXq0039UiLXhUYzdjebOJQQI30UXp6mZn+Dtam32Afu0iyrgUvN0r+ZQbr8HncSpUVJfwRhBWC0hyGV8CxXBL5SWYf9sYBidYLIG2V87/ifVjTWAX6AlxeK2C0X8e58hOr/Qa2XJ3iLMWxB1h72tHs7bgryzHAN2o2gJorTrLxRHVazd0o4TXiyV2Yjs90uzauGvvppmqcLjwmbZ3V7BO2HOrBnbgrQRqWUgTZ5+Snx4WeKfzCCrmb3axODKNH+vvUyWjqyK4DiKQ0eXSpFsgVvLJQWpH+xSpr4otg/HI0TR/t97cxTUS+QxIMRTLi/9ZYJPI/AgwAoc3W7ZrqR2IAAAAASUVORK5CYII%3D",
+  name: "discover-feeds-oface",
+  icon: this.feedIcon,
+  homepage: "http://ozten.com/",
+  author: {
+    name: "Your Name",
+    email: "you@example.com"
+  },
+  license: "GPL",
+  description: "Lists Feeds that this page contains",
+  help: "how to use your command",
+  preview: function(pblock, input) {
+    //var d = context.chromeWindow.window.document;
+    var d = CmdUtils.getDocument();
+    var links = d.getElementsByTagName('link');
+    var template = "<h4>Feeds</h4>";
+    var data = {};
+    var type = {
+      'application/rss+xml': 'RSS',
+      "application/atom+xml": "Atom"
+    };
+    var numFeeds = 0;
+    template += "<ul>";
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      var title = links[i].title || "Untitled Feed";
+      
+      if (link.type == "application/atom+xml" || link.type == "application/rss+xml") {
+        numFeeds += 1;
+        template += "<li ><img src='" + this.feedIcon + "' /> " + " <a href='" + link.href + "'>" + title + "</a> <small>(" + type[links[i].type]  + ")</small></li>";
+        //CmdUtils.log(links[i].title + " " + links[i].href);
+      }
+      template += "</ul>";
+
+    }
+    if (numFeeds == 0) {
+      template = "None Feeds discovered";
+    }
+    pblock.innerHTML = CmdUtils.renderTemplate(template, data);
+    var doc = Application.activeWindow.activeTab.document;
+    jQuery('div.cluster', doc).css('border', 'solid 1px grey');
+  }
+});
+
+
+
+CmdUtils.CreateCommand(ofaceObj);
+
+
+
 })();

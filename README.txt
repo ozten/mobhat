@@ -1,19 +1,11 @@
+The web and computers in general should capture which of our social identities are active
+when we are creating and viewing things. Something like the Oface service could
+automatically negotitate items based on social identity facets or tags
+and trim down the information overload.
 
+Project details:
 server - A Kohana 2.3 web based application
 
 database - Files relating to the MySQL databases which are used by the server
 
-
-I started messing with CakePHP and then followed the tutorial. 
-
-KISS - going with Kohana
-
-setup SMB and shared all of /home/aking
-
-oface.ubuntu is mapped to /home/aking/oface
-
-development server notes:
-VMWare - oface.ubuntu
-MySQL - admin / pass
-      - connect directly from Mac
-      - test_oface - integration testing
+ubiquity-scripts - Ubiquity 0.1.5 Commands

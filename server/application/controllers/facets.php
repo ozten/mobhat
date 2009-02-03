@@ -43,7 +43,7 @@ class Facets_Controller extends Template_Controller {
   public function current($username) {
     //Kohana::log('info', "Looks like they are logged in " . $this->user->id . " " . $this->user->username);
     $this->auto_render=false;
-    
+    Kohana::log('info', request::method());
     $facet = new Facet_Model;
     if( request::method() == "get"){
 		
@@ -55,10 +55,12 @@ class Facets_Controller extends Template_Controller {
       while ($data = fread($putdata, 1024)){
 	    $thedata = $thedata . $data;
       }
+	  Kohana::log('info', $thedata);
 	  $newFacets = json_decode($thedata);
+	  Kohana::log('info', 'decoded json is ' . Kohana::debug($newFacets));
 	  $proof = $this->proof($newFacets);
 	  if($proof[0]){
-		Kohana::lang('info', Kohana::debug($newFacets));
+		Kohana::log('info', Kohana::debug($newFacets));
         $this->_set_current($username, $newFacets, $facet);
 	  }else{
 		echo json_encode(array("errMsg" => $proof[1]));

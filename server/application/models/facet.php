@@ -30,7 +30,7 @@ class Facet_Model extends Model {
     foreach($newFacets as $facet){
       $facetsToInsert[$facet] = TRUE;
     }
-    Kohana::log('info', $newFacets);
+    Kohana::log('info', Kohana::debug($newFacets));
     $sql = "SELECT id, description FROM facets WHERE description IN ('" .
            implode("', '", $newFacets) . "')";
     

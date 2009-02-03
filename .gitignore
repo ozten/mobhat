@@ -2,9 +2,11 @@
 ._friendfeedhtml
 ._test
 ._ubiquity-docs
+.DS_Store
 database/oface_scratch.sql
 example_feeds
 friendfeedhtml
+gitconfig
 php-atompub-server-read-only-patch1.txt
 php-atompub-server-read-only
 server/.DS_Store
