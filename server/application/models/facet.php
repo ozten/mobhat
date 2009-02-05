@@ -85,5 +85,16 @@ class Facet_Model extends Model {
     $query = $this->db->query($sql);
     Kohana::log('info', $query->count());
   }
+  
+    public function facetsDuring($userId, $time)
+    {
+        $sql = "SELECT `facets_user`.facet_id, facets.description, facets.created " .
+               "FROM facets_user " .
+               "JOIN facets ON facets.id = `facets_user`.facet_id " .
+               "WHERE user_id = $userId AND " .
+               "'$time' BETWEEN start_date AND end_date OR " .
+               "start_date <  '$time' AND end_date IS NULL";
+        return $this->db->query($sql)->result_array(FALSE);
+    }
 }
 ?>

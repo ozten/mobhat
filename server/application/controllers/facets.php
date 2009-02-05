@@ -44,7 +44,7 @@ class Facets_Controller extends Template_Controller {
     //Kohana::log('info', "Looks like they are logged in " . $this->user->id . " " . $this->user->username);
     $this->auto_render=false;
     Kohana::log('info', request::method());
-    $facet = new Facet_Model;
+    $facet = new Facet_Model();
     if( request::method() == "get"){
 		
       $this->_get_current($username, $facet);
@@ -118,7 +118,7 @@ class Facets_Controller extends Template_Controller {
   public function weighted($username) {		
 	$this->auto_render=false;
     
-    $facet = new Facet_Model;
+    $facet = new Facet_Model();
     if( request::method() == "get"){
 		
       Kohana::log('info', Kohana::debug($facet->weighted_facets($username)));
@@ -131,7 +131,7 @@ class Facets_Controller extends Template_Controller {
   */
   public function u($username, $facet){
 		$this->auto_render=false;
-		$facetDb = new Facet_Model;
+		$facetDb = new Facet_Model();
 		Kohana::log('info', request::method());
 		if( request::method() == "delete"){
 		  $facetDb->remove_user_facet($username, $facet);

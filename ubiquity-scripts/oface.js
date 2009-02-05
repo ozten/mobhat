@@ -59,41 +59,66 @@ var ofaceObj = {
     }
   },
   processFeedForUrls: function(feed, tab, that){
-    var entries = jQuery('entry link', feed);
+    var entries = jQuery('entry', feed);
     var urls = [];
     entries.each(function(i){
-      var url = jQuery(this).attr('href');      
-      urls.push( {url: url,
-                   id: that.md5(url)});
+      var url = jQuery('link', this).attr('href');
+      var time = jQuery('published', this).text();
+      urls.push( {url: escape(url),
+                   id: that.md5(url),
+                   published: jQuery('published', this).text()});
       });
     return urls;
   },
   feedFacets: function(that, tab, pblock, urls){
-    /*
-    var h = {
-      url: "http://oface.ubuntu/facets/info",
-      method: "post",
-      cache: false, // REMOVE FOR PROD 
-      data: {
+    /* urls [{id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
+    CmdUtils.log(urls);
+    var query = {
         username: 'ozten',
-        urls: urls,
-        dataType: 'html',  //TODO JSON 
-        success: function(data, status){
-          CmdUtils.log('feedFacets success');
-          CmdUtils.log(data);          
-        },
-        error: function(xhr, status, err){
+        urls: urls
+    };
+    var dataPayload = "q=" + Utils.encodeJson(query);
+    CmdUtils.log('Sending ' + dataPayload)
+    var h = {
+      url: 'http://oface.ubuntu/resources/query_facets',
+      type: 'POST',
+      dataType: 'json',
+      cache: false, // REMOVE FOR PROD
+      data: dataPayload,
+      success: function(jsn, status){
+        CmdUtils.log(jsn);
+          if(status == 'success'){
+            var data = [];
+            for(var i=0; i<jsn.length; i++){
+              CmdUtils.log(jsn[i]['facets'][0]['description']);
+              //TODO we are throwing away id, created date
+              data[i] = {
+                facets: [jsn[i]['facets'][0]['description']],
+                url: unescape(jsn[i]['url']) };
+            }
+            that.addOfaceEnabled();
+            that.updateDisplayWithFacets(data, tab, that);
+            var currentFacet = 'art';//TODO
+            //simulate click on facet heading
+            that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0));
+            var missed = jQuery('div.cluster', tab.document).not('.oface');
+            CmdUtils.log("Missed " + missed.length + "items, turning em red");
+            jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');             
+          }
+      },
+      error: function(xhr, status, err){
           CmdUtils.log("Ouch trouble fetching facet info for urls ");
           CmdUtils.log("XHR call status " + status);
           CmdUtils.log(err);
-        },
-        complete: function(){
-          CmdUtils.log("woo");
-        }
+      },
+      complete: function(){
+          CmdUtils.log("woot");
       }
-    };
+  };
+   
+  
     jQuery.ajax(h, tab.document);
-    */
+    /*
     //after async
     var data = urls.slice(0);
     var facets = [["webdev"],["art"],["family"]];
@@ -108,16 +133,9 @@ var ofaceObj = {
         data[i].facets = facets[Math.round(Math.random() * 2)];
       }
     }
+    */
     
-    
-    that.addOfaceEnabled();
-    that.updateDisplayWithFacets(data, tab, that);
-    var currentFacet = 'art';
-    //simulate click on facet heading
-    that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0));
-    var missed = jQuery('div.cluster', tab.document).not('.oface');
-    CmdUtils.log("Missed " + missed.length + "items, turning em red");
-    jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');            
+               
   },
   updateDisplayWithFacets: function(data, tab, that){
     var prevFacet = "";
@@ -284,6 +302,7 @@ var ofaceObj = {
     }
   }
 };
+/*
 function pageLoad_fetchFeedOface(){
   var loc = Application.activeWindow.activeTab.document.location;
   
@@ -293,6 +312,7 @@ function pageLoad_fetchFeedOface(){
   }
 
 }
+*/
 ;(function(){
 
 //Growl displayMessage

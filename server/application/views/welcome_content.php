@@ -22,5 +22,14 @@
 						<button id="all-facets-close">Close</button>
 						</div>				        
 				</div>
+		
+				<div id="facet-reader">
+						<form action="http://oface.ubuntu/resources/query_facets"
+							  method="post">
+								<label for="url"></label>
+								<input id="url" name="url" type="text" />
+								<input type="submit" />
+						</form>
+				</div>
 		</div>
 <script src="/static/js/demo.js" type="text/javascript"></script>
