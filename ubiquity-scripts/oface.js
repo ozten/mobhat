@@ -4,7 +4,7 @@ var divId = 'feed1';
 var oFaceIsEnabled = true;
 var lastSeenFacetHeadings = null;
 var lastHiddenItems = null;
-
+var lastHiddenSubItems = null;
 function ofaceToggler(){
   var $ = jQuery;
   var doc = Application.activeWindow.activeTab.document;
@@ -12,17 +12,24 @@ function ofaceToggler(){
   if(oFaceIsEnabled){
     $('h3#oface-enabler span.status', doc).text("Disabled");
     $('h3#oface-enabler span.current-facet', doc).hide();
-
+    $('#oface-other-facets', doc).hide();
     lastSeenFacetHeadings = $('h4.facet:visible', doc).hide();
+    lastHiddenSubItems = $('.entry:hidden',doc);
     lastHiddenItems = $('div.oface:hidden', doc).show();
     //TODO rename class oface to oface-cluster and add a new one oface-entry
     $('.oface:hidden').show();
+    lastHiddenSubItems.show();
     oFaceIsEnabled = false;
+    
+    
   }else{
     $('h3#oface-enabler span.status', doc).text("Enabled");
     $('h3#oface-enabler span.current-facet', doc).show();
+    $('#oface-other-facets', doc).show();
     lastSeenFacetHeadings.show();
     lastHiddenItems.hide();
+    CmdUtils.log(lastHiddenSubItems);
+    lastHiddenSubItems.hide();
     //TODO finish disabling oface
     oFaceIsEnabled = true;
   }
@@ -97,8 +104,9 @@ var ofaceObj = {
                 url: unescape(jsn[i]['url']) };
             }
             that.addOfaceEnabled();
-            that.updateDisplayWithFacets(data, tab, that);
+            that.updateDisplayWithFacets(data, tab, that);            
             var currentFacet = 'art';//TODO
+            that.updateDisplayWithOtherFacets(data, currentFacet, tab, that);
             //simulate click on facet heading
             that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0));
             var missed = jQuery('div.cluster', tab.document).not('.oface');
@@ -184,7 +192,7 @@ var ofaceObj = {
           if(t) jQuery('span.count', t).text(prevItemCount);
           prevItemCount = 0;
           t = jQuery("<h4 class='facet " + data[i].facets[0] +
-                     "'><span class='facet-name'>" + (data[i].facets[0]) + "</span> <span class='count'>x</span></h4> ", tab.document);
+                     "' style='clear:left'><span class='facet-name'>" + (data[i].facets[0]) + "</span> <span class='count'>x</span></h4> ", tab.document);
           t.css({
              'class': 'toggler',
             'border': 'solid 1px grey',
@@ -202,6 +210,35 @@ var ofaceObj = {
         CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
       } //if(a.length == 1){
     } // for(var i=0; i < data.length; i++){
+  },
+  updateDisplayWithOtherFacets: function(data, currentFacet, tab, that){
+    var facets = [];
+    var counts = [];
+    for (var i=0; i< data.length; i++){
+      var facet = data[i].facets[0];
+      var facetIndex = facets.indexOf(facet);
+      if (facetIndex == -1) {
+        facets[facets.length] = facet;
+        counts[counts.length] = 1;
+      } else {
+        counts[facetIndex] += 1;
+      }
+    }
+    jQuery('#oface-other-facets', tab.document).append("<li style='display: inline; margin-right: 0.2em'>Other Facets:</li>");
+    for (var i=0; i< facets.length; i++){
+      
+      var li = jQuery("<li class='oface-enabler-" + facets[i] + "-other' style='display: inline; margin-right: 2em'><span class='facet-name'>" + facets[i] +
+                                                         "</span> <span class='count'>" + counts[i] + "</span></li>", tab.document);
+      li.click(that.switchFacetDisplay);
+      jQuery('#oface-other-facets', tab.document).append(li);
+      
+    }
+    that.switchDisplayWithOtherFacets(currentFacet, tab);
+    //hide currentFacet
+  },
+  switchDisplayWithOtherFacets: function(currentFacet, tab){
+    jQuery('#oface-other-facets li:hidden', tab.document).show();
+    jQuery('#oface-other-facets .oface-enabler-' + currentFacet + "-other", tab.document).hide();
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
     var cluster = element;//.parent();
@@ -232,7 +269,7 @@ var ofaceObj = {
     /**
      * this - is the 6.toggler the user clicked
     */
-    
+    CmdUtils.log(this);
     var doc = Application.activeWindow.activeTab.document;    
     var facet = jQuery('span.facet-name', this).text();
     
@@ -253,7 +290,9 @@ var ofaceObj = {
     
     //jQuery('div.cluster', doc).not('.oface').hide('slow');
     
-    
+    //TODO call switchDisplayWithOtherFacets
+    jQuery('#oface-other-facets li:hidden', doc).show();
+    jQuery('#oface-other-facets .oface-enabler-' + facet + "-other", doc).hide();
     
   },
   md5: function(str){
@@ -289,7 +328,8 @@ var ofaceObj = {
     var $ = jQuery;
     var doc = Application.activeWindow.activeTab.document;
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
-      var ofaceEnabler = $("<h3 id='oface-enabler' title='Click to Change'>Oface is " +
+       $('#feed1', doc).prepend($("<ul id='oface-other-facets' style='float: left; list-style-type: none;'></ul>", doc));
+      var ofaceEnabler = $("<h3 id='oface-enabler' style='width: 300px; float: left' title='Click to Change'>Oface is " +
                            "<span class='status'>Enabled</span> " +
                            "<span class='current-facet'>webdev</span>" +
                            "</h3>", doc)

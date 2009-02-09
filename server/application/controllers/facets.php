@@ -47,7 +47,7 @@ class Facets_Controller extends Template_Controller {
     $facet = new Facet_Model();
     if( request::method() == "get"){
 		
-      $this->_get_current($username, $facet);
+      echo json_encode($this->_get_current($username, $facet));
     }else if(request::method() == "put"){
       
       $putdata = fopen("php://input", "r");
@@ -58,7 +58,7 @@ class Facets_Controller extends Template_Controller {
 	  Kohana::log('info', $thedata);
 	  $newFacets = json_decode($thedata);
 	  Kohana::log('info', 'decoded json is ' . Kohana::debug($newFacets));
-	  $proof = $this->proof($newFacets);
+	  $proof = $this->proof($newFacets, $username, $facet);
 	  if($proof[0]){
 		Kohana::log('info', Kohana::debug($newFacets));
         $this->_set_current($username, $newFacets, $facet);
@@ -67,15 +67,18 @@ class Facets_Controller extends Template_Controller {
 	  }
     }
   }
-  
+  /**
+   * prints out the current facets
+   */
   public function _get_current($username, $facet){
-    echo json_encode($facet->current_facets($username));
+		//Kohana::log('info', "About to call get_current");
+    return $facet->current_facets($username);
   }
   
   /**
    * returns an array [success, errorMessage]
    */
-  public function proof(&$newFacets){
+  public function proof(&$newFacets, $username, $facetModel){
     if(is_array($newFacets)){
       $newFacets = array_unique($newFacets);
       for($i = 0; $i < count($newFacets); $i++){
@@ -87,7 +90,12 @@ class Facets_Controller extends Template_Controller {
 		}
 	  }
 	  if( count($newFacets) > 0 ){
-	    return array(true, "");
+		if ($this->_newFacetsAreSameAsCurrent($newFacets, $username, $facetModel)) {
+			header('http_response_code', true, 400);
+			return array(true, "");
+		} else {
+		    return array(true, "");		
+		}
 	  }else{
 		//Bad Request
 		header('http_response_code', true, 400);
@@ -105,9 +113,24 @@ class Facets_Controller extends Template_Controller {
 	}
   }
   
-  public function _set_current($username, $newFacets, $model){
-    Kohana::log('info', "Still Got this far... dong put" . Kohana::debug($newFacets));
-    //$newFacets = json_decode(@file_get_contents("php://input"));
+    private function _newFacetsAreSameAsCurrent($newFacets, $username, $facetModel)
+    {
+		Kohana::log('info', "new facets " . Kohana::debug($newFacets));
+		$cur = $this->_get_current($username, $facetModel);
+		Kohana::log('info', "Current facets " . Kohana::debug($cur));
+		if (count($newFacets) != count($cur)) {
+			return false;	
+		}
+		foreach ($newFacets as $i => $facet) {
+		    if (array_search($facet, $cur) == false) {
+				return false;
+			}
+		}
+		return true;
+    }
+  
+  public function _set_current($username, $newFacets, $model)
+  {
     $model->set_facets($username, $newFacets);
     echo json_encode($model->current_facets($username));
   }

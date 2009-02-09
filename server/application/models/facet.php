@@ -12,6 +12,11 @@ class Facet_Model extends Model {
                               "JOIN facets_user ON facets.id = facets_user.facet_id " .
                               "WHERE facets_user.username = '" . $username . "' AND " .
                               "  facets_user.end_date IS NULL");
+    Kohana::log('info', "SELECT facets.id, facets.description, facets.created " .
+                              "FROM facets " .
+                              "JOIN facets_user ON facets.id = facets_user.facet_id " .
+                              "WHERE facets_user.username = '" . $username . "' AND " .
+                              "  facets_user.end_date IS NULL");
     return $query->result_array(FALSE);
   }
   public function weighted_facets($username){
@@ -21,6 +26,7 @@ class Facet_Model extends Model {
            "WHERE username = '$username' " .
            "GROUP BY facet_id  " .
            "ORDER BY weight DESC ";
+    
     return $this->db->query($sql)->result_array(FALSE);
   }
   
