@@ -23,13 +23,13 @@ class Auth_Demo_Controller extends Template_Controller {
   {
     // Display the install page
     $this->template->title   = 'Auth Module Installation';
-    $this->template->content = View::factory('auth/install');
+    $this->template->content = View::factory('auth_demo/install');
   }
 
   public function create()
   {
     $this->template->title = 'Create User';
-    $this->template->content = View::factory('auth/create');
+    $this->template->content = View::factory('auth_demo/create');
 
   }
   public function save()
@@ -50,7 +50,7 @@ class Auth_Demo_Controller extends Template_Controller {
   public function login_form()
   {
     $this->template->title = "User Login Form";
-    $this->template->content = View::factory('auth/login_form');
+    $this->template->content = View::factory('auth_demo/login_form');
   }
 
   public function login()
@@ -59,21 +59,21 @@ class Auth_Demo_Controller extends Template_Controller {
     if (Auth::instance()->logged_in())
     {
       $this->template->title = 'User Logout';
-      $this->template->content = View::factory('auth/success');
+      $this->template->content = View::factory('auth_demo/success');
     }else{
       $this->template->title = 'User Login';
 
       // Load the user
       $user = ORM::factory('user', $this->input->post("username"));
 
-      if (Auth::instance()->login($user, $this->input->post("password")))
+      if (Auth::instance()->login($user, $this->input->post("password"), true))
       {
         // Login successful, redirect
         url::redirect($this->session->get("requested_url"));
 
-        $this->template->content = View::factory('auth/success');        
+        $this->template->content = View::factory('auth_demo/success');        
       } else {
-        $this->template->content = View::factory('auth/fail');
+        $this->template->content = View::factory('auth_demo/fail');
       }
     }
   }

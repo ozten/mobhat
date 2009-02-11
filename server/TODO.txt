@@ -1,7 +1,9 @@
 = TODO =
+  = Deployment TODO =
+  Delete examples controller
+  
   = Server APIs =
   There should be a facet audit trail?
-  
   
   facets
   
@@ -26,7 +28,6 @@
   total time in facet
   total # of times choosing a facet
   time of day
-  
   
   facets/current/username
   

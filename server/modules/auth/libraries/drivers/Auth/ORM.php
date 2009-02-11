@@ -91,6 +91,7 @@ class Auth_ORM_Driver extends Auth_Driver {
 		{
 			if ($remember === TRUE)
 			{
+				
 				// Create a new autologin token
 				$token = ORM::factory('user_token');
 
@@ -147,15 +148,16 @@ class Auth_ORM_Driver extends Auth_Driver {
 			$token = ORM::factory('user_token', $token);
 
 			if ($token->loaded AND $token->user->loaded)
-			{
+			{				
 				if ($token->user_agent === sha1(Kohana::$user_agent))
 				{
+					
 					// Save the token to create a new unique token
 					$token->save();
 
 					// Set the new token
 					cookie::set('authautologin', $token->token, $token->expires - time());
-
+					
 					// Complete the login with the found data
 					$this->complete_login($token->user);
 

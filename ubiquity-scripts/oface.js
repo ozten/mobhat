@@ -39,7 +39,8 @@ var ofaceObj = {
   name: "fetch-feed-oface",
   xenv: "http://friendfeed.com",
   env: "http://oface.ubuntu/static/test_files/",
-  preview: function(pblock, input){    
+  preview: function(pblock, input){
+    CmdUtils.log("preview");
     var tab = Application.activeWindow.activeTab;
     var url = this.env + jQuery('link[type=application/atom+xml]', tab.document).attr('href');
     var that = this;
@@ -407,7 +408,55 @@ CmdUtils.CreateCommand({
 
 
 CmdUtils.CreateCommand(ofaceObj);
+//Short term FriendFeed Specific stuff
+//Important for proof of concept, not how real service would work
+var ofaceWhatPageIsThis = {
+  name: "what-page-is-this-oface",
+  preview: function(pblock, input){
+    var doc = Application.activeWindow.activeTab.document;
+    //TODO hard code local filenames with their production equivilent?
+    CmdUtils.log(this.pageType(doc.location.href));
+    CmdUtils.log(Application.activeWindow);
+  },
+  HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
+  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+$/,
+  LIST_PAGE: "list",            LIST_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/list\/(\w)+$/,
+  ROOMS_LIST_PAGE: "roomslist", ROOMS_LIST_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms$/,
+  ROOM_PAGE: "room",            ROOM_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/(\w)+$/,
+  EVERYONE_PAGE: "everyone",    EVERYONE_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/public$/,
+  //A User's Profile plus their friends
+  FRIENDS_PAGE: "profilewfriends", FRIENDS_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/friends$/,
+  UNKNOWN_PAGE: "unknown",
+  pageType: function(url){
+    if(       this.HOME_REGEX.test(url)){
+      return  this.HOME_PAGE;
+    } else if(this.LIST_REGEX.test(url)) {
+      return  this.LIST_PAGE;
+    } else if(this.ROOMS_LIST_REGEX.test(url)) {
+      return  this.ROOMS_LIST_PAGE;
+    } else if(this.ROOM_REGEX.test(url)) {
+      return  this.ROOM_PAGE;
+    } else if(this.EVERYONE_REGEX.test(url)) {
+      return  this.EVERYONE_PAGE;
+    } else if(this.FRIENDS_REGEX.test(url)){
+      return  this.FRIENDS_PAGE;
+    } else if(this.PROFILE_REGEX.test(url)){
+      return  this.PROFILE_PAGE;
+    } else {
+      return this.UNKNOWN_PAGE;
+    }
+    
+    //Known unknowns
+    // Linkable Urls
+    // USER_COMMENTS_PAGE /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/comments$/
+    // USER_LIKES_PAGE   /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/likes$/
+    // USER_DISCUSSION /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/discussion$/
+    
+    CmdUtils.log(url);
+    
+  }
+}
 
-
+CmdUtils.CreateCommand(ofaceWhatPageIsThis);
 
 })();

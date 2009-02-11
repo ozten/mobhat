@@ -92,3 +92,9 @@ CREATE TABLE facets_urls (
     CONSTRAINT facets_urls_url_fk FOREIGN KEY (url_fk) REFERENCES urls (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `kohana_session` (
+  `session_id` varchar(40) NOT NULL,
+  `last_activity` int(10) UNSIGNED NOT NULL,
+  `data` text NOT NULL,
+  PRIMARY KEY (`session_id`)
+)
