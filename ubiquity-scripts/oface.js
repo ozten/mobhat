@@ -416,7 +416,7 @@ var ofaceWhatPageIsThis = {
     var doc = Application.activeWindow.activeTab.document;
     //TODO hard code local filenames with their production equivilent?
     CmdUtils.log(this.pageType(doc.location.href));
-    CmdUtils.log(Application.activeWindow);
+    CmdUtils.log("Supported? " + this.isSupportedPage(this.pageType(doc.location.href)))
   },
   HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
   PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+$/,
@@ -451,9 +451,13 @@ var ofaceWhatPageIsThis = {
     // USER_COMMENTS_PAGE /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/comments$/
     // USER_LIKES_PAGE   /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/likes$/
     // USER_DISCUSSION /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/discussion$/
-    
-    CmdUtils.log(url);
-    
+  },
+  isSupportedPage: function(pageType){
+    if(pageType == this.UNKNOWN_PAGE){
+      return false;
+    }
+    return [this.HOME_PAGE, this.PROFILE_PAGE, this.LIST_PAGE, this.ROOMS_LIST_PAGE,
+            this.ROOM_PAGE, this.EVERYONE_PAGE, this.FRIENDS_PAGE].indexOf(pageType) != -1;
   }
 }
 
