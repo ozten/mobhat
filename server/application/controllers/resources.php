@@ -51,8 +51,7 @@ class Resources_Controller extends Template_Controller
             //TODO url_decode each url before using...
             Kohana::log('info', Kohana::debug($items));
             
-            $username = $query['username'];
-            
+            $username = $query['username'];            
             foreach($items as $i => $item){
                 $date = $item['published'];
                 Kohana::log('info', Kohana::debug(date_parse($item['published'])));

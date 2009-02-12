@@ -38,20 +38,32 @@ function ofaceToggler(){
 
 var ofaceObj = {
   name: "fetch-feed-oface",
-  xenv: "http://friendfeed.com",
-  env: "http://oface.ubuntu/static/test_files/",
+  env: "http://friendfeed.com",
+  testenv: "http://oface.ubuntu/static/test_files/",
+  envFor: function(url){
+    CmdUtils.log(url);
+    if (/.*oface\.ubuntu.*/.test(url)){
+      return this.testenv;
+    } else {
+      return this.env;
+    }
+  },
   preview: function(pblock, input){
-    var tab = Application.activeWindow.activeTab;
-    var url = this.env + jQuery('link[type=application/atom+xml]', tab.document).attr('href');
+    var tab = Application.activeWindow.activeTab;    
+    var url = this.envFor(tab.document.location.href) + jQuery('link[type=application/atom+xml]', tab.document).attr('href');
+    CmdUtils.log('URL=' + url);
     var that = this;
     
     page = Oface.WhatPageIsThis.really.call(Oface.WhatPageIsThis);
-    if (page.isKnown) {
+    if (! page.isKnown) {
       CmdUtils.log("Unknown page type... Skipping");
     } else {
       if (page.type !== Oface.WhatPageIsThis.PROFILE_PAGE){
         CmdUtils.log("Page type " + page.type + " Skipping");
       } else {
+        var username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
+        CmdUtils.log("Dealing with username: " + username)
+        
         var h = {
             url: url,
             success: function(data, status){
@@ -59,7 +71,7 @@ var ofaceObj = {
               CmdUtils.log(data);
               var urls = that.processFeedForUrls(data.documentElement, tab, that);
               CmdUtils.log(urls);
-              that.getFacetsForUser(that, tab, pblock, 'ozten', urls);          
+              that.getFacetsForUser(that, tab, pblock, username, urls);          
             },
             error: function(xhr, status, err){
               CmdUtils.log("Ouch trouble fetching the feed " + url);
@@ -67,6 +79,7 @@ var ofaceObj = {
               CmdUtils.log(err);
             }
           };
+        
         jQuery.ajax(h, tab);
         if(pblock){
           pblock.innerHTML = "Loading";
@@ -118,7 +131,7 @@ var ofaceObj = {
             var currentFacet = 'art';//TODO
             that.updateDisplayWithOtherFacets(data, currentFacet, tab, that);
             //simulate click on facet heading
-            that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0));
+            that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0), aUsername);
             var missed = jQuery('div.cluster', tab.document).not('.oface');
             CmdUtils.log("Missed " + missed.length + "items, turning em red");
             jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');             
@@ -275,16 +288,16 @@ var ofaceObj = {
       return cluster.hasClass(containerClassName);
       });    
   },
-  switchFacetDisplay: function(){
+  switchFacetDisplay: function(username){
     /**
      * this - is the 6.toggler the user clicked
     */
-    CmdUtils.log(this);
+    CmdUtils.log("switchFacetDisplay(" + username + ")");
     var doc = Application.activeWindow.activeTab.document;    
     var facet = jQuery('span.facet-name', this).text();
     
     jQuery.ajax({
-                        url: 'http://oface.ubuntu/facets/current/ozten',
+                        url: 'http://oface.ubuntu/facets/current/' + username,
                         type: 'PUT',
                         data: '["' + facet + '"]',
                         dataType: "json"                        
@@ -433,24 +446,26 @@ Oface.WhatPageIsThis = {
      * pageType - One of the _PAGE constants from this object like PROFILE_PAGE
     */
     var doc = Application.activeWindow.activeTab.document;
-    var aPageType = this.pageType(doc.location.href);
-    return {isKnown:  this.isSupportedPage(aPageType),
-            type: aPageType};
-  },
-  HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
-  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+$/,
-  LIST_PAGE: "list",            LIST_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/list\/(\w)+$/,
-  ROOMS_LIST_PAGE: "roomslist", ROOMS_LIST_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms$/,
-  ROOM_PAGE: "room",            ROOM_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/(\w)+$/,
-  EVERYONE_PAGE: "everyone",    EVERYONE_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/public$/,
-  //A User's Profile plus their friends
-  FRIENDS_PAGE: "profilewfriends", FRIENDS_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/friends$/,
-  UNKNOWN_PAGE: "unknown",
-  pageType: function(url){
+    var url = doc.location.href;
     //TODO 
     if (url == "http://oface.ubuntu/static/test_files/ff-pattyok.html") {
       url = "http://friendfeed.com/pattyok";
     }
+    var aPageType = this.pageType(url);
+    return {isKnown:  this.isSupportedPage(aPageType),
+            type: aPageType,
+            url: url};
+  },
+  HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
+  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)$/,
+  LIST_PAGE: "list",            LIST_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/list\/(\w+)$/,
+  ROOMS_LIST_PAGE: "roomslist", ROOMS_LIST_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms$/,
+  ROOM_PAGE: "room",            ROOM_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/(\w+)$/,
+  EVERYONE_PAGE: "everyone",    EVERYONE_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/public$/,
+  //A User's Profile plus their friends
+  FRIENDS_PAGE: "profilewfriends", FRIENDS_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)\/friends$/,
+  UNKNOWN_PAGE: "unknown",
+  pageType: function(url){    
     if(       this.HOME_REGEX.test(url)){
       return  this.HOME_PAGE;
     } else if(this.LIST_REGEX.test(url)) {
@@ -471,10 +486,24 @@ Oface.WhatPageIsThis = {
     
     //Known unknowns
     // Linkable Urls
-    // USER_COMMENTS_PAGE /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/comments$/
-    // USER_LIKES_PAGE   /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/likes$/
-    // USER_DISCUSSION /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/discussion$/
+    // USER_COMMENTS_PAGE /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)\/comments$/
+    // USER_LIKES_PAGE   /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)\/likes$/
+    // USER_DISCUSSION /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)\/discussion$/
     // SEARCH http://friendfeed.com/search?required=q&q=lisp&friends=ozten
+  },
+  getUsername: function(url, pageType){
+    if (pageType === this.PROFILE_PAGE) {
+      var match = this.PROFILE_REGEX.exec(url);
+      if (match.length == 2) {
+        return match[1];
+      } else {
+        CmdUtils.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ");
+        CmdUtils.log(match);
+      }
+    } else {
+      CmdUtils.log("ERROR: getUsername(" + url + ", " + pageType + " called. Expected a PROFILE_PAGE types instead.");
+    }
+    
   },
   isSupportedPage: function(pageType){
     if(pageType == this.UNKNOWN_PAGE){

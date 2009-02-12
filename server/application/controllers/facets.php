@@ -40,7 +40,7 @@ class Facets_Controller extends Template_Controller {
   /**
    $.ajax( {url:'/facets/current/ozten', type:'PUT', data: JSON.stringify(["AllMyFriends", "You"])} ); 
    */
-  public function current($username) {
+  public function current($username) {		
     //Kohana::log('info', "Looks like they are logged in " . $this->user->id . " " . $this->user->username);
     $this->auto_render=false;
     Kohana::log('info', request::method());
