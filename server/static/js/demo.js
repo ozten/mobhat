@@ -8,23 +8,23 @@ Oface.Models = Oface.Models || {};
 */
 Oface.Models.Facet = Oface.Models.Facet || {
         currentFacets: [],
-        allFacets: [],
-
-        /* internal */
+        allFacets: [],        
         updateCurrent: function(newFacets) {
                 this.currentFacets = newFacets;
                 if (this.allFacets.length == 0) {
                         allFacets = newFacets.slice();
+                        //TODO rename isCurrent to arrayContainsByKey
+                } else {
+                        for(var i=0; i<newFacets.length; i++){
+                            if( ! this.isCurrent(newFacets[i], this.allFacets)){                                      
+                                this.allFacets[this.allFacets.length] = newFacets[i];                                
+                            }
+                        }
                 }
-                //TODO add newFacets to allFacets if they don't exist...
-        },
-        /* internal */
+        },        
         updateAll: function(newFacets) {
                 this.allFacets = newFacets;
-                
-                
         },
-
         isCurrent: function(needle, haystack) {
                 for (var i = 0; i < haystack.length; i++) {
                         if (needle['id'] == haystack[i]['id']) {
@@ -33,15 +33,16 @@ Oface.Models.Facet = Oface.Models.Facet || {
                 }
                 return false;
         },
-        facetsChosen: function(facets, forTheWin, fail) {
-                /* Takes a single facet and persists it
-        * facets - array of strings
-        * forTheWin - callback when successfull. Called with json, status
-        * fail - callback when there was an error. Called with xhr, msg, exception
-        */
-
+        /**
+         * Takes a single facet and persists it
+         * @param username {string} - username that we should update
+         * @param facets {array} of facets
+         * @param forTheWin {function} - callback when successfull. Called with json, status
+         * @param fail {function} - callback when there was an error. Called with xhr, msg, exception
+         */
+        facetsChosen: function(username, facets, forTheWin, fail) {
                 $.ajax({
-                        url: '/facets/current/ozten',
+                        url: '/facets/current/' + username,
                         type: 'PUT',
                         data: JSON.stringify(facets),
                         dataType: "json",
@@ -49,29 +50,29 @@ Oface.Models.Facet = Oface.Models.Facet || {
                         error: fail
                 });
         },
+        /**
+         * Removes the facet from the user
+         * @param username {string} the username
+         * @param facet {array} of facets
+         */
         removeUserFacet: function(username, facet) {
-                //Don't let overall LI think we want to switch to this facets...
                 $.ajax({
                         url: '/facets/u/' + username + '/' + facet,
                         type: 'DELETE'
                 });
-
                 function notTheFacet(aFacet, index) {
                         return aFacet['description'] != facet;
                 }
                 this.currentFacets = $.grep(this.currentFacets, notTheFacet);
-                this.allFacets = $.grep(this.allFacets, notTheFacet);
-
-                Oface.Views.Facet.showCurrent();
-                Oface.Views.Facet.showAll();
+                this.allFacets = $.grep(this.allFacets, notTheFacet);                
         }
 }; //End Oface.Models.Facet
+
 Oface.Views = Oface.Views || {};
 /** view
  *   Mostly in HTML this is the bits of code to manipulate the view
  */
 Oface.Views.Facet = Oface.Views.Facet || {
-        foo: 'Bar',
         showAll: function() {
                 var currentFacets = Oface.Models.Facet.currentFacets;
                 var allFacets = Oface.Models.Facet.allFacets;
@@ -85,10 +86,8 @@ Oface.Views.Facet = Oface.Views.Facet || {
                         li.bind('click', allFacets[i], Oface.Controllers.Facet.handleswitcherFacetlist);
                         if (Oface.Models.Facet.isCurrent(allFacets[i], currentFacets)) {
                                 cli = li.addClass("current").find('.remove-facet-a').hide();
-                                console.info("Yes, is current");
                         } else {
                                 li.find('.remove-facet-a').show();
-                                console.info("No not current " + allFacets[i]);
                         }
                         //li.text(allFacets[i]['description']);
                         li.find('.facetitem').text(allFacets[i]['description']);
@@ -97,6 +96,8 @@ Oface.Views.Facet = Oface.Views.Facet || {
                         },
                         function(event) {
                                 Oface.Models.Facet.removeUserFacet('ozten', event.data.facet);
+                                Oface.Views.Facet.showCurrent();
+                                Oface.Views.Facet.showAll();
                                 return false;
                         });
                         $('#switcher-facetlist').append(li);
@@ -108,6 +109,9 @@ Oface.Views.Facet = Oface.Views.Facet || {
                         'left': p.left
                 });
                 $('#all-facets').show();
+        },
+        hideAll: function(){
+                $('#all-facets').hide();
         },
         showCurrent: function() {
                 var currentFacets = Oface.Models.Facet.currentFacets;
@@ -121,13 +125,10 @@ Oface.Views.Facet = Oface.Views.Facet || {
                         li.text(currentFacets[i]['description']);
                         $('#switcher-current-facets').append(li);
                 }
-                $('#switcher-current-facets li').click(this.showAll);
-                
+                $('#switcher-current-facets li').click(this.showAll);                
         }
-
 }; //END Oface.Views.Facet
 Oface.Util = Oface.Util || {
-
         noOp: function(event) {
                 //no op
         }
@@ -135,31 +136,26 @@ Oface.Util = Oface.Util || {
 /* Controller */
 Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.Facet = Oface.Controllers.Facet || {
+        username: "Unknown",
         chooseFacetCallback: function(json, status) {
-                console.info(json);
-                console.info(status);
                 Oface.Models.Facet.updateCurrent(json);
-                Oface.Views.Facet.showCurrent();
-                console.info("done");
+                Oface.Views.Facet.showCurrent();                                
+                Oface.Views.Facet.hideAll();
         },
         handleswitcherFacetlist: function(event) {
                 that = this;
                 var data = event.data;
-                console.info("facetChosen event");
-                console.info(data);
-                Oface.Models.Facet.facetsChosen([data['description']], Oface.Controllers.Facet.chooseFacetCallback, Oface.Util.noOp);
-                $('#all-facets').hide();
+                Oface.Models.Facet.facetsChosen(Oface.Controllers.Facet.username, [data['description']], Oface.Controllers.Facet.chooseFacetCallback, Oface.Util.noOp);                
         },
-
         switchinputHandler: function() {
-                Oface.Models.Facet.facetsChosen($('#switchinput').attr('value').split(','), Oface.Controllers.Facet.chooseFacetCallback, Oface.Util.noOp);
-                
+                Oface.Models.Facet.facetsChosen(event.data.username, $('#switchinput').attr('value').split(','), Oface.Controllers.Facet.chooseFacetCallback, Oface.Util.noOp);                
         },
         allFacetsCloseHandler: function() {
-                $('#all-facets').hide();
+                Oface.Views.Facet.hideAll();
         }
 } // END Oface.Controllers.Facet 
 $(document).ready(function() {
+        Oface.Controllers.Facet.username = 'ozten';
         $.get('/facets/current/ozten', {},
         function(json) {
                 Oface.Models.Facet.updateCurrent(json);
@@ -173,8 +169,8 @@ $(document).ready(function() {
                 //Oface.Views.Facet.showAll();
         },
         "json");
+        var context = {username: 'ozten'};
         /* add behaviors */
-        $('#switchinput').bind('blur', Oface.Controllers.Facet.switchinputHandler);
-        $('#all-facets-close').bind('click', Oface.Controllers.Facet.allFacetsCloseHandler);
-        
+        $('#switchinput').bind('blur', context, Oface.Controllers.Facet.switchinputHandler);
+        $('#all-facets-close').bind('click', context, Oface.Controllers.Facet.allFacetsCloseHandler);        
 });

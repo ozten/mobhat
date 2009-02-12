@@ -38,7 +38,7 @@ class Facets_Controller extends Template_Controller {
   public $template = 'kohana/template';
 
   /**
-   $.ajax( {url:'/facets/current/ozten', type:'PUT', data: JSON.stringify(["AllMyFriends", "You"])} ); 
+   $.ajax( {url:'/facets/current/ozten', type:'PUT', data: JSON.stringify(["AllMyFriends", "AndYouGary"])} ); 
    */
   public function current($username) {		
     //Kohana::log('info', "Looks like they are logged in " . $this->user->id . " " . $this->user->username);
