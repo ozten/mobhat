@@ -1,4 +1,5 @@
 ;
+var Oface = Oface || {};
 
 var divId = 'feed1';
 var oFaceIsEnabled = true;
@@ -40,30 +41,38 @@ var ofaceObj = {
   xenv: "http://friendfeed.com",
   env: "http://oface.ubuntu/static/test_files/",
   preview: function(pblock, input){
-    CmdUtils.log("preview");
     var tab = Application.activeWindow.activeTab;
     var url = this.env + jQuery('link[type=application/atom+xml]', tab.document).attr('href');
     var that = this;
-    var h = {
-        url: url,
-        success: function(data, status){
-          CmdUtils.log("atom feed XHR call status " + status);
-          CmdUtils.log(data);
-          //CmdUtils.log('sucessfully fetched feed');
-          var urls = that.processFeedForUrls(data.documentElement, tab, that);
-          CmdUtils.log(urls);
-          that.feedFacets(that, tab, pblock, urls);
-          //CmdUtils.log(urls);          
-        },
-        error: function(xhr, status, err){
-          CmdUtils.log("Ouch trouble fetching the feed " + url);
-          CmdUtils.log("XHR call status " + status);
-          CmdUtils.log(err);
+    
+    page = Oface.WhatPageIsThis.really.call(Oface.WhatPageIsThis);
+    if (page.isKnown) {
+      CmdUtils.log("Unknown page type... Skipping");
+    } else {
+      if (page.type !== Oface.WhatPageIsThis.PROFILE_PAGE){
+        CmdUtils.log("Page type " + page.type + " Skipping");
+      } else {
+        var h = {
+            url: url,
+            success: function(data, status){
+              CmdUtils.log("atom feed XHR call status " + status);
+              CmdUtils.log(data);
+              var urls = that.processFeedForUrls(data.documentElement, tab, that);
+              CmdUtils.log(urls);
+              that.getFacetsForUser(that, tab, pblock, 'ozten', urls);          
+            },
+            error: function(xhr, status, err){
+              CmdUtils.log("Ouch trouble fetching the feed " + url);
+              CmdUtils.log("XHR call status " + status);
+              CmdUtils.log(err);
+            }
+          };
+        jQuery.ajax(h, tab);
+        if(pblock){
+          pblock.innerHTML = "Loading";
         }
-      };
-    jQuery.ajax(h, tab);
-    if(pblock){
-      pblock.innerHTML = "Loading";
+    
+      }
     }
   },
   processFeedForUrls: function(feed, tab, that){
@@ -78,15 +87,15 @@ var ofaceObj = {
       });
     return urls;
   },
-  feedFacets: function(that, tab, pblock, urls){
+  getFacetsForUser: function(that, tab, pblock, aUsername, urls){
     /* urls [{id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     CmdUtils.log(urls);
     var query = {
-        username: 'ozten',
+        username: aUsername,
         urls: urls
     };
     var dataPayload = "q=" + Utils.encodeJson(query);
-    CmdUtils.log('Sending ' + dataPayload)
+    
     var h = {
       url: 'http://oface.ubuntu/resources/query_facets',
       type: 'POST',
@@ -408,15 +417,25 @@ CmdUtils.CreateCommand({
 
 
 CmdUtils.CreateCommand(ofaceObj);
+
 //Short term FriendFeed Specific stuff
 //Important for proof of concept, not how real service would work
-var ofaceWhatPageIsThis = {
+Oface.WhatPageIsThis = {
   name: "what-page-is-this-oface",
   preview: function(pblock, input){
     var doc = Application.activeWindow.activeTab.document;
-    //TODO hard code local filenames with their production equivilent?
-    CmdUtils.log(this.pageType(doc.location.href));
-    CmdUtils.log("Supported? " + this.isSupportedPage(this.pageType(doc.location.href)))
+    pblock.innerHTML = "Supported? <b>" + this.isSupportedPage(this.pageType(doc.location.href)) +
+      "</b> type=<b>" + this.pageType(doc.location.href) + "</b>";
+  },
+  really: function(){
+    /**
+     * @returns {array} A two item array, [true/false, pageType]
+     * pageType - One of the _PAGE constants from this object like PROFILE_PAGE
+    */
+    var doc = Application.activeWindow.activeTab.document;
+    var aPageType = this.pageType(doc.location.href);
+    return {isKnown:  this.isSupportedPage(aPageType),
+            type: aPageType};
   },
   HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
   PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+$/,
@@ -428,6 +447,10 @@ var ofaceWhatPageIsThis = {
   FRIENDS_PAGE: "profilewfriends", FRIENDS_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/friends$/,
   UNKNOWN_PAGE: "unknown",
   pageType: function(url){
+    //TODO 
+    if (url == "http://oface.ubuntu/static/test_files/ff-pattyok.html") {
+      url = "http://friendfeed.com/pattyok";
+    }
     if(       this.HOME_REGEX.test(url)){
       return  this.HOME_PAGE;
     } else if(this.LIST_REGEX.test(url)) {
@@ -451,6 +474,7 @@ var ofaceWhatPageIsThis = {
     // USER_COMMENTS_PAGE /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/comments$/
     // USER_LIKES_PAGE   /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/likes$/
     // USER_DISCUSSION /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w)+\/discussion$/
+    // SEARCH http://friendfeed.com/search?required=q&q=lisp&friends=ozten
   },
   isSupportedPage: function(pageType){
     if(pageType == this.UNKNOWN_PAGE){
@@ -461,6 +485,6 @@ var ofaceWhatPageIsThis = {
   }
 }
 
-CmdUtils.CreateCommand(ofaceWhatPageIsThis);
+CmdUtils.CreateCommand(Oface.WhatPageIsThis);
 
 })();

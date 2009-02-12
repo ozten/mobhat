@@ -33,6 +33,8 @@
 				</div>
 		</div>
 <script src="/static/js/demo.js" type="text/javascript"></script>
+<h2>Test Pages</h2>
+<a href="/static/test_files/ff-pattyok.html">Dev page pattyok FriendFeed</a>
 <h2>Other APIs</h2>
 <h3>WhoAmI</h3>
 <p><a href="/users/whoami">/users/whoami</a> - Detects a logged in user and returns a UserInfo resource.

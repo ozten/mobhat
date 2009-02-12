@@ -60,7 +60,7 @@ class Resources_Controller extends Template_Controller
                 if (count($facets) > 0) {
                     $items[$i]['facets'] = $facets;
                 } else {
-                    $items[$i]['facets'] = $this->facetDb->current_facets('ozten');
+                    $items[$i]['facets'] = $this->facetDb->current_facets($username);
                 }
             }
             echo json_encode($items);
