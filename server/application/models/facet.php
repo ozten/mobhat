@@ -100,6 +100,7 @@ class Facet_Model extends Model {
                "WHERE user_id = $userId AND " .
                "'$time' BETWEEN start_date AND end_date OR " .
                "start_date <  '$time' AND end_date IS NULL";
+        Kohana::log('info', $sql);
         return $this->db->query($sql)->result_array(FALSE);
     }
 }

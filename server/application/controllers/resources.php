@@ -51,15 +51,24 @@ class Resources_Controller extends Template_Controller
             //TODO url_decode each url before using...
             Kohana::log('info', Kohana::debug($items));
             
-            $username = $query['username'];            
-            foreach($items as $i => $item){
-                $date = $item['published'];
-                Kohana::log('info', Kohana::debug(date_parse($item['published'])));
-                $facets = $this->facetDb->facetsDuring(6, $date);
-                if (count($facets) > 0) {
-                    $items[$i]['facets'] = $facets;
-                } else {
-                    $items[$i]['facets'] = $this->facetDb->current_facets($username);
+            $username = $query['username'];
+            Kohana::log('info', $username);
+            Kohana::log('info', Kohana::debug($username));
+            $userId = $this->_userId($username);
+            if( $userId <= 0 ) {
+                //TODO if request is for one unknown user... send a 404
+                header('http_response_code', true, 404);
+            } else {
+                $currentFacets = $this->facetDb->current_facets($username);
+            
+                foreach($items as $i => $item){
+                    $date = $item['published'];                
+                    $facets = $this->facetDb->facetsDuring($userId, $date);
+                    if (count($facets) > 0) {
+                        $items[$i]['facets'] = $facets;
+                    } else {
+                        $items[$i]['facets'] = $currentFacets;
+                    }
                 }
             }
             echo json_encode($items);
@@ -68,6 +77,12 @@ class Resources_Controller extends Template_Controller
         }
         
         
+    }
+    private function _userId($username)
+    {
+        //$model = ORM::factory('user')->find(11);//'username', $username);
+        $model = ORM::factory('user')->where('username', 'pattyok')->find();        
+        return $model->id;
     }
 }
 ?>
