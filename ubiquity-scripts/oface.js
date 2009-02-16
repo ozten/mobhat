@@ -57,34 +57,39 @@ var ofaceObj = {
     page = Oface.WhatPageIsThis.really.call(Oface.WhatPageIsThis);
     if (! page.isKnown) {
       CmdUtils.log("Unknown page type... Skipping");
-    } else {
-      if (page.type !== Oface.WhatPageIsThis.PROFILE_PAGE){
+    } else {      
+      
+      if ( ! Oface.WhatPageIsThis.isSupportedPage(page.type)){
         CmdUtils.log("Page type " + page.type + " Skipping");
       } else {
-        var username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
-        CmdUtils.log("Dealing with username: " + username)
+        if( page.type == Oface.WhatPageIsThis.PROFILE_PAGE ) {
+          var username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
+          CmdUtils.log("Dealing with username: " + username)
         
-        var h = {
-            url: url,
-            success: function(data, status){
-              CmdUtils.log("atom feed XHR call status " + status);
-              CmdUtils.log(data);
-              var urls = that.processFeedForUrls(data.documentElement, tab, that);
-              CmdUtils.log(urls);
-              that.getFacetsForUser(that, tab, pblock, username, urls);          
-            },
-            error: function(xhr, status, err){
-              CmdUtils.log("Ouch trouble fetching the feed " + url);
-              CmdUtils.log("XHR call status " + status);
-              CmdUtils.log(err);
-            }
-          };
+          var h = {
+              url: url,
+              success: function(data, status){
+                CmdUtils.log("atom feed XHR call status " + status);
+                CmdUtils.log(data);
+                var urls = that.processFeedForUrls(data.documentElement, tab, that);
+                CmdUtils.log(urls);
+                that.getFacetsForUser(that, tab, pblock, username, urls);          
+              },
+              error: function(xhr, status, err){
+                CmdUtils.log("Ouch trouble fetching the feed " + url);
+                CmdUtils.log("XHR call status " + status);
+                CmdUtils.log(err);
+              }
+            };
         
-        jQuery.ajax(h, tab);
-        if(pblock){
-          pblock.innerHTML = "Loading";
+          jQuery.ajax(h, tab);
+          if(pblock){
+            pblock.innerHTML = "Loading";
+          }
+        } else {
+          // Home, or other mixed username page... not in the url
+          
         }
-    
       }
     }
   },
@@ -103,14 +108,11 @@ var ofaceObj = {
   getFacetsForUser: function(that, tab, pblock, aUsername, urls){
     /* urls [{id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     CmdUtils.log(urls);
-    var query = {
-        username: aUsername,
-        urls: urls
-    };
+    var query = { urls: urls };
     var dataPayload = "q=" + Utils.encodeJson(query);
     
     var h = {
-      url: 'http://oface.ubuntu/resources/query_facets',
+      url: 'http://oface.ubuntu/resources/user/' + aUsername + '/query_facets',
       type: 'POST',
       dataType: 'json',
       cache: false, // REMOVE FOR PROD
@@ -450,6 +452,8 @@ Oface.WhatPageIsThis = {
     //TODO 
     if (url == "http://oface.ubuntu/static/test_files/ff-pattyok.html") {
       url = "http://friendfeed.com/pattyok";
+    } else if(url == "http://oface.ubuntu/static/test_files/ozten_home.html") {
+      url = "http://friendfeed.com/";
     }
     var aPageType = this.pageType(url);
     return {isKnown:  this.isSupportedPage(aPageType),

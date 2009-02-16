@@ -60,7 +60,7 @@ class Resources_Controller extends Template_Controller
     
     /**
     $.ajax({
-        url: '/resources/user/ozten/query_facets',
+        url: '/resources/user/{username}/query_facets',
         type: 'POST',
         dataType: 'json',
         data: "q=" + JSON.stringify({urls: [{url: escape('http://example.com/'), published: '2009-01-28T06:00:29Z'},{url: escape('http://example.com/art.jpg'), published: '2009-01-27T13:22:21Z'}]}),
