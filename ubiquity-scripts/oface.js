@@ -126,7 +126,10 @@ var ofaceObj = {
       if (isEachWithUsername) {
         try{
           //TODO brittle
-          var userHref = $('div.summary a.l_person', $($('a[href=' + url + ']', tab.document).get(0)).parent().parent().parent()).attr('href');
+          //aok a
+          var selector = that.linkSelector(url);
+          //'a[href=' + url + ']'
+          var userHref = $('div.summary a.l_person', $($(selector, tab.document).get(0)).parent().parent().parent()).attr('href');
           if ( userHref ) {
             var pieces = userHref.split('/');
             // http://friendfeed.com/draarong
@@ -284,6 +287,31 @@ var ofaceObj = {
     
                
   },
+  linkSelector: function(link){
+    var selector = 'div.title a[href=' + link + ']';
+      CmdUtils.log(selector);
+      if(link.indexOf('twitter') >= 0){
+        selector = 'div[viewinlink=' + link + ']';
+      }else if(link.indexOf('friendfeed.com/e/') >= 0){        
+        // http://friendfeed.com/e/fdb550f2-869e-4a1c-b4ce-11d2d9d4d282  
+        // is not present in the html... it is dynamically added to the
+        // More menu item as 'Link to this entry'
+        var eid = /^http.?:\/\/.*friendfeed\.com\/e\/(.*)$/.exec(link)[1];
+        selector = 'div[eid=' + eid + ']';
+        
+      }else if(link.indexOf('flickr.com/') >= 0 &&
+               jQuery(selector, tab.document).length != 1){
+        // flickr is either in the default format or this
+        // format when several are collapsed together...
+        selector = 'div.container a[href=' + link + ']';
+      } else if(link.indexOf('feedproxy.google.com/') >= 0){
+        //a[href=http://feedproxy.google.com/~r/slashfilm/~3/vjoxle-72JM/] becomes
+        //a[href=http://feedproxy.google.com/%7Er/slashfilm/%7E3/vjoxle-72JM/]
+        selector = selector.replace(/~/g, "%7E");
+        CmdUtils.log("feedproxy.google case selector now " + selector);
+      }
+      return selector;
+  },
   updateDisplayWithFacets: function(data, tab, that){
     var prevFacet = "";
     var t = null;
@@ -298,23 +326,7 @@ var ofaceObj = {
       if ( ! data[i] ) {
         continue;
       }
-      var selector = 'div.title a[href=' + data[i].url + ']';
-      CmdUtils.log(selector);
-      if(data[i].url.indexOf('twitter') >= 0){
-        selector = 'div[viewinlink=' + data[i].url + ']';
-      }else if(data[i].url.indexOf('friendfeed.com/e/') >= 0){        
-        // http://friendfeed.com/e/fdb550f2-869e-4a1c-b4ce-11d2d9d4d282  
-        // is not present in the html... it is dynamically added to the
-        // More menu item as 'Link to this entry'
-        var eid = /^http.?:\/\/.*friendfeed\.com\/e\/(.*)$/.exec(data[i].url)[1];
-        selector = 'div[eid=' + eid + ']';
-        
-      }else if(data[i].url.indexOf('flickr.com/') >= 0 &&
-               jQuery(selector, tab.document).length != 1){
-        // flickr is either in the default format or this
-        // format when several are collapsed together...
-        selector = 'div.container a[href=' + data[i].url + ']';
-      }
+      var selector = that.linkSelector(data[i].url);
       //CmdUtils.log("selector=" + selector);
       var a = jQuery(selector, tab.document);
       if(a.length == 1){
