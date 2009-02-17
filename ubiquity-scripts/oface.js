@@ -62,46 +62,84 @@ var ofaceObj = {
       if ( ! Oface.WhatPageIsThis.isSupportedPage(page.type)){
         CmdUtils.log("Page type " + page.type + " Skipping");
       } else {
+        var sucessFn;
         if( page.type == Oface.WhatPageIsThis.PROFILE_PAGE ) {
           var username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
-          CmdUtils.log("Dealing with username: " + username)
-        
-          var h = {
-              url: url,
-              success: function(data, status){
-                CmdUtils.log("atom feed XHR call status " + status);
-                CmdUtils.log(data);
-                var urls = that.processFeedForUrls(data.documentElement, tab, that);
-                CmdUtils.log(urls);
-                that.getFacetsForUser(that, tab, pblock, username, urls);          
-              },
-              error: function(xhr, status, err){
-                CmdUtils.log("Ouch trouble fetching the feed " + url);
-                CmdUtils.log("XHR call status " + status);
-                CmdUtils.log(err);
-              }
-            };
-        
-          jQuery.ajax(h, tab);
-          if(pblock){
-            pblock.innerHTML = "Loading";
-          }
+          successFn = function(data, status){
+            CmdUtils.log("atom feed XHR call status " + status);
+            CmdUtils.log(data);
+            var urls = that.processFeedForUrls(data.documentElement, tab, that);
+            CmdUtils.log(urls);
+            that.getFacetsForUser(that, tab, pblock, username, urls, false);          
+          };          
         } else {
           // Home, or other mixed username page... not in the url
-          
+          successFn = function(data, status){
+            CmdUtils.log("atom feed XHR call status " + status);
+            CmdUtils.log(data);
+            var urls = that.processFeedForUrls(data.documentElement, tab, that, true);
+            var validItems = [];
+            //TODO validate url, published, etc
+            for (var i=0; i<urls.length; i++) {
+              if ( urls[i]['username']) {
+                validItems.push(urls[i]);
+              }
+            }
+            CmdUtils.log(validItems);
+            that.getFacetsForManyUsers(that, tab, pblock, validItems);          
+          };   
+        }
+        var h = this.fetchFeed(that, tab, username, url, successFn);
+        jQuery.ajax(h, tab);
+        if(pblock){
+          pblock.innerHTML = "Loading";
         }
       }
     }
   },
-  processFeedForUrls: function(feed, tab, that){
+  fetchFeed: function(that, tab, username, url, successFn){
+    return {
+        url: url,
+        success: successFn,
+        error: function(xhr, status, err){
+          CmdUtils.log("Ouch trouble fetching the feed " + url);
+          CmdUtils.log("XHR call status " + status);
+          CmdUtils.log(err);
+        }
+      };
+  },
+  /**
+   * @param username {string} optional - if username is given, then item will
+   *  not each individually
+   */
+  processFeedForUrls: function(feed, tab, that, isEachWithUsername){
+    var $ = jQuery;
+    isEachWithUsername = isEachWithUsername || false;
     var entries = jQuery('entry', feed);
     var urls = [];
     entries.each(function(i){
       var url = jQuery('link', this).attr('href');
       var time = jQuery('published', this).text();
-      urls.push( {url: escape(url),
+      var item = {url: escape(url),
                    id: that.md5(url),
-                   published: jQuery('published', this).text()});
+                   published: jQuery('published', this).text()};
+      if (isEachWithUsername) {
+        try{
+          //TODO brittle
+          var userHref = $('div.summary a.l_person', $($('a[href=' + url + ']', tab.document).get(0)).parent().parent().parent()).attr('href');
+          if ( userHref ) {
+            var pieces = userHref.split('/');
+            // http://friendfeed.com/draarong
+            item['username'] = pieces[pieces.length -1];
+            CmdUtils.log('USERNAME: ' + item['username']);
+          } else {
+            CmdUtils.log("WARNING can't find username for " + url);
+          }
+        } catch (error) {
+          CmdUtils.log(error);
+        }
+      }
+      urls.push( item);
       });
     return urls;
   },
@@ -170,16 +208,98 @@ var ofaceObj = {
     
                
   },
+  getFacetsForManyUsers: function(that, tab, pblock, urls){
+    /* urls [{username: 'pattyok', id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
+    CmdUtils.log('getFacetsForManyUsers');
+    var query = { urls: urls };
+    var dataPayload = "q=" + Utils.encodeJson(query);
+    
+    var h = {
+      url: 'http://oface.ubuntu/resources/query_facets',
+      type: 'POST',
+      dataType: 'json',
+      cache: false, // REMOVE FOR PROD
+      data: dataPayload,
+      success: function(jsn, status){
+          if(status == 'success'){
+            var data = [];
+            
+            for(var i=0; i<jsn.length; i++){
+              try{
+                if (jsn[i]['facets']) {
+                  //TODO we are throwing away id, created date
+              
+                  //TODO loop through here and grab all the facets instead of the first
+                  data.push({
+                    facets: [jsn[i]['facets'][0]['description']],
+                    url: unescape(jsn[i]['url'])
+                  });
+                }
+              } catch(error){
+                CmdUtils.log(error);
+              }
+            }
+            CmdUtils.log("Setting up ofaceenabled widget");
+            that.addOfaceEnabled();
+            //aok
+            that.updateDisplayWithFacets(data, tab, that);            
+            var currentFacet = 'geek';//TODO
+            var aUsername    = 'ozten'; //TODO
+            that.updateDisplayWithOtherFacets(data, currentFacet, tab, that);
+            //simulate click on facet heading
+            that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0), aUsername);
+            var missed = jQuery('div.cluster', tab.document).not('.oface');
+            CmdUtils.log("Missed " + missed.length + "items, turning em red");
+            jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');             
+          }
+      },
+      error: function(xhr, status, err){
+          CmdUtils.log("Ouch trouble fetching facet info for urls ");
+          CmdUtils.log("XHR call status " + status);
+          CmdUtils.log(err);
+      },
+      complete: function(){
+          CmdUtils.log("woot");
+      }
+  };
+   
+  
+    jQuery.ajax(h, tab.document);
+    /*
+    //after async
+    var data = urls.slice(0);
+    var facets = [["webdev"],["art"],["family"]];
+    for(var i = 0; i < data.length; i++){
+      if(i == 0 || i == 6){
+        data[i].facets = facets[0];
+      } else if(i == 1 || i == 5 ){
+        data[i].facets = facets[2];
+      } else if(i >= 2 && i < 5 ){
+        data[i].facets = facets[1];
+      } else {
+        data[i].facets = facets[Math.round(Math.random() * 2)];
+      }
+    }
+    */
+    
+               
+  },
   updateDisplayWithFacets: function(data, tab, that){
     var prevFacet = "";
     var t = null;
     var prevItemCount = 0;
     //[CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
+    CmdUtils.log(data);
     for(var i=0; i < data.length; i++){
       /* Grab an item by url (this varies by webapp)
       *  bubble up the DOM until you reach the FriendFeed container */
-      
-      var selector = 'div.title a[href=' + data[i].url + ']';      
+      CmdUtils.log(i);
+      CmdUtils.log(data[i]);
+      if ( ! data[i] ) {
+        continue;
+      }
+      var selector = 'div.title a[href=' + data[i].url + ']';
+      CmdUtils.log(selector);
       if(data[i].url.indexOf('twitter') >= 0){
         selector = 'div[viewinlink=' + data[i].url + ']';
       }else if(data[i].url.indexOf('friendfeed.com/e/') >= 0){        
@@ -201,12 +321,15 @@ var ofaceObj = {
         var success;
         var entry;
         var cluster;
+        
         [success, entry  ] = that.findAndTagByClass(a,'entry', data[i].facets);
+        CmdUtils.log("updateDisplayWithFacets entry " + " " + success + " " + entry);
         if(! success ){
           //Flickr uses tr as it's container...
           CmdUtils.log("WARNING, might have found an entry div for anchor tag " + data[i].url);
         }
         [success, cluster] = that.findAndTagByClass(a,'cluster', data[i].facets);
+        CmdUtils.log("updateDisplayWithFacets cluster " + " " + success + " " + cluster);
         if(! success ){
           CmdUtils.log("ERROR, expected to find a cluster div for anchor tag " + data[i].url);
         }
@@ -285,10 +408,6 @@ var ofaceObj = {
     return this.findAndTag(element, containerClassName, facets, function(cluster){
       return cluster.hasClass(containerClassName);
       });    
-  },findAndTagByClass: function(element, containerClassName, facets){
-    return this.findAndTag(element, containerClassName, facets, function(cluster){
-      return cluster.hasClass(containerClassName);
-      });    
   },
   switchFacetDisplay: function(username){
     /**
@@ -353,6 +472,7 @@ var ofaceObj = {
     var $ = jQuery;
     var doc = Application.activeWindow.activeTab.document;
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
+      CmdUtils.log("Adding widget");
        $('#feed1', doc).prepend($("<ul id='oface-other-facets' style='float: left; list-style-type: none;'></ul>", doc));
       var ofaceEnabler = $("<h3 id='oface-enabler' style='width: 300px; float: left' title='Click to Change'>Oface is " +
                            "<span class='status'>Enabled</span> " +

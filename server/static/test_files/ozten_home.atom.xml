@@ -1,0 +1,1854 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:georss="http://www.georss.org/georss" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
+    <restriction xmlns="http://www.bloglines.com/about/specs/fac-1.0" relationship="deny" />
+    <title type="text">FriendFeed</title>
+    <updated>2009-02-16T20:08:38Z</updated>
+    <id>http://friendfeed.com/</id>
+    <link rel="alternate" href="http://friendfeed.com/" title="FriendFeed" type="text/html" />
+    <link rel="self" href="http://friendfeed.com/?auth=25cdlFyYJMIeOCW7&amp;amp;format=atom" title="FriendFeed" type="application/atom+xml" />
+    <author>
+        <name>FriendFeed</name>
+    </author>
+    <icon>http://friendfeed.com/static/apple-touch-icon.png?v=2fd08f8fef067a679ba3c71b1c3b5727</icon>
+    <entry>
+        <title type="text">You: ozten pushed to master at ozten/oface (via ozten's Activity)</title>
+        <updated>2009-02-16T20:01:58Z</updated>
+        <published>2009-02-16T20:01:58Z</published>
+        <id>tag:friendfeed.com,2007:6fe8b922-957a-9a77-8c4f-84e169adad99</id>
+        <link href="http://github.com/ozten/oface/commits/master" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/ozten">
+                                    <img src="http://friendfeed.com/static/images/icons/feed.png?v=7f94a63b8d2a5a538c6666540ba687f0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/ozten" style="color:black;text-decoration:none;font-weight:bold">You</a>- 
+                                <a rel="nofollow" href="http://github.com/" style="color:black;text-decoration:none">ozten's Activity</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://github.com/ozten/oface/commits/master" class="main">ozten pushed to master at ozten/oface</a>
+                                </div>
+                                <div style="color:#737373">17 minutes ago - 
+                                <a href="http://friendfeed.com/e/6fe8b922-957a-9a77-8c4f-84e169adad99/ozten-pushed-to-master-at-ozten-oface/?login=1&amp;comment=6fe8b922-957a-9a77-8c4f-84e169adad99" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/6fe8b922-957a-9a77-8c4f-84e169adad99/ozten-pushed-to-master-at-ozten-oface/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">You: ozten committed to ozten/oface (via ozten's Activity)</title>
+        <updated>2009-02-16T20:01:58Z</updated>
+        <published>2009-02-16T20:01:58Z</published>
+        <id>tag:friendfeed.com,2007:774e4c70-c595-64e2-c365-0e3a3c8517ec</id>
+        <link href="http://github.com/ozten/oface/commit/143434e71fb656351799813b76ef241349cd6ee5" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/ozten">
+                                    <img src="http://friendfeed.com/static/images/icons/feed.png?v=7f94a63b8d2a5a538c6666540ba687f0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/ozten" style="color:black;text-decoration:none;font-weight:bold">You</a>- 
+                                <a rel="nofollow" href="http://github.com/" style="color:black;text-decoration:none">ozten's Activity</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://github.com/ozten/oface/commit/143434e71fb656351799813b76ef241349cd6ee5" class="main">ozten committed to ozten/oface</a>
+                                </div>
+                                <div style="color:#737373">17 minutes ago - 
+                                <a href="http://friendfeed.com/e/774e4c70-c595-64e2-c365-0e3a3c8517ec/ozten-committed-to-ozten-oface/?login=1&amp;comment=774e4c70-c595-64e2-c365-0e3a3c8517ec" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/774e4c70-c595-64e2-c365-0e3a3c8517ec/ozten-committed-to-ozten-oface/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Ana: Old Blackberry from 2005 officially died yesterday (dropped one too many times :( Any recommendations for new phone to get w/ AT&amp;T plan? Please, no iPhones... (via FriendFeed)</title>
+        <updated>2009-02-16T20:08:38Z</updated>
+        <published>2009-02-16T20:08:38Z</published>
+        <id>tag:friendfeed.com,2007:71d5af7e-1efd-4a45-8b69-cd6c0354b1e5</id>
+        <link href="http://friendfeed.com/e/71d5af7e-1efd-4a45-8b69-cd6c0354b1e5" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/ana">
+                                    <img src="http://friendfeed.com/static/images/icons/internal.png?v=e471e9afdf04ae568dcbddb5584fc6c0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                    <a href="http://friendfeed.com/ana" style="color:black;text-decoration:none;font-weight:bold">Ana</a>
+                                </div>
+                                <div style="margin-bottom:4pt">&#8220;Old Blackberry from 2005 officially died yesterday (dropped one too many times :( Any recommendations for new phone to get w/ AT&amp;T plan? Please, no iPhones...&#8221;</div>
+                                <div style="color:#737373">11 minutes ago - 
+                                <a href="http://friendfeed.com/e/71d5af7e-1efd-4a45-8b69-cd6c0354b1e5/Old-Blackberry-from-2005-officially-died/?login=1&amp;comment=71d5af7e-1efd-4a45-8b69-cd6c0354b1e5" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/71d5af7e-1efd-4a45-8b69-cd6c0354b1e5/Old-Blackberry-from-2005-officially-died/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:3px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/smile.png?v=d1af5ec06a4071ce3df6627c86ab8b4a" width="16" height="16" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">
+                                            <a href="http://friendfeed.com/mvandenberg" style="color:#7777cc; text-decoration:none">Mark VandenBerg</a>liked this</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">i can't resist... iphone :) - 
+                                            <a href="http://friendfeed.com/tommypjr" style="color:#7777cc; text-decoration:none">tommy payne</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @dacort yep - me too. just wish bellevue would do something similar (via Twitter)</title>
+        <updated>2009-02-16T19:26:48Z</updated>
+        <published>2009-02-16T19:26:48Z</published>
+        <id>tag:friendfeed.com,2007:14f34ca8-d3ab-26b2-2d7f-ec20b457843a</id>
+        <link href="http://twitter.com/geekcoach/statuses/1216303731" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/dacort">dacort</a>yep - me too. just wish bellevue would do something similar&#8221;</div>
+                                <div style="color:#737373">1 hour ago - 
+                                <a href="http://friendfeed.com/e/14f34ca8-d3ab-26b2-2d7f-ec20b457843a/dacort-yep-me-too-just-wish-bellevue-would-do/?login=1&amp;comment=14f34ca8-d3ab-26b2-2d7f-ec20b457843a" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/14f34ca8-d3ab-26b2-2d7f-ec20b457843a/dacort-yep-me-too-just-wish-bellevue-would-do/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @dacort Depends on the girl. When I see a fire engine go by, I turn on the scanner to find out why! Oh, and I've ridden on one. Fun. (via Twitter)</title>
+        <updated>2009-02-16T19:22:38Z</updated>
+        <published>2009-02-16T19:22:38Z</published>
+        <id>tag:friendfeed.com,2007:93f8a8f9-c142-83f5-49a8-e31d8639d5e5</id>
+        <link href="http://twitter.com/geekcoach/statuses/1216291162" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/dacort">dacort</a>Depends on the girl. When I see a fire engine go by, I turn on the scanner to find out why! Oh, and I've ridden on one. Fun.&#8221;</div>
+                                <div style="color:#737373">1 hour ago - 
+                                <a href="http://friendfeed.com/e/93f8a8f9-c142-83f5-49a8-e31d8639d5e5/dacort-Depends-on-the-girl-When-I-see-a-fire/?login=1&amp;comment=93f8a8f9-c142-83f5-49a8-e31d8639d5e5" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/93f8a8f9-c142-83f5-49a8-e31d8639d5e5/dacort-Depends-on-the-girl-When-I-see-a-fire/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @JesseNewhart I was noticing / thinking the same thing! I do love seeing me some blue sky tho ;) (via Twitter)</title>
+        <updated>2009-02-16T18:41:48Z</updated>
+        <published>2009-02-16T18:41:48Z</published>
+        <id>tag:friendfeed.com,2007:ed62c025-5c6f-89b0-e574-6a401c7ae555</id>
+        <link href="http://twitter.com/geekcoach/statuses/1216153088" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/JesseNewhart">JesseNewhart</a>I was noticing / thinking the same thing! I do love seeing me some blue sky tho ;)&#8221;</div>
+                                <div style="color:#737373">2 hours ago - 
+                                <a href="http://friendfeed.com/e/ed62c025-5c6f-89b0-e574-6a401c7ae555/JesseNewhart-I-was-noticing-thinking-the-same/?login=1&amp;comment=ed62c025-5c6f-89b0-e574-6a401c7ae555" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/ed62c025-5c6f-89b0-e574-6a401c7ae555/JesseNewhart-I-was-noticing-thinking-the-same/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @vikdug My husband knows a fair amount about carbon credits - but haven't convinced him to move onto twitter yet. (via Twitter)</title>
+        <updated>2009-02-16T18:40:38Z</updated>
+        <published>2009-02-16T18:40:38Z</published>
+        <id>tag:friendfeed.com,2007:b5abfa44-fcef-6b3f-4f2d-67c78119882c</id>
+        <link href="http://twitter.com/geekcoach/statuses/1216148999" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/vikdug">vikdug</a>My husband knows a fair amount about carbon credits - but haven't convinced him to move onto twitter yet.&#8221;</div>
+                                <div style="color:#737373">2 hours ago - 
+                                <a href="http://friendfeed.com/e/b5abfa44-fcef-6b3f-4f2d-67c78119882c/vikdug-My-husband-knows-a-fair-amount-about/?login=1&amp;comment=b5abfa44-fcef-6b3f-4f2d-67c78119882c" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/b5abfa44-fcef-6b3f-4f2d-67c78119882c/vikdug-My-husband-knows-a-fair-amount-about/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: Judging by TwitScoop, sun in Seattle this time of year makes us go bananas. At least we appreciate it! :) (via Twitter)</title>
+        <updated>2009-02-16T18:28:39Z</updated>
+        <published>2009-02-16T18:28:39Z</published>
+        <id>tag:friendfeed.com,2007:ca6b281a-ea62-0682-f5ff-f6762cd04b55</id>
+        <link href="http://twitter.com/geekcoach/statuses/1216106942" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;Judging by TwitScoop, sun in Seattle this time of year makes us go bananas. At least we appreciate it! :)&#8221;</div>
+                                <div style="color:#737373">2 hours ago - 
+                                <a href="http://friendfeed.com/e/ca6b281a-ea62-0682-f5ff-f6762cd04b55/Judging-by-TwitScoop-sun-in-Seattle-this-time-of/?login=1&amp;comment=ca6b281a-ea62-0682-f5ff-f6762cd04b55" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/ca6b281a-ea62-0682-f5ff-f6762cd04b55/Judging-by-TwitScoop-sun-in-Seattle-this-time-of/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Brandon: New challenge: tracking how many (&amp; how long) of your tv channels do you use? http://tinyurl.com/bkxugv (via Twitter)</title>
+        <updated>2009-02-16T19:15:45Z</updated>
+        <published>2009-02-16T19:15:45Z</published>
+        <id>tag:friendfeed.com,2007:e92f1e90-a495-99e0-ed3f-910d405bc52d</id>
+        <link href="http://twitter.com/rubywahoo/statuses/1216269307" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/rubywahoo">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/rubywahoo" style="color:black;text-decoration:none;font-weight:bold">Brandon</a>- 
+                                <a rel="nofollow" href="http://twitter.com/rubywahoo" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;New challenge: tracking how many (&amp; how long) of your tv channels do you use? 
+                                <a rel="nofollow" href="http://tinyurl.com/bkxugv" title="http://rubywahoo.com/2009/02/the-tv-channel-challenge-part-i">http://tinyurl.com/bkxugv</a>&#8221;</div>
+                                <div style="color:#737373">1 hour ago - 
+                                <a href="http://friendfeed.com/e/e92f1e90-a495-99e0-ed3f-910d405bc52d/New-challenge-tracking-how-many-how-long-of-your/?login=1&amp;comment=e92f1e90-a495-99e0-ed3f-910d405bc52d" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/e92f1e90-a495-99e0-ed3f-910d405bc52d/New-challenge-tracking-how-many-how-long-of-your/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: @emilytroutman Hurray! I've been meaning to write and tell you how good I thought that post was. Very nice - thanks @guykawasaki :) (via Twitter)</title>
+        <updated>2009-02-16T19:18:07Z</updated>
+        <published>2009-02-16T19:18:07Z</published>
+        <id>tag:friendfeed.com,2007:8ff63891-8e94-6d35-1763-086cbe19c3c2</id>
+        <link href="http://twitter.com/mriggen/statuses/1216276694" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/emilytroutman">emilytroutman</a>Hurray! I've been meaning to write and tell you how good I thought that post was. Very nice - thanks @
+                                <a rel="nofollow" href="http://twitter.com/guykawasaki">guykawasaki</a>:)&#8221;</div>
+                                <div style="color:#737373">1 hour ago - 
+                                <a href="http://friendfeed.com/e/8ff63891-8e94-6d35-1763-086cbe19c3c2/emilytroutman-Hurray-I-ve-been-meaning-to-write/?login=1&amp;comment=8ff63891-8e94-6d35-1763-086cbe19c3c2" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/8ff63891-8e94-6d35-1763-086cbe19c3c2/emilytroutman-Hurray-I-ve-been-meaning-to-write/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Ana: Art Review - Edvard Munch - Exhibition at Art Institute of Chicago - NYTimes.com (via FriendFeed)</title>
+        <updated>2009-02-13T20:25:26Z</updated>
+        <published>2009-02-13T20:25:26Z</published>
+        <id>tag:friendfeed.com,2007:ec1192c5-5a28-4af4-8832-53b00b8fe606</id>
+        <link href="http://www.nytimes.com/2009/02/13/arts/design/13munc.html?8dpc" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/ana">
+                                    <img src="http://friendfeed.com/static/images/icons/internal.png?v=e471e9afdf04ae568dcbddb5584fc6c0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                    <a href="http://friendfeed.com/ana" style="color:black;text-decoration:none;font-weight:bold">Ana</a>
+                                </div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.nytimes.com/2009/02/13/arts/design/13munc.html?8dpc" class="main">Art Review - Edvard Munch - Exhibition at Art Institute of Chicago - NYTimes.com</a>
+                                </div>
+                                <div style="margin-bottom:4pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="padding:0; border:0; vertical-align:middle; padding-right:8px">
+                                                <a href="http://www.nytimes.com/2009/02/13/arts/design/13munc.html?8dpc">
+                                                    <img src="http://i.friendfeed.com/0a549af43e6c2f4b351c4b30b56df3dd8842f16f" class="thumbnail" style="width:323px; height:175px;border:1px solid silver; padding:1px" alt="Art Review - Edvard Munch - Exhibition at Art Institute of Chicago - NYTimes.com" title="Art Review - Edvard Munch - Exhibition at Art Institute of Chicago - NYTimes.com" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="color:#737373">Friday at 12:25 pm - 
+                                <a href="http://friendfeed.com/e/ec1192c5-5a28-4af4-8832-53b00b8fe606/Art-Review-Edvard-Munch-Exhibition-at-Art/?login=1&amp;comment=ec1192c5-5a28-4af4-8832-53b00b8fe606" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/ec1192c5-5a28-4af4-8832-53b00b8fe606/Art-Review-Edvard-Munch-Exhibition-at-Art/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:3px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/smile.png?v=d1af5ec06a4071ce3df6627c86ab8b4a" width="16" height="16" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">
+                                            <a href="http://friendfeed.com/brox" style="color:#7777cc; text-decoration:none">Thomas Brox R&#195;&#184;st</a>, 
+                                            <a href="http://fiendfeed.com/baardoa" style="color:#7777cc; text-decoration:none">Baard Overgaard Hansen</a>, 
+                                            <a href="http://friendfeed.com/atul" style="color:#7777cc; text-decoration:none">Atul Arora</a>and 5 other people liked this</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">I want to go see this so badly. - 
+                                            <a href="http://friendfeed.com/ana" style="color:#7777cc; text-decoration:none">Ana</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:6pt; padding-left:31px">
+                                    <a href="http://friendfeed.com/e/ec1192c5-5a28-4af4-8832-53b00b8fe606/Art-Review-Edvard-Munch-Exhibition-at-Art/" style="color:#7777cc; text-decoration:none; font-style:italic">2 more comments</a>
+                                </div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">haha, i wanted to say what mike said but i held back. :) - 
+                                            <a href="http://friendfeed.com/eviltom" style="color:#7777cc; text-decoration:none">eviltom</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">You guys are so funny. No discounted tickets into my house/art exhibit for you two. - 
+                                            <a href="http://friendfeed.com/ana" style="color:#7777cc; text-decoration:none">Ana</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+        <media:group>
+            <media:content url="http://graphics8.nytimes.com/images/2009/02/13/arts/13munc_600.jpg" type="image/jpeg" width="600" height="325" />
+            <media:thumbnail url="http://i.friendfeed.com/0a549af43e6c2f4b351c4b30b56df3dd8842f16f" width="323" height="175" />
+        </media:group>
+    </entry>
+    <entry>
+        <title type="text">Bret Taylor: 2009 Academy Awards Odds: Slumdog, Rourke, Winslet, Cruz Are Favorites (via Google Reader)</title>
+        <updated>2009-02-16T04:12:47Z</updated>
+        <published>2009-02-16T04:12:47Z</published>
+        <id>tag:friendfeed.com,2007:017cc6aa-dc9f-5198-0f16-529df0f138a0</id>
+        <link href="http://feedproxy.google.com/~r/slashfilm/~3/vjoxle-72JM/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/bret">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/bret" style="color:black;text-decoration:none;font-weight:bold">Bret Taylor</a>(
+                                <a href="http://friendfeed.com/ana" style="color:black;text-decoration:none;font-weight:bold">Ana</a>commented on this) - 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/08164081683585541814" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://feedproxy.google.com/~r/slashfilm/~3/vjoxle-72JM/" class="main">2009 Academy Awards Odds: Slumdog, Rourke, Winslet, Cruz Are Favorites</a>
+                                </div>
+                                <div style="color:#737373">16 hours ago - 
+                                <a href="http://friendfeed.com/e/017cc6aa-dc9f-5198-0f16-529df0f138a0/2009-Academy-Awards-Odds-Slumdog-Rourke-Winslet/?login=1&amp;comment=017cc6aa-dc9f-5198-0f16-529df0f138a0" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/017cc6aa-dc9f-5198-0f16-529df0f138a0/2009-Academy-Awards-Odds-Slumdog-Rourke-Winslet/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:3px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/smile.png?v=d1af5ec06a4071ce3df6627c86ab8b4a" width="16" height="16" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">
+                                            <a href="http://friendfeed.com/ana" style="color:#7777cc; text-decoration:none">Ana</a>and 
+                                            <a href="http://friendfeed.com/atul" style="color:#7777cc; text-decoration:none">Atul Arora</a>liked this</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">"I believe that in order to win an Academy Award, passion is required. Slumdog Millionaire has a passionate zeal among its supporters that will make it virtually unbeatable. Although I have made The Curious Case of Benjamin Button the second choice here, I give it very little chance of winning. It has major studio backing (Paramount), and it is certainly well-respected, but it is more admired than loved. So, for me the betting value is in Milk. Aside from Slumdog, it is the movie with the largest bloc of zealous fans. Gay and gay-friendly Academy members love the movie, and in the shadow of the passage of Proposition 8 in California, Milk is worth a $2 bet at the window." - 
+                                            <a href="http://friendfeed.com/bret" style="color:#7777cc; text-decoration:none">Bret Taylor</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">If everyone at FriendFeed follows this advice, our little office Oscars pool won't be very exciting :) - 
+                                            <a href="http://friendfeed.com/ana" style="color:#7777cc; text-decoration:none">Ana</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Alex Vernon: Off to install some laptop RAM, minus my magic Toshiba screwdriver. This does not bode well, hopefully my Craftsman is up to the task. (via Twitter)</title>
+        <updated>2009-02-16T18:06:14Z</updated>
+        <published>2009-02-16T18:06:14Z</published>
+        <id>tag:friendfeed.com,2007:b789eef1-54b9-ca9a-953a-17dec7a2a8d4</id>
+        <link href="http://twitter.com/AlexVernon/statuses/1216034800" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/alexvernon">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/alexvernon" style="color:black;text-decoration:none;font-weight:bold">Alex Vernon</a>- 
+                                <a rel="nofollow" href="http://twitter.com/AlexVernon" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;Off to install some laptop RAM, minus my magic Toshiba screwdriver. This does not bode well, hopefully my Craftsman is up to the task.&#8221;</div>
+                                <div style="color:#737373">2 hours ago - 
+                                <a href="http://friendfeed.com/e/b789eef1-54b9-ca9a-953a-17dec7a2a8d4/Off-to-install-some-laptop-RAM-minus-my-magic/?login=1&amp;comment=b789eef1-54b9-ca9a-953a-17dec7a2a8d4" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/b789eef1-54b9-ca9a-953a-17dec7a2a8d4/Off-to-install-some-laptop-RAM-minus-my-magic/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @techburgh True enough! (via Twitter)</title>
+        <updated>2009-02-16T17:08:59Z</updated>
+        <published>2009-02-16T17:08:59Z</published>
+        <id>tag:friendfeed.com,2007:04961f96-f112-9eba-9d0d-7a79e424cc4e</id>
+        <link href="http://twitter.com/geekcoach/statuses/1215858970" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/techburgh">techburgh</a>True enough!&#8221;</div>
+                                <div style="color:#737373">3 hours ago - 
+                                <a href="http://friendfeed.com/e/04961f96-f112-9eba-9d0d-7a79e424cc4e/techburgh-True-enough/?login=1&amp;comment=04961f96-f112-9eba-9d0d-7a79e424cc4e" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/04961f96-f112-9eba-9d0d-7a79e424cc4e/techburgh-True-enough/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @techburgh Mistakes on purpose feels misleading to me, so I don't do it. U have a point, tho, so I don't sweat when they creep in. (via Twitter)</title>
+        <updated>2009-02-16T17:05:54Z</updated>
+        <published>2009-02-16T17:05:54Z</published>
+        <id>tag:friendfeed.com,2007:14fbb8fd-daa2-c377-4c33-01ade6e5199a</id>
+        <link href="http://twitter.com/geekcoach/statuses/1215849484" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/techburgh">techburgh</a>Mistakes on purpose feels misleading to me, so I don't do it. U have a point, tho, so I don't sweat when they creep in.&#8221;</div>
+                                <div style="color:#737373">3 hours ago - 
+                                <a href="http://friendfeed.com/e/14fbb8fd-daa2-c377-4c33-01ade6e5199a/techburgh-Mistakes-on-purpose-feels-misleading-to/?login=1&amp;comment=14fbb8fd-daa2-c377-4c33-01ade6e5199a" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/14fbb8fd-daa2-c377-4c33-01ade6e5199a/techburgh-Mistakes-on-purpose-feels-misleading-to/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @rhythmofself Cool widget. Nice work, guys! #ssw2 (via Twitter)</title>
+        <updated>2009-02-16T16:00:14Z</updated>
+        <published>2009-02-16T16:00:14Z</published>
+        <id>tag:friendfeed.com,2007:7999c66f-e2cf-760f-8dce-dac3f385ee0e</id>
+        <link href="http://twitter.com/geekcoach/statuses/1215643807" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/rhythmofself">rhythmofself</a>Cool widget. Nice work, guys! 
+                                <a rel="nofollow" href="http://search.twitter.com/search?q=%23ssw2">#ssw2</a>&#8221;</div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/7999c66f-e2cf-760f-8dce-dac3f385ee0e/rhythmofself-Cool-widget-Nice-work-guys/?login=1&amp;comment=7999c66f-e2cf-760f-8dce-dac3f385ee0e" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/7999c66f-e2cf-760f-8dce-dac3f385ee0e/rhythmofself-Cool-widget-Nice-work-guys/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @rhythmofself Oops - sorry! Oops, sorry, there's another. Ooops... :) This is, of course, why I turn off the sound when I have Tweetdeck up! (via Twitter)</title>
+        <updated>2009-02-16T15:57:08Z</updated>
+        <published>2009-02-16T15:57:08Z</published>
+        <id>tag:friendfeed.com,2007:0e983107-af28-e2d5-f84b-15ddf6545dc4</id>
+        <link href="http://twitter.com/geekcoach/statuses/1215633957" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/rhythmofself">rhythmofself</a>Oops - sorry! Oops, sorry, there's another. Ooops... :) This is, of course, why I turn off the sound when I have Tweetdeck up!&#8221;</div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/0e983107-af28-e2d5-f84b-15ddf6545dc4/rhythmofself-Oops-sorry-Oops-sorry-there-s/?login=1&amp;comment=0e983107-af28-e2d5-f84b-15ddf6545dc4" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/0e983107-af28-e2d5-f84b-15ddf6545dc4/rhythmofself-Oops-sorry-Oops-sorry-there-s/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @dacort You'll let us know when there's something new to test, right? I have so much fun with it - TweetSum is way cool. #tweetsum (via Twitter)</title>
+        <updated>2009-02-16T15:55:19Z</updated>
+        <published>2009-02-16T15:55:19Z</published>
+        <id>tag:friendfeed.com,2007:68d4fe57-1fb1-edf9-07a7-6d93fe4e2089</id>
+        <link href="http://twitter.com/geekcoach/statuses/1215628437" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/dacort">dacort</a>You'll let us know when there's something new to test, right? I have so much fun with it - TweetSum is way cool. 
+                                <a rel="nofollow" href="http://search.twitter.com/search?q=%23tweetsum">#tweetsum</a>&#8221;</div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/68d4fe57-1fb1-edf9-07a7-6d93fe4e2089/dacort-You-ll-let-us-know-when-there-s-something/?login=1&amp;comment=68d4fe57-1fb1-edf9-07a7-6d93fe4e2089" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/68d4fe57-1fb1-edf9-07a7-6d93fe4e2089/dacort-You-ll-let-us-know-when-there-s-something/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Kimm: @kmesiab Bummer - I love video editing :) (via Twitter)</title>
+        <updated>2009-02-16T15:44:48Z</updated>
+        <published>2009-02-16T15:44:48Z</published>
+        <id>tag:friendfeed.com,2007:86fc25c1-c8ed-8360-47b8-2c56354c4eae</id>
+        <link href="http://twitter.com/geekcoach/statuses/1215596465" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/geekcoach">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/geekcoach" style="color:black;text-decoration:none;font-weight:bold">Kimm</a>- 
+                                <a rel="nofollow" href="http://twitter.com/geekcoach" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/kmesiab">kmesiab</a>Bummer - I love video editing :)&#8221;</div>
+                                <div style="color:#737373">5 hours ago - 
+                                <a href="http://friendfeed.com/e/86fc25c1-c8ed-8360-47b8-2c56354c4eae/kmesiab-Bummer-I-love-video-editing/?login=1&amp;comment=86fc25c1-c8ed-8360-47b8-2c56354c4eae" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/86fc25c1-c8ed-8360-47b8-2c56354c4eae/kmesiab-Bummer-I-love-video-editing/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Alex Vernon: @tessa Congratulations! (via Twitter)</title>
+        <updated>2009-02-16T16:44:05Z</updated>
+        <published>2009-02-16T16:44:05Z</published>
+        <id>tag:friendfeed.com,2007:ce79e1c8-9fcb-53e8-8e5d-6ad56b833b8d</id>
+        <link href="http://twitter.com/AlexVernon/statuses/1215780241" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/alexvernon">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/alexvernon" style="color:black;text-decoration:none;font-weight:bold">Alex Vernon</a>- 
+                                <a rel="nofollow" href="http://twitter.com/AlexVernon" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/tessa">tessa</a>Congratulations!&#8221;</div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/ce79e1c8-9fcb-53e8-8e5d-6ad56b833b8d/tessa-Congratulations/?login=1&amp;comment=ce79e1c8-9fcb-53e8-8e5d-6ad56b833b8d" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/ce79e1c8-9fcb-53e8-8e5d-6ad56b833b8d/tessa-Congratulations/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Alex Vernon: @levarburton Happy Birthday! (via Twitter)</title>
+        <updated>2009-02-16T16:43:34Z</updated>
+        <published>2009-02-16T16:43:34Z</published>
+        <id>tag:friendfeed.com,2007:81e49707-b5b9-fafe-2507-e76c598eaff8</id>
+        <link href="http://twitter.com/AlexVernon/statuses/1215778708" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/alexvernon">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/alexvernon" style="color:black;text-decoration:none;font-weight:bold">Alex Vernon</a>- 
+                                <a rel="nofollow" href="http://twitter.com/AlexVernon" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/levarburton">levarburton</a>Happy Birthday!&#8221;</div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/81e49707-b5b9-fafe-2507-e76c598eaff8/levarburton-Happy-Birthday/?login=1&amp;comment=81e49707-b5b9-fafe-2507-e76c598eaff8" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/81e49707-b5b9-fafe-2507-e76c598eaff8/levarburton-Happy-Birthday/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Alex Vernon: @uknity Guilty confession: I enjoy watching The Antiques Roadshow. (via Twitter)</title>
+        <updated>2009-02-16T16:06:18Z</updated>
+        <published>2009-02-16T16:06:18Z</published>
+        <id>tag:friendfeed.com,2007:47314272-9b14-9872-11d3-d50f97cddc69</id>
+        <link href="http://twitter.com/AlexVernon/statuses/1215662881" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/alexvernon">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/alexvernon" style="color:black;text-decoration:none;font-weight:bold">Alex Vernon</a>- 
+                                <a rel="nofollow" href="http://twitter.com/AlexVernon" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/uknity">uknity</a>Guilty confession: I enjoy watching The Antiques Roadshow.&#8221;</div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/47314272-9b14-9872-11d3-d50f97cddc69/uknity-Guilty-confession-I-enjoy-watching-The/?login=1&amp;comment=47314272-9b14-9872-11d3-d50f97cddc69" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/47314272-9b14-9872-11d3-d50f97cddc69/uknity-Guilty-confession-I-enjoy-watching-The/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">You: ozten committed to ozten/oface (via ozten's Activity)</title>
+        <updated>2009-02-16T16:43:25Z</updated>
+        <published>2009-02-16T16:43:25Z</published>
+        <id>tag:friendfeed.com,2007:8ad5b5cf-263d-9303-3d07-ea41cd9f1bac</id>
+        <link href="http://github.com/ozten/oface/commit/34e1e6abc92897f701dc13eec77a60d6c0860115" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/ozten">
+                                    <img src="http://friendfeed.com/static/images/icons/feed.png?v=7f94a63b8d2a5a538c6666540ba687f0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/ozten" style="color:black;text-decoration:none;font-weight:bold">You</a>- 
+                                <a rel="nofollow" href="http://github.com/" style="color:black;text-decoration:none">ozten's Activity</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://github.com/ozten/oface/commit/34e1e6abc92897f701dc13eec77a60d6c0860115" class="main">ozten committed to ozten/oface</a>
+                                </div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/8ad5b5cf-263d-9303-3d07-ea41cd9f1bac/ozten-committed-to-ozten-oface/?login=1&amp;comment=8ad5b5cf-263d-9303-3d07-ea41cd9f1bac" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/8ad5b5cf-263d-9303-3d07-ea41cd9f1bac/ozten-committed-to-ozten-oface/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: @vanessamason Congratulations, Vanessa! That is awesome! (via Twitter)</title>
+        <updated>2009-02-16T16:28:18Z</updated>
+        <published>2009-02-16T16:28:18Z</published>
+        <id>tag:friendfeed.com,2007:14127dcc-c8f4-9fc8-144b-592fadc6ea07</id>
+        <link href="http://twitter.com/mriggen/statuses/1215731132" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/vanessamason">vanessamason</a>Congratulations, Vanessa! That is awesome!&#8221;</div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/14127dcc-c8f4-9fc8-144b-592fadc6ea07/vanessamason-Congratulations-Vanessa-That-is/?login=1&amp;comment=14127dcc-c8f4-9fc8-144b-592fadc6ea07" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/14127dcc-c8f4-9fc8-144b-592fadc6ea07/vanessamason-Congratulations-Vanessa-That-is/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Jay: using the internet is much more fun with no power. that is, until the batteries run out!!! (via Twitter)</title>
+        <updated>2009-02-16T16:22:59Z</updated>
+        <published>2009-02-16T16:22:59Z</published>
+        <id>tag:friendfeed.com,2007:e4de8928-8a05-6b0d-9e91-912e83342f87</id>
+        <link href="http://twitter.com/ranchoweb/statuses/1215714728" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/ranchoweb">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/ranchoweb" style="color:black;text-decoration:none;font-weight:bold">Jay</a>- 
+                                <a rel="nofollow" href="http://twitter.com/ranchoweb" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;using the internet is much more fun with no power. that is, until the batteries run out!!!&#8221;</div>
+                                <div style="color:#737373">4 hours ago - 
+                                <a href="http://friendfeed.com/e/e4de8928-8a05-6b0d-9e91-912e83342f87/using-the-internet-is-much-more-fun-with-no-power/?login=1&amp;comment=e4de8928-8a05-6b0d-9e91-912e83342f87" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/e4de8928-8a05-6b0d-9e91-912e83342f87/using-the-internet-is-much-more-fun-with-no-power/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: Changing the face of customer service (via Got Kit?)</title>
+        <updated>2009-02-16T11:36:19Z</updated>
+        <published>2009-02-16T11:36:19Z</published>
+        <id>tag:friendfeed.com,2007:efa439c4-5a4e-1b1f-fe35-1be14966380a</id>
+        <link href="http://blog.js-kit.com/2009/02/16/changing-the-face-of-customer-service/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/blog.png?v=d3fe9e9d1dd09839623e597a92ecbb00" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://blog.js-kit.com" style="color:black;text-decoration:none">Got Kit?</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://blog.js-kit.com/2009/02/16/changing-the-face-of-customer-service/" class="main">Changing the face of customer service</a>
+                                </div>
+                                <div style="color:#737373">9 hours ago - 
+                                <a href="http://friendfeed.com/e/efa439c4-5a4e-1b1f-fe35-1be14966380a/Changing-the-face-of-customer-service/?login=1&amp;comment=efa439c4-5a4e-1b1f-fe35-1be14966380a" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/efa439c4-5a4e-1b1f-fe35-1be14966380a/Changing-the-face-of-customer-service/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: This is a great post about pro-active customer support from JS-Kit - very glad customers love it http://tinyurl.com/dfpuj6 (via Twitter)</title>
+        <updated>2009-02-16T11:30:42Z</updated>
+        <published>2009-02-16T11:30:42Z</published>
+        <id>tag:friendfeed.com,2007:da3947ab-43b3-2512-c478-7c21b3cfc2bd</id>
+        <link href="http://twitter.com/ChrisSaad/statuses/1214996559" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://twitter.com/chrissaad" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;This is a great post about pro-active customer support from JS-Kit - very glad customers love it 
+                                <a rel="nofollow" href="http://tinyurl.com/dfpuj6" title="http://thefridaychallenge.blogspot.com/2009/02/some-updates-on-posting-comments.html">http://tinyurl.com/dfpuj6</a>&#8221;</div>
+                                <div style="color:#737373">9 hours ago - 
+                                <a href="http://friendfeed.com/e/da3947ab-43b3-2512-c478-7c21b3cfc2bd/This-is-a-great-post-about-pro-active-customer/?login=1&amp;comment=da3947ab-43b3-2512-c478-7c21b3cfc2bd" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/da3947ab-43b3-2512-c478-7c21b3cfc2bd/This-is-a-great-post-about-pro-active-customer/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: 17 Again - Trailer 1 (via Google Reader)</title>
+        <updated>2009-02-16T10:31:31Z</updated>
+        <published>2009-02-16T10:31:31Z</published>
+        <id>tag:friendfeed.com,2007:365db199-f425-a102-157d-c38e6ce94774</id>
+        <link href="http://www.apple.com/trailers/wb/17again/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/01624768308971341792" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.apple.com/trailers/wb/17again/" class="main">17 Again - Trailer 1</a>
+                                </div>
+                                <div style="color:#737373">10 hours ago - 
+                                <a href="http://friendfeed.com/e/365db199-f425-a102-157d-c38e6ce94774/17-Again-Trailer-1/?login=1&amp;comment=365db199-f425-a102-157d-c38e6ce94774" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/365db199-f425-a102-157d-c38e6ce94774/17-Again-Trailer-1/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: Tokyo - Trailer (via Google Reader)</title>
+        <updated>2009-02-16T10:31:31Z</updated>
+        <published>2009-02-16T10:31:31Z</published>
+        <id>tag:friendfeed.com,2007:892b8774-1796-e1f0-f342-36c3af90904e</id>
+        <link href="http://www.apple.com/trailers/independent/tokyo/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/01624768308971341792" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.apple.com/trailers/independent/tokyo/" class="main">Tokyo - Trailer</a>
+                                </div>
+                                <div style="color:#737373">10 hours ago - 
+                                <a href="http://friendfeed.com/e/892b8774-1796-e1f0-f342-36c3af90904e/Tokyo-Trailer/?login=1&amp;comment=892b8774-1796-e1f0-f342-36c3af90904e" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/892b8774-1796-e1f0-f342-36c3af90904e/Tokyo-Trailer/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: Miss March - Trailer 1 (via Google Reader)</title>
+        <updated>2009-02-16T10:31:31Z</updated>
+        <published>2009-02-16T10:31:31Z</published>
+        <id>tag:friendfeed.com,2007:0505e630-8347-9a87-5ead-a020d3d96622</id>
+        <link href="http://www.apple.com/trailers/fox_searchlight/missmarch/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/01624768308971341792" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.apple.com/trailers/fox_searchlight/missmarch/" class="main">Miss March - Trailer 1</a>
+                                </div>
+                                <div style="color:#737373">10 hours ago - 
+                                <a href="http://friendfeed.com/e/0505e630-8347-9a87-5ead-a020d3d96622/Miss-March-Trailer-1/?login=1&amp;comment=0505e630-8347-9a87-5ead-a020d3d96622" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/0505e630-8347-9a87-5ead-a020d3d96622/Miss-March-Trailer-1/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: Planet 51 - Trailer 1r (via Google Reader)</title>
+        <updated>2009-02-16T06:34:36Z</updated>
+        <published>2009-02-16T06:34:36Z</published>
+        <id>tag:friendfeed.com,2007:8576e904-9beb-9ee9-83d1-eb52678bdd2b</id>
+        <link href="http://www.apple.com/trailers/sony_pictures/planet51/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/01624768308971341792" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.apple.com/trailers/sony_pictures/planet51/" class="main">Planet 51 - Trailer 1r</a>
+                                </div>
+                                <div style="color:#737373">14 hours ago - 
+                                <a href="http://friendfeed.com/e/8576e904-9beb-9ee9-83d1-eb52678bdd2b/Planet-51-Trailer-1r/?login=1&amp;comment=8576e904-9beb-9ee9-83d1-eb52678bdd2b" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/8576e904-9beb-9ee9-83d1-eb52678bdd2b/Planet-51-Trailer-1r/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: Starting to get chronically aching "touchpad" metatarsals. Where oh where is my embedded brain chip? (via Twitter)</title>
+        <updated>2009-02-16T06:00:26Z</updated>
+        <published>2009-02-16T06:00:26Z</published>
+        <id>tag:friendfeed.com,2007:7f56e187-d601-adf5-2616-43533f4cd10a</id>
+        <link href="http://twitter.com/mriggen/statuses/1214479238" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;Starting to get chronically aching "touchpad" metatarsals. Where oh where is my embedded brain chip?&#8221;</div>
+                                <div style="color:#737373">14 hours ago - 
+                                <a href="http://friendfeed.com/e/7f56e187-d601-adf5-2616-43533f4cd10a/Starting-to-get-chronically-aching-touchpad/?login=1&amp;comment=7f56e187-d601-adf5-2616-43533f4cd10a" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/7f56e187-d601-adf5-2616-43533f4cd10a/Starting-to-get-chronically-aching-touchpad/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: Imagine a rest home full of Twittering silver foxes issuing booty calls in between Judge Judy &amp; naps. (husband made me take out of post) (via Twitter)</title>
+        <updated>2009-02-16T05:30:36Z</updated>
+        <published>2009-02-16T05:30:36Z</published>
+        <id>tag:friendfeed.com,2007:b54398c6-4d73-d50b-1d1f-cf467c2c3162</id>
+        <link href="http://twitter.com/mriggen/statuses/1214424200" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;Imagine a rest home full of Twittering silver foxes issuing booty calls in between Judge Judy &amp; naps. (husband made me take out of post)&#8221;</div>
+                                <div style="color:#737373">15 hours ago - 
+                                <a href="http://friendfeed.com/e/b54398c6-4d73-d50b-1d1f-cf467c2c3162/Imagine-a-rest-home-full-of-Twittering-silver/?login=1&amp;comment=b54398c6-4d73-d50b-1d1f-cf467c2c3162" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/b54398c6-4d73-d50b-1d1f-cf467c2c3162/Imagine-a-rest-home-full-of-Twittering-silver/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: @drmomentum Whoa! Twitter sure is getting fancy! (via Twitter)</title>
+        <updated>2009-02-16T05:23:33Z</updated>
+        <published>2009-02-16T05:23:33Z</published>
+        <id>tag:friendfeed.com,2007:704431cd-faf5-c57e-2e89-42151844a01a</id>
+        <link href="http://twitter.com/mriggen/statuses/1214411752" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/drmomentum">drmomentum</a>Whoa! Twitter sure is getting fancy!&#8221;</div>
+                                <div style="color:#737373">15 hours ago - 
+                                <a href="http://friendfeed.com/e/704431cd-faf5-c57e-2e89-42151844a01a/drmomentum-Whoa-Twitter-sure-is-getting/?login=1&amp;comment=704431cd-faf5-c57e-2e89-42151844a01a" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/704431cd-faf5-c57e-2e89-42151844a01a/drmomentum-Whoa-Twitter-sure-is-getting/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: Fanboys - Trailer 2 (via Google Reader)</title>
+        <updated>2009-02-16T05:26:59Z</updated>
+        <published>2009-02-16T05:26:59Z</published>
+        <id>tag:friendfeed.com,2007:e2255caf-8d8d-f3c6-250a-f5ad2a344d28</id>
+        <link href="http://www.apple.com/trailers/weinstein/fanboys/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/01624768308971341792" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.apple.com/trailers/weinstein/fanboys/" class="main">Fanboys - Trailer 2</a>
+                                </div>
+                                <div style="color:#737373">15 hours ago - 
+                                <a href="http://friendfeed.com/e/e2255caf-8d8d-f3c6-250a-f5ad2a344d28/Fanboys-Trailer-2/?login=1&amp;comment=e2255caf-8d8d-f3c6-250a-f5ad2a344d28" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/e2255caf-8d8d-f3c6-250a-f5ad2a344d28/Fanboys-Trailer-2/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: Phoebe In Wonderland - Film Clip (via Google Reader)</title>
+        <updated>2009-02-16T05:26:59Z</updated>
+        <published>2009-02-16T05:26:59Z</published>
+        <id>tag:friendfeed.com,2007:6193a0c8-eab0-62c4-264a-d46591cf4605</id>
+        <link href="http://www.apple.com/trailers/thinkfilm/phoebeinwonderland/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/01624768308971341792" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.apple.com/trailers/thinkfilm/phoebeinwonderland/" class="main">Phoebe In Wonderland - Film Clip</a>
+                                </div>
+                                <div style="color:#737373">15 hours ago - 
+                                <a href="http://friendfeed.com/e/6193a0c8-eab0-62c4-264a-d46591cf4605/Phoebe-In-Wonderland-Film-Clip/?login=1&amp;comment=6193a0c8-eab0-62c4-264a-d46591cf4605" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/6193a0c8-eab0-62c4-264a-d46591cf4605/Phoebe-In-Wonderland-Film-Clip/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Chris Saad: Super Capers - Trailer (via Google Reader)</title>
+        <updated>2009-02-16T05:26:59Z</updated>
+        <published>2009-02-16T05:26:59Z</published>
+        <id>tag:friendfeed.com,2007:15dbaf34-206c-ad2e-14d6-9846a046c693</id>
+        <link href="http://www.apple.com/trailers/independent/supercapers/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/chrissaad">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/chrissaad" style="color:black;text-decoration:none;font-weight:bold">Chris Saad</a>- 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/01624768308971341792" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.apple.com/trailers/independent/supercapers/" class="main">Super Capers - Trailer</a>
+                                </div>
+                                <div style="color:#737373">15 hours ago - 
+                                <a href="http://friendfeed.com/e/15dbaf34-206c-ad2e-14d6-9846a046c693/Super-Capers-Trailer/?login=1&amp;comment=15dbaf34-206c-ad2e-14d6-9846a046c693" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/15dbaf34-206c-ad2e-14d6-9846a046c693/Super-Capers-Trailer/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Patty O'Hara: Christine Cooks: Mediterranean Red Pepper Coulis (via delicious)</title>
+        <updated>2009-02-16T05:24:20Z</updated>
+        <published>2009-02-16T05:24:20Z</published>
+        <id>tag:friendfeed.com,2007:109065fc-5288-463f-d472-ef19b9fc4a92</id>
+        <link href="http://christinecooks.blogspot.com/2007/04/mediterranean-red-pepper-coulis.html" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/pattyok">
+                                    <img src="http://friendfeed.com/static/images/icons/delicious.png?v=69bca9c4fb157f73b97c35d7c4f376bb" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/pattyok" style="color:black;text-decoration:none;font-weight:bold">Patty O'Hara</a>- 
+                                <a rel="nofollow" href="http://delicious.com/patty.ohara" style="color:black;text-decoration:none">delicious</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://christinecooks.blogspot.com/2007/04/mediterranean-red-pepper-coulis.html" class="main">Christine Cooks: Mediterranean Red Pepper Coulis</a>
+                                </div>
+                                <div style="color:#737373">15 hours ago - 
+                                <a href="http://friendfeed.com/e/109065fc-5288-463f-d472-ef19b9fc4a92/Christine-Cooks-Mediterranean-Red-Pepper/?login=1&amp;comment=109065fc-5288-463f-d472-ef19b9fc4a92" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/109065fc-5288-463f-d472-ef19b9fc4a92/Christine-Cooks-Mediterranean-Red-Pepper/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">YUM! - 
+                                            <a href="http://friendfeed.com/pattyok" style="color:#7777cc; text-decoration:none">Patty O'Hara</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Alex Vernon: Re: Lauter Has a Posse (via Disqus)</title>
+        <updated>2009-02-16T04:36:25Z</updated>
+        <published>2009-02-16T04:36:25Z</published>
+        <id>tag:friendfeed.com,2007:00a81a76-4f03-f1cf-549f-6b2dbfdc52a9</id>
+        <link href="http://lauterhaus.tumblr.com/post/78644341#comment-6294233" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/alexvernon">
+                                    <img src="http://friendfeed.com/static/images/icons/disqus.png?v=82e8e708b4dd20b70566dea3c96b1f7e" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/alexvernon" style="color:black;text-decoration:none;font-weight:bold">Alex Vernon</a>- 
+                                <a rel="nofollow" href="http://www.disqus.com/people/AlexVernon/" style="color:black;text-decoration:none">Disqus</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://lauterhaus.tumblr.com/post/78644341#comment-6294233" class="main">Re: Lauter Has a Posse</a>
+                                </div>
+                                <div style="color:#737373">16 hours ago - 
+                                <a href="http://friendfeed.com/e/00a81a76-4f03-f1cf-549f-6b2dbfdc52a9/Re-Lauter-Has-a-Posse/?login=1&amp;comment=00a81a76-4f03-f1cf-549f-6b2dbfdc52a9" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/00a81a76-4f03-f1cf-549f-6b2dbfdc52a9/Re-Lauter-Has-a-Posse/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">"Glad to be of assistance (although I had nothing to do with it, just along for the ride). I've been stuck because of Marta before as well, extremely inconvenient and annoying." - 
+                                            <a href="http://friendfeed.com/alexvernon" style="color:#7777cc; text-decoration:none">Alex Vernon</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: @sondernagle Were it that Twitter had an Oh snap feature, I would be using it. (via Twitter)</title>
+        <updated>2009-02-16T04:16:14Z</updated>
+        <published>2009-02-16T04:16:14Z</published>
+        <id>tag:friendfeed.com,2007:c083dfbc-b4df-1184-454b-f30aab219ca7</id>
+        <link href="http://twitter.com/mriggen/statuses/1214277891" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/sondernagle">sondernagle</a>Were it that Twitter had an Oh snap feature, I would be using it.&#8221;</div>
+                                <div style="color:#737373">16 hours ago - 
+                                <a href="http://friendfeed.com/e/c083dfbc-b4df-1184-454b-f30aab219ca7/sondernagle-Were-it-that-Twitter-had-an-Oh-snap/?login=1&amp;comment=c083dfbc-b4df-1184-454b-f30aab219ca7" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/c083dfbc-b4df-1184-454b-f30aab219ca7/sondernagle-Were-it-that-Twitter-had-an-Oh-snap/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: @adarowski Who's the clean cut gent with all the laptops at the coffee shop? (via Twitter)</title>
+        <updated>2009-02-16T03:59:14Z</updated>
+        <published>2009-02-16T03:59:14Z</published>
+        <id>tag:friendfeed.com,2007:dfca2685-01d8-3759-9881-135daf894d61</id>
+        <link href="http://twitter.com/mriggen/statuses/1214239792" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/adarowski">adarowski</a>Who's the clean cut gent with all the laptops at the coffee shop?&#8221;</div>
+                                <div style="color:#737373">16 hours ago - 
+                                <a href="http://friendfeed.com/e/dfca2685-01d8-3759-9881-135daf894d61/adarowski-Who-s-the-clean-cut-gent-with-all-the/?login=1&amp;comment=dfca2685-01d8-3759-9881-135daf894d61" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/dfca2685-01d8-3759-9881-135daf894d61/adarowski-Who-s-the-clean-cut-gent-with-all-the/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: @huzzah70 That's ok, that's what I need :) (via Twitter)</title>
+        <updated>2009-02-16T03:52:03Z</updated>
+        <published>2009-02-16T03:52:03Z</published>
+        <id>tag:friendfeed.com,2007:27265b27-92bf-db03-840a-b8bf1dec419d</id>
+        <link href="http://twitter.com/mriggen/statuses/1214223254" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/huzzah70">huzzah70</a>That's ok, that's what I need :)&#8221;</div>
+                                <div style="color:#737373">16 hours ago - 
+                                <a href="http://friendfeed.com/e/27265b27-92bf-db03-840a-b8bf1dec419d/huzzah70-That-s-ok-that-s-what-I-need/?login=1&amp;comment=27265b27-92bf-db03-840a-b8bf1dec419d" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/27265b27-92bf-db03-840a-b8bf1dec419d/huzzah70-That-s-ok-that-s-what-I-need/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: @AndrewNim No, that's fine. I'm writing a post about it. Looking for immediate reactions to that image. (via Twitter)</title>
+        <updated>2009-02-16T03:45:55Z</updated>
+        <published>2009-02-16T03:45:55Z</published>
+        <id>tag:friendfeed.com,2007:21f61d68-434c-de3b-993a-79e3d8ed68db</id>
+        <link href="http://twitter.com/mriggen/statuses/1214208766" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;@
+                                <a rel="nofollow" href="http://twitter.com/AndrewNim">AndrewNim</a>No, that's fine. I'm writing a post about it. Looking for immediate reactions to that image.&#8221;</div>
+                                <div style="color:#737373">17 hours ago - 
+                                <a href="http://friendfeed.com/e/21f61d68-434c-de3b-993a-79e3d8ed68db/AndrewNim-No-that-s-fine-I-m-writing-a-post-about/?login=1&amp;comment=21f61d68-434c-de3b-993a-79e3d8ed68db" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/21f61d68-434c-de3b-993a-79e3d8ed68db/AndrewNim-No-that-s-fine-I-m-writing-a-post-about/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Michelle Riggen-Ransom: What words come to mind when you hear the words "nursing home"? (via Twitter)</title>
+        <updated>2009-02-16T03:42:05Z</updated>
+        <published>2009-02-16T03:42:05Z</published>
+        <id>tag:friendfeed.com,2007:2e43cc4f-dd1a-946e-199a-6780228e5be7</id>
+        <link href="http://twitter.com/mriggen/statuses/1214200270" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/mriggen">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/mriggen" style="color:black;text-decoration:none;font-weight:bold">Michelle Riggen-Ransom</a>- 
+                                <a rel="nofollow" href="http://twitter.com/mriggen" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;What words come to mind when you hear the words "nursing home"?&#8221;</div>
+                                <div style="color:#737373">17 hours ago - 
+                                <a href="http://friendfeed.com/e/2e43cc4f-dd1a-946e-199a-6780228e5be7/What-words-come-to-mind-when-you-hear-the-words/?login=1&amp;comment=2e43cc4f-dd1a-946e-199a-6780228e5be7" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/2e43cc4f-dd1a-946e-199a-6780228e5be7/What-words-come-to-mind-when-you-hear-the-words/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Aaron Green: TrueCrypt - Free Open-Source On-The-Fly Disk Encryption Software for Windows Vista/XP, Mac OS X and Linux (via Diigo)</title>
+        <updated>2009-02-16T03:59:39Z</updated>
+        <published>2009-02-16T03:59:39Z</published>
+        <id>tag:friendfeed.com,2007:061c457e-ec53-43ff-71b6-f199b4313289</id>
+        <link href="http://www.truecrypt.org" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/draarong">
+                                    <img src="http://friendfeed.com/static/images/icons/diigo.png?v=77441b008df933e10668f53891b0c566" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/draarong" style="color:black;text-decoration:none;font-weight:bold">Aaron Green</a>- 
+                                <a rel="nofollow" href="http://www.diigo.com/profile/drgreen" style="color:black;text-decoration:none">Diigo</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.truecrypt.org" class="main">TrueCrypt - Free Open-Source On-The-Fly Disk Encryption Software for Windows Vista/XP, Mac OS X and Linux</a>
+                                </div>
+                                <div style="color:#737373">16 hours ago - 
+                                <a href="http://friendfeed.com/e/061c457e-ec53-43ff-71b6-f199b4313289/TrueCrypt-Free-Open-Source-On-The-Fly-Disk/?login=1&amp;comment=061c457e-ec53-43ff-71b6-f199b4313289" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/061c457e-ec53-43ff-71b6-f199b4313289/TrueCrypt-Free-Open-Source-On-The-Fly-Disk/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Aaron Green: 7-Zip (via Diigo)</title>
+        <updated>2009-02-16T03:59:28Z</updated>
+        <published>2009-02-16T03:59:28Z</published>
+        <id>tag:friendfeed.com,2007:48739942-e0b1-ab07-931b-66a6819a7565</id>
+        <link href="http://www.7-zip.org/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/draarong">
+                                    <img src="http://friendfeed.com/static/images/icons/diigo.png?v=77441b008df933e10668f53891b0c566" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/draarong" style="color:black;text-decoration:none;font-weight:bold">Aaron Green</a>- 
+                                <a rel="nofollow" href="http://www.diigo.com/profile/drgreen" style="color:black;text-decoration:none">Diigo</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.7-zip.org/" class="main">7-Zip</a>
+                                </div>
+                                <div style="color:#737373">16 hours ago - 
+                                <a href="http://friendfeed.com/e/48739942-e0b1-ab07-931b-66a6819a7565/7-Zip/?login=1&amp;comment=48739942-e0b1-ab07-931b-66a6819a7565" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/48739942-e0b1-ab07-931b-66a6819a7565/7-Zip/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Ethan: Scintillation, A Mix of Stop Motion &amp; Live Projection Mapping (via Google Reader)</title>
+        <updated>2009-02-16T03:22:49Z</updated>
+        <published>2009-02-16T03:22:49Z</published>
+        <id>tag:friendfeed.com,2007:c52504cd-2e8b-3f19-e12a-2b66d6a4cd13</id>
+        <link href="http://feedproxy.google.com/~r/laughingsquid/~3/uBB8Ox7lYD4/" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/ethanmiller">
+                                    <img src="http://friendfeed.com/static/images/icons/googlereader.png?v=5996dd645157314e06bcaaf8f75b6ed9" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/ethanmiller" style="color:black;text-decoration:none;font-weight:bold">Ethan</a>- 
+                                <a rel="nofollow" href="http://www.google.com/reader/shared/07760694261234824394" style="color:black;text-decoration:none">Google Reader</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://feedproxy.google.com/~r/laughingsquid/~3/uBB8Ox7lYD4/" class="main">Scintillation, A Mix of Stop Motion &amp; Live Projection Mapping</a>
+                                </div>
+                                <div style="color:#737373">17 hours ago - 
+                                <a href="http://friendfeed.com/e/c52504cd-2e8b-3f19-e12a-2b66d6a4cd13/Scintillation-A-Mix-of-Stop-Motion-Live/?login=1&amp;comment=c52504cd-2e8b-3f19-e12a-2b66d6a4cd13" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/c52504cd-2e8b-3f19-e12a-2b66d6a4cd13/Scintillation-A-Mix-of-Stop-Motion-Live/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">Very nice imagery - 
+                                            <a href="http://friendfeed.com/ethanmiller" style="color:#7777cc; text-decoration:none">Ethan</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Jay: artichokes are yummy (via Twitter)</title>
+        <updated>2009-02-16T03:12:57Z</updated>
+        <published>2009-02-16T03:12:57Z</published>
+        <id>tag:friendfeed.com,2007:867a4c7b-4863-7109-cb34-4df3c8b33ab8</id>
+        <link href="http://twitter.com/ranchoweb/statuses/1214132952" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/ranchoweb">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/ranchoweb" style="color:black;text-decoration:none;font-weight:bold">Jay</a>- 
+                                <a rel="nofollow" href="http://twitter.com/ranchoweb" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;artichokes are yummy&#8221;</div>
+                                <div style="color:#737373">17 hours ago - 
+                                <a href="http://friendfeed.com/e/867a4c7b-4863-7109-cb34-4df3c8b33ab8/artichokes-are-yummy/?login=1&amp;comment=867a4c7b-4863-7109-cb34-4df3c8b33ab8" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/867a4c7b-4863-7109-cb34-4df3c8b33ab8/artichokes-are-yummy/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Aaron Green: Securing your portable storage: CruzerLock and TrueCrypt | Network Administrator | TechRepublic.com (via Diigo)</title>
+        <updated>2009-02-16T02:37:01Z</updated>
+        <published>2009-02-16T02:37:01Z</published>
+        <id>tag:friendfeed.com,2007:f17b86b3-aba7-ca7a-491e-f92ec3388ce1</id>
+        <link href="http://blogs.techrepublic.com.com/networking/?p=95&amp;tag=rbxccnbtr1" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/draarong">
+                                    <img src="http://friendfeed.com/static/images/icons/diigo.png?v=77441b008df933e10668f53891b0c566" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/draarong" style="color:black;text-decoration:none;font-weight:bold">Aaron Green</a>- 
+                                <a rel="nofollow" href="http://www.diigo.com/profile/drgreen" style="color:black;text-decoration:none">Diigo</a></div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://blogs.techrepublic.com.com/networking/?p=95&amp;tag=rbxccnbtr1" class="main">Securing your portable storage: CruzerLock and TrueCrypt | Network Administrator | TechRepublic.com</a>
+                                </div>
+                                <div style="color:#737373">18 hours ago - 
+                                <a href="http://friendfeed.com/e/f17b86b3-aba7-ca7a-491e-f92ec3388ce1/Securing-your-portable-storage-CruzerLock-and/?login=1&amp;comment=f17b86b3-aba7-ca7a-491e-f92ec3388ce1" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/f17b86b3-aba7-ca7a-491e-f92ec3388ce1/Securing-your-portable-storage-CruzerLock-and/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Brandon: I have some questions about the economy and its impact on various topics: http://tinyurl.com/dmzmcl (via Twitter)</title>
+        <updated>2009-02-16T02:08:11Z</updated>
+        <published>2009-02-16T02:08:11Z</published>
+        <id>tag:friendfeed.com,2007:818548aa-4aff-e847-7522-95d302d4bc57</id>
+        <link href="http://twitter.com/rubywahoo/statuses/1213968623" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/rubywahoo">
+                                    <img src="http://friendfeed.com/static/images/icons/twitter.png?v=df0a0affa8100c494df42159627a38b0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/rubywahoo" style="color:black;text-decoration:none;font-weight:bold">Brandon</a>- 
+                                <a rel="nofollow" href="http://twitter.com/rubywahoo" style="color:black;text-decoration:none">Twitter</a></div>
+                                <div style="margin-bottom:4pt">&#8220;I have some questions about the economy and its impact on various topics: 
+                                <a rel="nofollow" href="http://tinyurl.com/dmzmcl" title="http://rubywahoo.com/2009/02/three-questions-about-the-economy">http://tinyurl.com/dmzmcl</a>&#8221;</div>
+                                <div style="color:#737373">18 hours ago - 
+                                <a href="http://friendfeed.com/e/818548aa-4aff-e847-7522-95d302d4bc57/I-have-some-questions-about-the-economy-and-its/?login=1&amp;comment=818548aa-4aff-e847-7522-95d302d4bc57" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/818548aa-4aff-e847-7522-95d302d4bc57/I-have-some-questions-about-the-economy-and-its/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+    </entry>
+    <entry>
+        <title type="text">Nelson Cheng: The No-Stats All-Star - NYTimes.com (via FriendFeed)</title>
+        <updated>2009-02-15T22:44:26Z</updated>
+        <published>2009-02-15T22:44:26Z</published>
+        <id>tag:friendfeed.com,2007:76a5d2e0-99bc-471b-8a86-bf2446e9ec2d</id>
+        <link href="http://www.nytimes.com/2009/02/15/magazine/15Battier-t.html?ref=magazine&amp;pagewanted=all#" rel="alternate" type="text/html" />
+        <content type="xhtml" xml:base="http://friendfeed.com/">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;font-family:Arial,sans-serif;color:#222222">
+                <div style="margin-bottom:17pt">
+                    <table style="border-spacing:0; border-collapse:collapse">
+                        <tr>
+                            <td style="border:0; padding:0; padding-right:7px; vertical-align:top">
+                                <a href="http://friendfeed.com/nelsonkcheng">
+                                    <img src="http://friendfeed.com/static/images/icons/internal.png?v=e471e9afdf04ae568dcbddb5584fc6c0" style="border:0" width="16" height="16" />
+                                </a>
+                            </td>
+                            <td style="border:0; padding:0; font-family:Arial, sans-serif; font-size:10pt">
+                                <div style="margin-bottom:4pt">
+                                <a href="http://friendfeed.com/nelsonkcheng" style="color:black;text-decoration:none;font-weight:bold">Nelson Cheng</a>(
+                                <a href="http://friendfeed.com/ana" style="color:black;text-decoration:none;font-weight:bold">Ana</a>liked this)</div>
+                                <div style="margin-bottom:4pt">
+                                    <a rel="nofollow" href="http://www.nytimes.com/2009/02/15/magazine/15Battier-t.html?ref=magazine&amp;pagewanted=all#" class="main">The No-Stats All-Star - NYTimes.com</a>
+                                </div>
+                                <div style="margin-bottom:4pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="padding:0; border:0; vertical-align:middle; padding-right:8px">
+                                                <a href="http://www.nytimes.com/2009/02/15/magazine/15Battier-t.html?ref=magazine&amp;pagewanted=all#">
+                                                    <img src="http://i.friendfeed.com/a0b0f5c2b6784bad1a4c37d09045dfba9b950043" class="thumbnail" style="width:317px; height:175px;border:1px solid silver; padding:1px" alt="The No-Stats All-Star - NYTimes.com" title="The No-Stats All-Star - NYTimes.com" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="color:#737373">22 hours ago - 
+                                <a href="http://friendfeed.com/e/76a5d2e0-99bc-471b-8a86-bf2446e9ec2d/The-No-Stats-All-Star-NYTimes-com/?login=1&amp;comment=76a5d2e0-99bc-471b-8a86-bf2446e9ec2d" style="color:#7777cc; text-decoration:none">Comment</a>- 
+                                <a href="http://friendfeed.com/e/76a5d2e0-99bc-471b-8a86-bf2446e9ec2d/The-No-Stats-All-Star-NYTimes-com/?login=1" style="color:#7777cc; text-decoration:none">Like</a></div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:3px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/smile.png?v=d1af5ec06a4071ce3df6627c86ab8b4a" width="16" height="16" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">
+                                            <a href="http://friendfeed.com/ana" style="color:#7777cc; text-decoration:none">Ana</a>, 
+                                            <a href="http://friendfeed.com/wasauce" style="color:#7777cc; text-decoration:none">Bill</a>, 
+                                            <a href="http://friendfeed.com/dhsiao" style="color:#7777cc; text-decoration:none">Dan Hsiao</a>and 
+                                            <a href="http://friendfeed.com/casey" style="color:#7777cc; text-decoration:none">Casey Muller</a>liked this</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="margin-top:6pt">
+                                    <table style="border-spacing:0; border-collapse:collapse">
+                                        <tr>
+                                            <td style="border:0; padding:0; padding-left:12px; padding-right:5px; padding-top: 2px; vertical-align:top">
+                                                <img src="http://friendfeed.com/static/images/comment-lighter.png?v=f43f3a0844ee5082e1691e615b810c8d" width="14" height="11" />
+                                            </td>
+                                            <td style="border:0; padding:0; font-family:Arial,sans-serif; font-size:10pt; color:#737373; vertical-align:middle">"Here we have a basketball mystery: a player is widely regarded inside the N.B.A. as, at best, a replaceable cog in a machine driven by superstars. And yet every team he has ever played on has acquired some magical ability to win. Solving the mystery is somewhere near the heart of Daryl Morey&#226;&#196;&#244;s job." - 
+                                            <a href="http://friendfeed.com/nelsonkcheng" style="color:#7777cc; text-deration:none">Nelson Cheng</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </content>
+        <media:group>
+            <media:content url="http://graphics8.nytimes.com/images/2009/02/07/magazine/15battier-600.jpg" type="image/jpeg" width="600" height="331" />
+            <media:thumbnail url="http://i.friendfeed.com/a0b0f5c2b6784bad1a4c37d09045dfba9b950043" width="317" height="175" />
+        </media:group>
+    </entry>
+</feed>

@@ -98,8 +98,7 @@ class Facet_Model extends Model {
                "FROM facets_user " .
                "JOIN facets ON facets.id = `facets_user`.facet_id " .
                "WHERE user_id = $userId AND " .
-               "'$time' BETWEEN start_date AND end_date OR " .
-               "start_date <  '$time' AND end_date IS NULL";
+               "'$time' BETWEEN start_date AND end_date ";
         Kohana::log('info', $sql);
         return $this->db->query($sql)->result_array(FALSE);
     }

@@ -40,15 +40,15 @@ class Resources_Controller extends Template_Controller
      */
     public function query_facets()
     {
-
         $this->auto_render=false;
+        //TODO hook up $msg
         $msg = "";
         if (request::method() == "post") {
             
             $post = $this->input->post();            
             $query = json_decode($post['q'], true);            
             $origItems = $query['urls'];
-            
+            Kohana::log('info', "Servicing /resources/query_facets urls = " . Kohana::debug($origItems));
             //TODO url_decode each url before using...
             $items_by_author = $this->_prepareItemsByAuthor($origItems);
             $this->_facetItemsAnAuthorAtATime($items_by_author, $origItems);
@@ -77,8 +77,10 @@ class Resources_Controller extends Template_Controller
             $query = json_decode($post['q'], true);
             $items = $query['urls'];
             //TODO url_decode each url before using...
-                            
+            Kohana::log('info', "Servicing /resources/user/" . $username . "/" . $action . " urls = " . Kohana::debug($items));
+            
             $userId = $this->_userId($username);
+            
             if( $userId <= 0 ) {
                 //TODO if request is for one unknown user... send a 404
                 header('http_response_code', true, 404);                
@@ -94,7 +96,7 @@ class Resources_Controller extends Template_Controller
     private function _userId($username)
     {
         //$model = ORM::factory('user')->find(11);//'username', $username);
-        $model = ORM::factory('user')->where('username', 'pattyok')->find();        
+        $model = ORM::factory('user')->where('username', $username)->find();        
         return $model->id;
     }
     private function _updateFacetInfo($userId, $currentFacets, &$items)
@@ -102,6 +104,7 @@ class Resources_Controller extends Template_Controller
         foreach($items as $i => $item){            
             $date = $item['published'];                
             $facets = $this->facetDb->facetsDuring($userId, $date);
+            // TODO make sure facets are uniqu(!?!)
             if (count($facets) > 0) {
                 $items[$i]['facets'] = $facets;
             } else {
@@ -131,8 +134,11 @@ class Resources_Controller extends Template_Controller
     
     private function _facetItemsAnAuthorAtATime(&$items_by_author, &$origItems)
     {
+        $msg = "";
         foreach ($items_by_author as $username => $items) {
             $userId = $this->_userId($username);
+            Kohana::log('info', "_facetItemsAnAuthorAtATime username=$username userId=$userId " . " items=" .
+                        Kohana::debug($items));
             if( $userId <= 0 ) {
                 $s = "WARNING: Query contains an unknown username $username id: $userId\n";
                 $msg += $s;
@@ -143,12 +149,18 @@ class Resources_Controller extends Template_Controller
                 $this->_updateFacetInfo($userId, $currentFacets, $items_by_author[$username]);
                 foreach($items_by_author[$username] as $i => $facetedItem) {
                     $index = $facetedItem['index'];
+                    Kohana::log('info', $facetedItem['index']);
                     if( array_key_exists('facets', $facetedItem)) {
+                        //Kohana::log('info', "index is " . $index);
+                        
+                        Kohana::log('info', "Updating " . Kohana::debug($facetedItem['facets']) . " onto " . Kohana::debug($origItems[$index]));
                         $origItems[$index]['facets'] = $facetedItem['facets'];
+                        Kohana::log('info', "Now it looks like " . Kohana::debug($origItems[$index]));
                     }
                 }
             }    
         }
+        return $msg;
     }
 }
 ?>
