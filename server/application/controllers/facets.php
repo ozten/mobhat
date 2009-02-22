@@ -46,7 +46,7 @@ class Facets_Controller extends Template_Controller {
     Kohana::log('info', request::method());
     $facet = new Facet_Model();
     if( request::method() == "get"){
-		
+      Kohana::log('info', "METERING GET facets/current username=$username");
       echo json_encode($this->_get_current($username, $facet));
     }else if(request::method() == "put"){
       
@@ -55,7 +55,8 @@ class Facets_Controller extends Template_Controller {
       while ($data = fread($putdata, 1024)){
 	    $thedata = $thedata . $data;
       }
-	  Kohana::log('info', $thedata);
+	  Kohana::log('info', "METERING PUT facets/current username=$username data=$thedata");
+	  
 	  $newFacets = json_decode($thedata);
 	  Kohana::log('info', 'decoded json is ' . Kohana::debug($newFacets));
 	  $proof = $this->proof($newFacets, $username, $facet);
@@ -154,9 +155,10 @@ class Facets_Controller extends Template_Controller {
    $.ajax( {url:'/facets/u/ozten/foo', type:'DELETE'});
   */
   public function u($username, $facet){
+		Kohana::log('info', "METERING " . request::method() . "facets/u username=$username facet=$facet");
 		$this->auto_render=false;
 		$facetDb = new Facet_Model();
-		Kohana::log('info', request::method());
+		
 		if( request::method() == "delete"){
 		  $facetDb->remove_user_facet($username, $facet);
 		}else{
@@ -164,6 +166,5 @@ class Facets_Controller extends Template_Controller {
 				header('http_response_code', true, 501);
 				echo "Unsupported Operation";		
 		}
-		
   }
 }

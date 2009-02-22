@@ -17,11 +17,14 @@ class Users_Controller extends Controller
     
     public function whoami()
     {
+        Kohana::log('info', "METERING " . request::method() . "users/whoami");
+
         $this->auth->auto_login();
         if (! $this->auth->logged_in()) {
+            Kohana::log('info', "Noone logged in... sending to auth");
             $this->session->set("requested_url","/". url::current() );
             url::redirect('/auth_demo/login_form');
-        } else {			
+        } else {            
             $this->user = Session::instance()->get('auth_user');            
             $this->auto_render = FALSE;
             

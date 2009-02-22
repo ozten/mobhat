@@ -39,7 +39,7 @@ class Resources_Controller extends Template_Controller
      });
      */
     public function query_facets()
-    {
+    {		
         $this->auto_render=false;
         //TODO hook up $msg
         $msg = "";
@@ -48,12 +48,15 @@ class Resources_Controller extends Template_Controller
             $post = $this->input->post();            
             $query = json_decode($post['q'], true);            
             $origItems = $query['urls'];
-            Kohana::log('info', "Servicing /resources/query_facets urls = " . Kohana::debug($origItems));
+            
+            Kohana::log('info', "METERING POST resources/query_facets urls=" . Kohana::debug($origItems));
+
             //TODO url_decode each url before using...
             $items_by_author = $this->_prepareItemsByAuthor($origItems);
             $this->_facetItemsAnAuthorAtATime($items_by_author, $origItems);
             echo json_encode($origItems);
         } else {
+            Kohana::log('alert', request::method() . " on resources/query_facets INVALID, expected POST");
             echo json_encode(array('error' => "Unknown action, expecting POST"));
         }
     }
@@ -77,12 +80,13 @@ class Resources_Controller extends Template_Controller
             $query = json_decode($post['q'], true);
             $items = $query['urls'];
             //TODO url_decode each url before using...
-            Kohana::log('info', "Servicing /resources/user/" . $username . "/" . $action . " urls = " . Kohana::debug($items));
+            Kohana::log('info', "METERING POST resources/user username=$username action=$action urls=" . Kohana::debug($items));
             
             $userId = $this->_userId($username);
             
             if( $userId <= 0 ) {
                 //TODO if request is for one unknown user... send a 404
+                Kohana::log('alert', "Couldn't find an id for username $username");
                 header('http_response_code', true, 404);                
             } else {
                 $currentFacets = $this->facetDb->current_facets($username);

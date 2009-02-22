@@ -922,8 +922,10 @@ Oface.WhatPageIsThis = {
     var url = doc.location.href;
     //TODO 
     if (url == "http://oface.ubuntu/static/test_files/ff-pattyok.html") {
+      CmdUtils.log('Replacing ' + url + " with hardcoded http://friendfeed.com/pattyok");
       url = "http://friendfeed.com/pattyok";
     } else if(url == "http://oface.ubuntu/static/test_files/ozten_home.html") {
+      CmdUtils.log('Replacing ' + url + " with hardcoded http://friendfeed.com/");
       url = "http://friendfeed.com/";
     }
     var aPageType = this.pageType(url);
