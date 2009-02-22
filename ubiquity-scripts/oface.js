@@ -175,9 +175,8 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
 						<div id="all-facets">
 								<h4>All Facets</h4>
 
-								<ul id='switcher-facetlist' style="list-style-type: none;">
-                                <!-- TODO li id="template" doesn't get overwritten -->
-										<li id="template" style="float: left; margin-right: 5px"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
+								<ul id='switcher-facetlist' style="list-style-type: none;">                                
+										<li style="float: left; margin-right: 5px"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
 								</ul>
                           <div style="clear:left">
 						    <label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
@@ -187,11 +186,12 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
 				</div>.toXMLString();
                 CmdUtils.log(switcherXml);
                 $('#oface-enabler', doc).after(switcherXml);
-                //TODO does this work without the context?
-                
+                //TODO is this duplicated between orig oface and the switcher?
                 $.get(this.server + '/facets/current/' + this.username, {},
                     function(json) {
+                      
                         Oface.Models.Facet.updateCurrent(json);
+                        
                         //TODO using call here isn't necissary
                         var curFacetView = Oface.Views.Facet.createCurrent.call(Oface.Views.Facet);
                         
@@ -241,9 +241,8 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                                     f.find('.remove-facet-a').bind('click', {
                                             facet: allFacets[i]['description']
                                         },
-                                        function(event) {
-                                            //TODO username is available in this scope
-                                            Oface.Models.Facet.removeUserFacet(Oface.Controllers.Facet.username, event.data.facet);
+                                        function(event) {                                            
+                                            Oface.Models.Facet.removeUserFacet(that.username, event.data.facet);
                                             //Oface.Views.Facet.showCurrent();
                                             //Oface.Views.Facet.createAll(Oface.Controllers.Facet.username);
                                             CmdUtils.log('deleted a facet');
@@ -272,7 +271,7 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                                 curFacetView(currentFacets[i]['weight'],
                                              currentFacets[i]['description']);                               
                         }
-                        //TODO get rid of jQuery here... 
+                        
                 $('#switcher-current-facets li', doc).click(Oface.Views.Facet.showAll);
                 Oface.Views.Facet.showCurrent();
                 
@@ -320,8 +319,9 @@ function ofaceToggler(){
   var doc = Application.activeWindow.activeTab.document;
 
   if(oFaceIsEnabled){
-    $('h3#oface-enabler span.status', doc).text("Disabled");
-    $('h3#oface-enabler span.current-facet', doc).hide();
+    $('h3#oface-enabler span.status', doc).text("Disabled");    
+    //TODO show/hide is broken here... why?
+    $('.current-facet', doc).hide();
     $('#oface-other-facets', doc).hide();
     lastSeenFacetHeadings = $('h4.facet:visible', doc).hide();
     lastHiddenSubItems = $('.entry:hidden',doc);
@@ -330,12 +330,13 @@ function ofaceToggler(){
     $('.oface:hidden').show();
     lastHiddenSubItems.show();
     jQuery('div.cluster', doc).not('.oface').show();
+    jQuery('.current-facet', doc).show();
     oFaceIsEnabled = false;
     
     
   }else{
     $('h3#oface-enabler span.status', doc).text("Enabled");
-    $('h3#oface-enabler span.current-facet', doc).show();
+    $('.current-facet', doc).show();
     $('#oface-other-facets', doc).show();
     lastSeenFacetHeadings.show();
     lastHiddenItems.hide();
@@ -343,6 +344,7 @@ function ofaceToggler(){
     lastHiddenSubItems.hide();
     jQuery('div.cluster', doc).not('.oface').hide();
     //TODO finish disabling oface
+    
     oFaceIsEnabled = true;
   }
 }
@@ -438,8 +440,7 @@ var ofaceObj = {
                    published: jQuery('published', this).text()};
       if (isEachWithUsername) {
         try{
-          //TODO brittle
-          //aok a
+          //TODO brittle          
           var selector = that.linkSelector(url, tab);
           //'a[href=' + url + ']'
           var userHref = $('div.summary a.l_person', $($(selector, tab.document).get(0)).parent().parent().parent()).attr('href');
@@ -490,10 +491,7 @@ var ofaceObj = {
               CmdUtils.log('caught error while in getFacetsForUser');
               CmdUtils.log(e);
             }
-            var currentFacet = 'art';//TODO
-            
-            CmdUtils.log('never here');
-            
+            var currentFacet = 'art';//TODO does this duplicate efforts of the Switcher
             that.updateDisplayWithOtherFacets(data, currentFacet, tab, that);
             //simulate click on facet heading
             that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0), aUsername);
@@ -552,9 +550,7 @@ var ofaceObj = {
             for(var i=0; i<jsn.length; i++){
               try{
                 if (jsn[i]['facets']) {
-                  //TODO we are throwing away id, created date
-              
-                  //TODO loop through here and grab all the facets instead of the first
+                  //TODO we are throwing away id and create data, etc
                   data.push({
                     facets: [jsn[i]['facets'][0]['description']],
                     url: unescape(jsn[i]['url'])
@@ -568,7 +564,7 @@ var ofaceObj = {
             that.addOfaceEnabled();
             //aok
             that.updateDisplayWithFacets(data, tab, that);            
-            var currentFacet = 'geek';//TODO
+            var currentFacet = 'geek';//TODO does this duplicate Switcher
             var aUsername    = 'ozten'; //TODO
             that.updateDisplayWithOtherFacets(data, currentFacet, tab, that);
             //simulate click on facet heading
@@ -704,8 +700,9 @@ var ofaceObj = {
     //hide currentFacet
   },
   switchDisplayWithOtherFacets: function(currentFacet, tab){
+    CmdUtils.log('switchDisplayWithOtherFacets');
     jQuery('#oface-other-facets li:hidden', tab.document).show();
-    jQuery('#oface-other-facets #oface-enabler-' + currentFacet + "-other", tab.document).hide();
+    jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
     var cluster = element;//.parent();
@@ -761,9 +758,7 @@ var ofaceObj = {
     
     //jQuery('div.cluster', doc).not('.oface').hide('slow');
     
-    //TODO call switchDisplayWithOtherFacets
-    jQuery('#oface-other-facets li:hidden', doc).show();
-    jQuery('#oface-other-facets #oface-enabler-' + facet + "-other", doc).hide();
+    ofaceObj.switchDisplayWithOtherFacets(facet, Application.activeWindow.activeTab);
   },  
   md5: function(str){
     // https://developer.mozilla.org/en/nsICryptoHash
@@ -920,11 +915,11 @@ Oface.WhatPageIsThis = {
     */
     var doc = Application.activeWindow.activeTab.document;
     var url = doc.location.href;
-    //TODO 
-    if (url == "http://oface.ubuntu/static/test_files/ff-pattyok.html") {
+    
+    if (url.indexOf("http://oface.ubuntu/static/test_files/ff-pattyok.html") >= 0) {
       CmdUtils.log('Replacing ' + url + " with hardcoded http://friendfeed.com/pattyok");
       url = "http://friendfeed.com/pattyok";
-    } else if(url == "http://oface.ubuntu/static/test_files/ozten_home.html") {
+    } else if(url.indexOf("http://oface.ubuntu/static/test_files/ozten_home.html") >=0) {
       CmdUtils.log('Replacing ' + url + " with hardcoded http://friendfeed.com/");
       url = "http://friendfeed.com/";
     }
