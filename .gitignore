@@ -16,6 +16,8 @@ server/application/config/session.php
 server/modules/auth/config/auth.php
 server/static/.DS_Store
 server/static/._test_files
+server/static/test_files/._ozten_home
+server/static/test_files/._ozten_home_files
 server/static/js/lib/._jquery-1.3.js
 test-sync.txt
 test

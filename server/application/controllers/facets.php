@@ -60,6 +60,7 @@ class Facets_Controller extends Template_Controller {
 	  Kohana::log('info', 'decoded json is ' . Kohana::debug($newFacets));
 	  $proof = $this->proof($newFacets, $username, $facet);
 	  if($proof[0]){
+		Kohana::log('info', "username is " . Kohana::debug($username));
 		Kohana::log('info', Kohana::debug($newFacets));
         $this->_set_current($username, $newFacets, $facet);
 	  }else{
