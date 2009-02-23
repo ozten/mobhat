@@ -232,6 +232,7 @@ class Database_Core {
 	 */
 	public function query($sql = '')
 	{
+		
 		if ($sql == '') return FALSE;
 
 		// No link? Connect!
@@ -251,7 +252,7 @@ class Database_Core {
 		{
 			$sql = $this->compile_binds($sql, $binds);
 		}
-
+        Kohana::log('info', "=DB= " . $sql);
 		// Fetch the result
 		$result = $this->driver->query($this->last_query = $sql);
 

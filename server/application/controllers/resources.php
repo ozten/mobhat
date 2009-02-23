@@ -1,4 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
+
 /*
   Facets are the "hats" that people wear throughout the day.
   We have various social identities that we perform for different audiences.
@@ -95,6 +96,8 @@ class Resources_Controller extends Template_Controller
             //TODO wrap with in an object {urls: $items, user: {profile: url}} etc
             echo json_encode($items);
              
+        } else {
+            Kohana::log('alert', "Unknown action [$action] was expecting query_facets");
         }
     }
     private function _userId($username)
@@ -105,11 +108,29 @@ class Resources_Controller extends Template_Controller
     }
     private function _updateFacetInfo($userId, $currentFacets, &$items)
     {
-        foreach($items as $i => $item){            
-            $date = $item['published'];                
-            $facets = $this->facetDb->facetsDuring($userId, $date);
+        Kohana::log('info', "=================");
+        $this->urlDb = new Url_Model;
+        foreach($items as $i => $item){
+            $found = false;
+            //TODO check if md5 is set, url is set, validate them...
+            //thing about policy during read vs update/set
+            $md5sum = md5($item['url']);
+            $url = $item['url'];
+            Kohana::log('info', "given $url using md5 $md5sum");
+            $facets = $this->urlDb->facetsFor($userId, $md5sum);
+            Kohana::log('info', "we get " . Kohana::debug($facets));
+            if (count($facets) > 0) {
+                $found = false;
+            } else {
+                $date = $item['published'];                
+                $facets = $this->facetDb->facetsDuring($userId, $date);
+            }
             // TODO make sure facets are uniqu(!?!)
             if (count($facets) > 0) {
+                if ( ! $found) {
+                    //TODO stopped here.. create url model and this method
+                    $this->urlDb->createUrl($url, $md5sum, $userId, $facets);
+                }
                 $items[$i]['facets'] = $facets;
             } else {
                 $items[$i]['facets'] = $currentFacets;

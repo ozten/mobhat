@@ -379,7 +379,7 @@ var ofaceObj = {
         var sucessFn;
         if( page.type == Oface.WhatPageIsThis.PROFILE_PAGE ) {
           var username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
-          successFn = function(data, status){
+          successFn = function(data, status){            
             CmdUtils.log("atom feed XHR call status " + status);
             CmdUtils.log(data);
             var urls = that.processFeedForUrls(data.documentElement, tab, that);
@@ -418,7 +418,8 @@ var ofaceObj = {
         success: successFn,
         error: function(xhr, status, err){
           CmdUtils.log("Ouch trouble fetching the feed " + url);
-          CmdUtils.log("XHR call status " + status);
+          CmdUtils.log(xhr);
+          CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);
           CmdUtils.log(err);
         }
       };
@@ -501,8 +502,9 @@ var ofaceObj = {
           }
       },
       error: function(xhr, status, err){
-          CmdUtils.log("Ouch trouble fetching facet info for urls ");
-          CmdUtils.log("XHR call status " + status);
+          CmdUtils.log("Ouch trouble fetching facet info for urls during getFacetsForUser ");
+          CmdUtils.log(xhr);          
+          CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);          
           CmdUtils.log(err);
       },
       complete: function(){
@@ -576,8 +578,9 @@ var ofaceObj = {
           }
       },
       error: function(xhr, status, err){
-          CmdUtils.log("Ouch trouble fetching facet info for urls ");
-          CmdUtils.log("XHR call status " + status);
+          CmdUtils.log("Ouch trouble fetching facet info for urls during getFacetsForManyUsers ");
+          CmdUtils.log(xhr);
+          CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);
           CmdUtils.log(err);
       },
       complete: function(){

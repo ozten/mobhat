@@ -29,49 +29,92 @@ class Facet_Model extends Model {
     
     return $this->db->query($sql)->result_array(FALSE);
   }
+    //TODO refactor with set_facets below
+    public function getOrCreateFacets($theFacets)
+    {
+        $newFacetIds = array();
+        $facetsToInsert = array();
+        $theFacetDescs = array();
+        foreach($theFacets as $facet){
+            Kohana::log('info', Kohana::debug($facet));
+            $facetsToInsert[$facet['description']] = TRUE;
+            array_push($theFacetDescs, $facet['description']);
+        }
+        $existingFacets = $this->_getFacets($theFacetDescs);
+    
+        foreach($existingFacets as $facet){
+          array_push($newFacetIds, $facet['id']);
+          if( array_key_exists($facet['description'], $facetsToInsert) ){
+           unset($facetsToInsert[$facet['description']]);
+          }else{
+            Kohana::log('alert', "Skipping " . $facet . ", didn't find it in " . Kohana::debug($facetsToInsert));
+          }
+        }
+        Kohana::log('info', "new facets so far..." . Kohana::debug($newFacetIds));
+        foreach(array_keys($facetsToInsert) as $facet){
+          $facetId = $this->_createFacet($facet);
+          array_push($newFacetIds, $facetId[0]->id);
+          Kohana::log('info', "Searching for ids gives us " . Kohana::debug($query));
+        }
+    
+        return $this->_getFacets($theFacetDescs);
+    }
+    /**
+     * @param Array string - a list of facet descriptions
+     */
+    private function _getFacets($newFacets)
+    {
+        Kohana::log('info', Kohana::debug($newFacets));
+        $sql = "SELECT id, description FROM facets WHERE description IN ('" .
+        implode("', '", $newFacets) . "')";
+    
+        $query = $this->db->query($sql);
+        return $query->result_array(FALSE);
+    }
+    
+    private function _createFacet($facet)
+    {
+        $sql = "INSERT INTO facets (description) VALUES('" . $facet . "')";
+        
+        $this->db->query($sql);
+        //TODO can we use insert_id?
+        $sql = "SELECT id FROM facets WHERE description = '" . $facet . "'";
+        
+        return $this->db->query($sql);
+    }
   
   public function set_facets($username, $newFacets){
     $newFacetIds = array();
+    $newFacetDescs = array();
     $facetsToInsert = array();
     foreach($newFacets as $facet){
       $facetsToInsert[$facet] = TRUE;
+      array_push($newFacetDescs, $facet);
     }
-    Kohana::log('info', Kohana::debug($newFacets));
-    $sql = "SELECT id, description FROM facets WHERE description IN ('" .
-           implode("', '", $newFacets) . "')";
+    $existingFacets = $this->_getFacets($newFacetDescs);
     
-    Kohana::log('info', $sql);
-    $query = $this->db->query($sql);
-    $existingFacets = $query->result_array(FALSE);
     foreach($existingFacets as $facet){
       array_push($newFacetIds, $facet['id']);
       if( array_key_exists($facet['description'], $facetsToInsert) ){
        unset($facetsToInsert[$facet['description']]);
       }else{
-        Kohana::log('warn', "Skipping " . $facet . ", didn't find it in " . Kohana::debug($facetsToInsert));
+        Kohana::log('alert', "Skipping " . $facet . ", didn't find it in " . Kohana::debug($facetsToInsert));
       }
     }
     Kohana::log('info', "new facets so far..." . Kohana::debug($newFacetIds));
     foreach(array_keys($facetsToInsert) as $facet){
-      $sql = "INSERT INTO facets (description) VALUES('" . $facet . "')";
-      Kohana::log('info', $sql);
-      $this->db->query($sql);
-      $sql = "SELECT id FROM facets WHERE description = '" . $facet . "'";
-      Kohana::log('info', $sql);
-      $facetId = $this->db->query($sql);
+      $facetId = $this->_createFacet($facet);
       array_push($newFacetIds, $facetId[0]->id);
       Kohana::log('info', "Searching for ids gives us " . Kohana::debug($query));
     }
+    
     $userId = User_Model::username_to_id($username, $this->db);
     $this->remove_old_facets($userId);
     foreach($newFacetIds as $id){
       $sql = "INSERT INTO facets_user (facet_id, user_id, username, start_date) VALUES (" . $id . ", " . $userId . ", '" . $username . "', NOW())";
-      Kohana::log('info', $sql);
+      
       $this->db->query($sql);
     }
-    
-    //Kohana::log('info', Kohana::debug($existingFacets));
-    //Kohana::log('info', Kohana::debug($facetsToInsert));
     return $newFacets;
   }
   
@@ -87,7 +130,7 @@ class Facet_Model extends Model {
     $sql = "DELETE FROM facets_user WHERE facets_user.username = '$username' " .
     "AND facets_user.facet_id = ( " .
     "  SELECT id FROM facets WHERE facets.description = '$facet');";
-    Kohana::log('info', $sql);
+    
     $query = $this->db->query($sql);
     Kohana::log('info', $query->count());
   }
@@ -99,8 +142,10 @@ class Facet_Model extends Model {
                "JOIN facets ON facets.id = `facets_user`.facet_id " .
                "WHERE user_id = $userId AND " .
                "'$time' BETWEEN start_date AND end_date ";
-        Kohana::log('info', $sql);
+        
         return $this->db->query($sql)->result_array(FALSE);
     }
+    
+    
 }
 ?>
