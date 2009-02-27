@@ -21,6 +21,7 @@ class Auth_Demo_Controller extends Template_Controller {
 
   public function index()
   {
+    Kohana::log('info', "METERING " . request::method() . "auth_demo/index");
     // Display the install page
     $this->template->title   = 'Auth Module Installation';
     $this->template->content = View::factory('auth_demo/install');
@@ -28,12 +29,14 @@ class Auth_Demo_Controller extends Template_Controller {
 
   public function create()
   {
+    Kohana::log('info', "METERING " . request::method() . "auth_demo/create");
     $this->template->title = 'Create User';
     $this->template->content = View::factory('auth_demo/create');
 
   }
   public function save()
   {
+    Kohana::log('info', "METERING " . request::method() . "auth_demo/save");
     $user = ORM::factory('user');
     $user->email = $this->input->post("email");
     $user->username = $this->input->post("username");
@@ -49,41 +52,78 @@ class Auth_Demo_Controller extends Template_Controller {
 
   public function login_form()
   {
+    Kohana::log('info', "METERING " . request::method() . "auth_demo/login_form");
     $this->template->title = "User Login Form";
-    $this->template->content = View::factory('auth_demo/login_form');
+	$this->template->content = View::factory('auth_demo/login_form');
+	
   }
 
   public function login()
   {
+    Kohana::log('info', "METERING " . request::method() . "auth_demo/login");
     $this->session = Session::instance();
     if (Auth::instance()->logged_in())
     {
+		//TODO JSON unhandled case... login called when already logged in
       $this->template->title = 'User Logout';
       $this->template->content = View::factory('auth_demo/success');
     }else{
       $this->template->title = 'User Login';
-
+      Kohana::log('info', "Checking " . $this->input->post("username") . " and " . $this->input->post("password"));
       // Load the user
       $user = ORM::factory('user', $this->input->post("username"));
 
-      if (Auth::instance()->login($user, $this->input->post("password"), true))
-      {
-        // Login successful, redirect
-        url::redirect($this->session->get("requested_url"));
-
-        $this->template->content = View::factory('auth_demo/success');        
+      if (Auth::instance()->login($user, $this->input->post("password"), true)) {
+		  if ($this->_isJSON()) {
+				Kohana::log('info', "JSON request");
+		      $this->auto_render = FALSE;
+			  header("Content-type: application/json; charset=utf-8");
+			  echo json_encode(array(
+                  'status' => 'OK',
+                  'message' => 'retry-whoami'
+		      ));	
+		  } else {
+				
+              // Login successful, redirect
+              url::redirect($this->session->get("requested_url"));
+		  }
+          $this->template->content = View::factory('auth_demo/success');        
       } else {
-        $this->template->content = View::factory('auth_demo/fail');
+		
+		  if ($this->_isJSON()) {
+				Kohana::log('info', "JSON request");
+		      header("Login Required", true, 401);
+			  $this->auto_render = FALSE;
+			  header("Content-type: application/json; charset=utf-8");
+              echo json_encode(array(
+                    'status' => 'LOGIN_FAIL',
+                    'loginAction' => '/auth_demo/login'
+			  ));
+		  } else {
+				Kohana::log('info', "NOT JSON request");
+              $this->template->content = View::factory('auth_demo/fail');
+		  }
       }
     }
   }
 
   public function logout()
   {
+    Kohana::log('info', "METERING " . request::method() . "auth_demo/logout");
     // Force a complete logout
     Auth::instance()->logout(TRUE);
 
     // Redirect back to the login page
     url::redirect('auth_demo/login_form');
   }
+  
+    private function _isJSON(){
+		$headers = getallheaders();
+        $acceptHeader = $headers['Accept'];
+        if (strpos($acceptHeader, "pplication/json")) {
+			return true;
+		} else {
+		    return false;
+		}
+    }
 }

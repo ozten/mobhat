@@ -115,6 +115,11 @@ class Resources_Controller extends Template_Controller
             //TODO check if md5 is set, url is set, validate them...
             //thing about policy during read vs update/set
             $md5sum = md5($item['url']);
+            $origMd5sum = NULL;
+            Kohana::log('info', Kohana::debug($item));
+            if (isset($item['md5sum']) && $md5sum != $item['md5sum']) {
+                Kohana::log('alert', "client HASH $md5sum != Server HASH " . $item['md5sum']);
+            }
             $url = $item['url'];
             Kohana::log('info', "given $url using md5 $md5sum");
             $facets = $this->urlDb->facetsFor($userId, $md5sum);
@@ -122,9 +127,11 @@ class Resources_Controller extends Template_Controller
             if (count($facets) > 0) {
                 $found = false;
             } else {
-                $date = $item['published'];                
+                
+                $date = $item['published'];
                 $facets = $this->facetDb->facetsDuring($userId, $date);
             }
+            
             // TODO make sure facets are uniqu(!?!)
             if (count($facets) > 0) {
                 if ( ! $found) {
@@ -133,6 +140,10 @@ class Resources_Controller extends Template_Controller
                 }
                 $items[$i]['facets'] = $facets;
             } else {
+                //TODO we ignore the currentFacets which come into this function...
+                //user them as a last resort, instead of having $urlDb->facetsFor
+                //regrabbing the current facets
+                Kohana::log('alert', "really? I know this is user $userId but I couldn't find any facets for " . Kohana::debug($item));
                 $items[$i]['facets'] = $currentFacets;
             }
         }
@@ -169,6 +180,7 @@ class Resources_Controller extends Template_Controller
                 $msg += $s;
                 Kohana::log('alert', $s);
             } else {
+                Kohana::log('info', "Right here in _facetItemsAnAuthorAtATime username=" . $username);
                 //TODO include link to profile and current facets for each user?
                 $currentFacets = $this->facetDb->current_facets($username);            
                 $this->_updateFacetInfo($userId, $currentFacets, $items_by_author[$username]);

@@ -1,4 +1,82 @@
 ;
+var identity = null;
+//TODO namespace this...
+function whoAmI(oface){
+    //get userame and current facets... force login if need be
+    
+    jQuery.ajax({
+        type: "GET",
+        url: "http://oface.ubuntu/users/whoami?cache_bust=" + escape(new Date()),
+        async: false,
+        cache: false,
+        dataType: "json",
+        success: function(data, status){
+          //TODO jQuery json ... data is a string and not an oject...why?
+            CmdUtils.log("whoAmI success with: " + data['id'] + " " + data['username']);
+            identity = data;
+            jQuery('#oface-login-form', Application.activeWindow.activeTab.document).hide();
+            oface.continueEnablingOface();
+        },
+        error: function(xhr, status, error){
+          CmdUtils.log(xhr);
+          CmdUtils.log(xhr.status);
+            if (xhr.status == 401) {
+                askForLogin(oface);
+            } 
+            CmdUtils.log("whoAmI ERROR with: ");
+            CmdUtils.log(xhr);
+            CmdUtils.log(status);
+            CmdUtils.log(error);
+            
+        }
+    });
+}
+
+function askForLogin(oface){
+  
+  var doc = Application.activeWindow.activeTab.document;
+  var $ = jQuery;
+  var form = <div id="oface-login-form"
+                  style="position: fixed; top: 100px; left: 100px; z-index: 666; background-color: #FFF; color: #333">
+                          <div>
+                            <h1>OFace requires a Login:</h1>
+                            <p id="message">Please login to use OFace</p>
+                            Username: <input type="text" value="" name="username" id="username" /><br />
+                            Password: <input type="password" value="" name="password" id="password" /><br />
+                            <input type="submit" value="Login" name="submit" id="submit" />
+                            <input type="submit" value="Cancel" name="cancel" id="cancel" />
+                          </div>
+                        </div>.toXMLString();
+  $('#feed1', doc).append(form);
+  $('#oface-login-form #submit', doc).click(function(){
+      //TODO validate
+      //TODO handle bad login...
+      var formData = { username: $('#oface-login-form #username', doc).attr('value'),
+                       password: $('#oface-login-form #password', doc).attr('value') };
+      $.ajax({
+        type: "POST",
+        url: "http://oface.ubuntu/auth_demo/login",
+        async: false,
+        cache: false,
+        dataType: "json",
+        data: formData,
+        beforeSend: function(xhr){
+            $('#oface-login-form #message', doc).text("Checking Username and Password.");
+        },
+        success: function(data, status){
+            whoAmI(oface);
+        },
+        error: function(xhr, status, error){          
+            $('#oface-login-form #message', doc).text("Username or Password were incorrect. Please try again.");
+            CmdUtils.log("login ERROR with: ");
+            CmdUtils.log(xhr);
+            CmdUtils.log(status);
+            CmdUtils.log(error);
+        }
+    });
+    });
+}
+
 var Oface = Oface || {};
 Oface.Models = Oface.Models || {};
 
@@ -349,6 +427,8 @@ function ofaceToggler(){
   }
 }
 
+
+
 var ofaceObj = {
   name: "fetch-feed-oface",
   env: "http://friendfeed.com",
@@ -362,7 +442,10 @@ var ofaceObj = {
     }
   },
   preview: function(pblock, input){
-    var tab = Application.activeWindow.activeTab;    
+    whoAmI(this);
+  },
+  continueEnablingOface: function(){
+        var tab = Application.activeWindow.activeTab;    
     var url = this.envFor(tab.document.location.href) + jQuery('link[type=application/atom+xml]', tab.document).attr('href');
     CmdUtils.log('URL=' + url);
     var that = this;
@@ -385,7 +468,7 @@ var ofaceObj = {
             var urls = that.processFeedForUrls(data.documentElement, tab, that);
             CmdUtils.log(urls);
             CmdUtils.log('in preview calling that.getFacetsForUser');
-            that.getFacetsForUser(that, tab, pblock, username, urls, false);          
+            that.getFacetsForUser(that, tab, username, urls, false);          
           };          
         } else {
           // Home, or other mixed username page... not in the url
@@ -401,14 +484,12 @@ var ofaceObj = {
               }
             }
             CmdUtils.log(validItems);
-            that.getFacetsForManyUsers(that, tab, pblock, validItems);          
+            that.getFacetsForManyUsers(that, tab, validItems);          
           };   
         }
         var h = this.fetchFeed(that, tab, username, url, successFn);
         jQuery.ajax(h, tab);
-        if(pblock){
-          pblock.innerHTML = "Loading";
-        }
+        
       }
     }
   },
@@ -437,7 +518,7 @@ var ofaceObj = {
       var url = jQuery('link', this).attr('href');
       var time = jQuery('published', this).text();
       var item = {url: escape(url),
-                   id: that.md5(url),
+                   md5sum: that.md5(url),
                    published: jQuery('published', this).text()};
       if (isEachWithUsername) {
         try{
@@ -461,7 +542,7 @@ var ofaceObj = {
       });
     return urls;
   },
-  getFacetsForUser: function(that, tab, pblock, aUsername, urls){
+  getFacetsForUser: function(that, tab, aUsername, urls){
     /* urls [{id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     CmdUtils.log(urls);
     var query = { urls: urls };
@@ -533,7 +614,7 @@ var ofaceObj = {
     
                
   },
-  getFacetsForManyUsers: function(that, tab, pblock, urls){
+  getFacetsForManyUsers: function(that, tab, urls){
     /* urls [{username: 'pattyok', id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     CmdUtils.log('getFacetsForManyUsers');
     var query = { urls: urls };
@@ -564,10 +645,10 @@ var ofaceObj = {
             }
             CmdUtils.log("Setting up ofaceenabled widget");
             that.addOfaceEnabled();
-            //aok
+            
             that.updateDisplayWithFacets(data, tab, that);            
-            var currentFacet = 'geek';//TODO does this duplicate Switcher
-            var aUsername    = 'ozten'; //TODO
+            var currentFacet = identity.facets[0];
+            var aUsername    = identity.username;
             that.updateDisplayWithOtherFacets(data, currentFacet, tab, that);
             //simulate click on facet heading
             that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0), aUsername);
@@ -633,7 +714,7 @@ var ofaceObj = {
       var selector = that.linkSelector(data[i].url, tab);
       //CmdUtils.log("selector=" + selector);
       var a = jQuery(selector, tab.document);
-      if(a.length == 1){
+      if(a.length >= 1){
         var success;
         var entry;
         var cluster;
@@ -669,9 +750,12 @@ var ofaceObj = {
         }
         prevFacet = data[i].facets[0];
         prevItemCount++;
-      }else{
+      }
+      if(a.length != 1){
         //href=http://www.flickr.com/photos/wigfur/3229310456/
         CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
+        //TODO send a report back to home base???
+        
       } //if(a.length == 1){
     } // for(var i=0; i < data.length; i++){
   },
@@ -827,7 +911,8 @@ var ofaceObj = {
           CmdUtils.log('click');
           $('#switcher', doc).toggle();
       });
-      Oface.Controllers.Facet.username = 'ozten';
+      //TODO AOK
+      Oface.Controllers.Facet.username = identity.username;
       Oface.Controllers.Facet.initialize.call(Oface.Controllers.Facet);
       $('h3#oface-enabler span.current-facet', doc).css('margin-left', '30px');
     }else{

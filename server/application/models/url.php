@@ -97,7 +97,7 @@ class Url_Model extends Model {
                 WHERE facets_urls.url_fk IN (
                     SELECT id FROM urls WHERE user_fk = $userId AND hash = '$hash'
                 );";
-        Kohana::log('info', $sql);
+        
         return $this->db->query($sql)->result_array(FALSE);
     }
 }

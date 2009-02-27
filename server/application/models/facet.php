@@ -12,11 +12,6 @@ class Facet_Model extends Model {
                               "JOIN facets_user ON facets.id = facets_user.facet_id " .
                               "WHERE facets_user.username = '" . $username . "' AND " .
                               "  facets_user.end_date IS NULL");
-    Kohana::log('info', "SELECT facets.id, facets.description, facets.created " .
-                              "FROM facets " .
-                              "JOIN facets_user ON facets.id = facets_user.facet_id " .
-                              "WHERE facets_user.username = '" . $username . "' AND " .
-                              "  facets_user.end_date IS NULL");
     return $query->result_array(FALSE);
   }
   public function weighted_facets($username){
@@ -137,13 +132,14 @@ class Facet_Model extends Model {
   
     public function facetsDuring($userId, $time)
     {
-        $sql = "SELECT `facets_user`.facet_id, facets.description, facets.created " .
-               "FROM facets_user " .
-               "JOIN facets ON facets.id = `facets_user`.facet_id " .
-               "WHERE user_id = $userId AND " .
-               "'$time' BETWEEN start_date AND end_date ";
+        $sql = "SELECT `facets_user`.facet_id, facets.description, facets.created
+                FROM facets_user 
+                JOIN facets ON facets.id = `facets_user`.facet_id 
+                WHERE user_id = $userId AND (
+                ? BETWEEN start_date AND end_date OR
+                (end_date IS NULL AND ? > start_date))";
         
-        return $this->db->query($sql)->result_array(FALSE);
+        return $this->db->query($sql, array($time, $time))->result_array(FALSE);
     }
     
     
