@@ -1,4 +1,10 @@
 ;
+function logError(msg, debugObjects) {
+  CmdUtils.log("ERROR:" + msg);
+  for(var i=0; i <= debugObjects.length; i++) {
+    CmdUtils.log(debugObjects[i]);
+  }
+}
 var identity = null;
 //TODO namespace this...
 function whoAmI(oface){
@@ -460,6 +466,7 @@ var ofaceObj = {
       } else {
  
         var sucessFn;
+        CmdUtils.log("I think I am on a " + page.type + " page");
         if( page.type == Oface.WhatPageIsThis.PROFILE_PAGE ) {
           var username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
           successFn = function(data, status){            
@@ -512,6 +519,7 @@ var ofaceObj = {
   processFeedForUrls: function(feed, tab, that, isEachWithUsername){
     var $ = jQuery;
     isEachWithUsername = isEachWithUsername || false;
+    CmdUtils.log(isEachWithUsername + "== true right?");
     var entries = jQuery('entry', feed);
     var urls = [];
     entries.each(function(i){
@@ -524,15 +532,33 @@ var ofaceObj = {
         try{
           //TODO brittle          
           var selector = that.linkSelector(url, tab);
+          CmdUtils.log("Selector = " + selector);
           //'a[href=' + url + ']'
-          var userHref = $('div.summary a.l_person', $($(selector, tab.document).get(0)).parent().parent().parent()).attr('href');
-          if ( userHref ) {
-            var pieces = userHref.split('/');
-            // http://friendfeed.com/draarong
-            item['username'] = pieces[pieces.length -1];
-            CmdUtils.log('USERNAME: ' + item['username']);
+          
+          var entry = $(selector, tab.document);
+          if (entry.length == 0) {
+              logError("processFeedForUrls's selector " + selector + " failed to match any entries", [url]);
           } else {
-            CmdUtils.log("WARNING can't find username for " + url);
+              var cluster = entry;
+              while( cluster.length && ! cluster.hasClass('cluster')){      
+                  cluster = cluster.parent();
+              }
+              if(cluster.length > 0){
+                 //update this div...
+                  var userHref = $('div.summary a.l_person', cluster).attr('href');
+                  
+                  CmdUtils.log(userHref);
+                  if ( userHref ) {
+                      var pieces = userHref.split('/');
+                      // http://friendfeed.com/draarong
+                      item['username'] = pieces[pieces.length -1];
+                      CmdUtils.log('USERNAME: ' + item['username']);
+                  } else {
+                     CmdUtils.log("WARNING can't find username for " + url);
+                 }
+              }else{
+                  logError("processFeedForUrls's bubbling up from entry, can't find outter cluster", [entry, cluster]);
+              } 
           }
         } catch (error) {
           CmdUtils.log(error);
@@ -792,7 +818,7 @@ var ofaceObj = {
     jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
-    var cluster = element;//.parent();
+        var cluster = element;//.parent();
         while( cluster.length && ! matchFn(cluster)){      
           cluster = cluster.parent();
         }
