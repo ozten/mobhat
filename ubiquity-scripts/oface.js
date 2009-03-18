@@ -1,4 +1,5 @@
 ;
+CmdUtils.injectCss(".cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}");
 function logError(msg, debugObjects) {
   CmdUtils.log("ERROR:" + msg);
   for(var i=0; i <= debugObjects.length; i++) {
@@ -81,6 +82,23 @@ function askForLogin(oface){
         }
     });
     });
+}
+var urlDb = {};
+/**
+ * @param url {string} The url for the item
+ * @param md5 {string} hash of the url
+ * @param facets {Array of Strings} A list of Facets
+ */
+function updateUrlDbWithMd5AndFacets(url, md5, facets) {
+    if( urlDb[url] ) {
+      CmdUtils.log("Already seen ", url);
+    } else {
+      CmdUtils.log("Seeing ", url, "for the first time");
+      urlDb[url] = {
+        md5: md5,
+        facets: facets
+      };
+    }
 }
 
 var Oface = Oface || {};
@@ -173,6 +191,8 @@ Oface.Views = Oface.Views || {};
  */
 Oface.Views.Facet = Oface.Views.Facet || {
         createAll: function(username) {
+          //Store a global reference to the current user
+          Oface.Models.username = username;
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
                 var liTemplate = $('#switcher-facetlist li:first', doc).clone();
                 $('#switcher-facetlist li', doc).replaceWith('');
@@ -250,11 +270,12 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
         username: "Unknown",
         server: "http://oface.ubuntu", 
         initialize: function(){
+                
                 //CmdUtils.log(this);
                 //CmdUtils.log('xx');
                 var that = this;
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                
+                $('head', doc).append('<link rel="stylesheet" href="http://oface.ubuntu/static/css/stylo.css" type="text/css" media="screen" />');
                 var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none; background-color: #CCC;'>
 						<div id="all-facets">
 								<h4>All Facets</h4>
@@ -300,7 +321,146 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                 //CmdUtils.log(context);
                 /* add behaviors */
                 Oface.Views.Facet.newFacetInput().bind('blur', context, Oface.Controllers.Facet.handleNewFacetCreated);
-                $('#all-facets-close', doc).bind('click', context, Oface.Controllers.Facet.allFacetsCloseHandler);        
+                $('#all-facets-close', doc).bind('click', context, Oface.Controllers.Facet.allFacetsCloseHandler);
+                
+                $(doc).bind('clustersfaceted', function(){
+                    $('.entry-facet-widget-root', doc)
+                        .bind('mouseover', {controller: that}, that.mouseEnterFacetedCluster)
+                        .bind('mouseout', {controller: that}, that.mouseOutFacetedCluster)
+                });
+                //TODO register and handle 'oface-url-refaceted'
+        },
+        //Idea Actor model -> Series of Actor objects with eventHandlers which bootstrap themselfs back into the object
+        // They know about callers, and callees which they've called
+        // backbone of the system is catalog of events and event handlers
+        // An actor may switch it's behavior to handle the next event...
+        // Actor - mailbox(es?) Tasks Behaviors
+        //Task - tag, address, content
+        //Mailbox - FIFO Queue - jQuery event system
+        //Behavior - function to process task, returns the next Behavior. Behaviors can see related actors
+        mouseEnterFacetedCluster: function(event){
+          var $ = jQuery, cluster = event.target, that = event.data.controller;
+          
+          if ($(cluster).data('entry-oface-url') === undefined) {
+            return;
+          } else {
+            CmdUtils.log("OKAY GET THE URL BACK.>...");
+            CmdUtils.log($(cluster).data('entry-oface-url'));
+          }
+          var theUrl = $(cluster).data('entry-oface-url');
+            if(jQuery(cluster).data('oface.faceted.cluster.widget') == undefined) {
+              //Stopped here... we need a global data store... boo.
+              //Quick fix in memory hash
+              //eventually a sqlite db with in memory caching
+                var url = $($(cluster).parents('.cluster'));
+                var urlInfo = urlDb[theUrl];
+                CmdUtils.log("URL DB", urlDb);
+                CmdUtils.log("URL INFO", urlInfo);
+                CmdUtils.log("URL man", urlDb['http://twitter.com/pattyok/statuses/1101336763']);
+                var clusterWidget =
+                  $(cluster).append(<div class="cluster-facet-widget-panel"><a class="cluster-facet-widget-link" href="#">Change Facet</a><form class="cluster-facet-widget" style="position: absolute; z-index: 666; top: -5px; right: 0px">
+                                    <input type="hidden" name="md5sum" value="TODO" />
+                                    <input type="hidden" name="url" value="TODO" />
+                                          <select></select><button type="submit">Change</button><button class="cancel" type="reset">Cancel</button></form></div>.toXMLString());
+                $options = "";
+                for(var i=0; i < Oface.Models.Facet.allFacets.length; i++) {
+                  var f = Oface.Models.Facet.allFacets[i];
+                  var selectedVal = f['description'] === urlInfo['facets'][0] ? ' selected="true"' : '';
+                  $options += "<option value='" + f['description'] + " " + f['id'] + "'" + selectedVal + ">" + f['description']  + "</option>";
+                }
+                $('select', cluster).append($options);
+                $('.cluster-facet-widget', cluster).hide().bind('submit', function(){
+                    var theForm = this;
+                    CmdUtils.log("form", theForm);
+                    CmdUtils.log("options=", $('option', theForm));
+                    CmdUtils.log("option sel=", $('option[selected]', theForm));
+                    var options = $('option[selected]', theForm);
+                    var f;
+                    //HACK ALERT: jQuery is acting weird here...
+                    //Ubiquity jQuery returns 2 options, doing same directly in Firebug w/jQuery returns 1 option
+                    //So we do some funny business here
+                    options.each(function(){
+                        var tmp = $(this).attr('value').split(' ');
+                        if( tmp[0] != urlInfo['facets'][0]) {
+                          f = tmp;
+                        }
+                      });
+                        
+                    if(f) {
+                        CmdUtils.log("User selected", f);
+                        var newFacets = {id: f[1], description: f[0]};
+                        CmdUtils.log(newFacets);
+                        var payload = Utils.encodeJson([{facets: newFacets, urlInfo: urlInfo, url: theUrl}]);
+                        $.ajax({
+                          url: 'http://oface.ubuntu/resources/resource/' + urlInfo['md5'] + '/user/' + Oface.Models.username,
+                          type: 'PUT',
+                          data: payload,
+                          dataType: 'json',
+                          success: function(jsn, status){
+                              $(theForm).trigger('oface-url-refaceted',{
+                                  cluster: cluster,
+                                  url: theUrl,
+                                  oldFacets: urlInfo['facets'],
+                                  newFacets: newFacets
+                                });
+                          $(theForm).hide();
+                          },
+                          cache: false
+                        });
+                    } else {
+                        CmdUtils.log("No new facet");
+                    }
+                    return false;
+                });
+                $('.cancel', cluster).click(function(){
+                    $('.cluster-facet-widget', cluster).hide();
+                    return false;
+                });
+                $('.cluster-facet-widget-link', cluster).show().click(function(){
+                    $('.cluster-facet-widget', cluster).show();
+                    return false;
+                  });
+              jQuery(cluster).data('oface.faceted.cluster.widget', clusterWidget);
+            } else {
+              var clusterWidget = jQuery(cluster).data('oface.faceted.cluster.widget');
+              //TODO
+              CmdUtils.log("TODO show this form again sldkfjsdkjewrj");
+            }
+            $('.cluster-facet-widget-link', cluster).show();
+            //clear Timeout if exists
+            if ( $(cluster).data('oface.faceted.cluster.widget.timer') ) {
+              CmdUtils.log("Clearing Timeout ");
+              CmdUtils.log($(cluster).data('oface.faceted.cluster.widget.timer'));
+              Utils.clearTimeout($(cluster).data('oface.faceted.cluster.widget.timer'));
+              $(cluster).data('oface.faceted.cluster.widget.timer', null)
+            } else {
+              CmdUtils.log("Nothing to clear ");
+            }
+        },
+        mouseOutFacetedCluster: function(event){
+          var $ = jQuery, cluster = event.target;
+          /*
+            var c = $(cluster);
+              while( c.length && ! c.hasClass('summary')){      
+                  c = c.parent();
+              }
+            cluster = c.get(0);
+          */
+          if ( ! $(cluster).data('oface.faceted.cluster.widget.timer') ) {
+            var timer = Utils.setTimeout(function(){
+                  $('.cluster-facet-widget-link', cluster).hide();  
+              }, 1000);
+              $(cluster).data('oface.faceted.cluster.widget.timer', timer);
+              CmdUtils.log("Setting Timeout ");
+              CmdUtils.log($(cluster).data('oface.faceted.cluster.widget.timer'));
+              
+          }
+            //if(jQuery(event.target).data('oface.faceted.cluster.widget')) {
+              
+            //}
+            
+            //CmdUtils.log('mouseOutFacetedCluster');
+            //CmdUtils.log(arguments);
         },
         updateAllView: function(){
                 CmdUtils.log("updateAllView called");
@@ -734,11 +894,14 @@ var ofaceObj = {
       *  bubble up the DOM until you reach the FriendFeed container */
       CmdUtils.log(i);
       CmdUtils.log(data[i]);
-      if ( ! data[i] ) {
+      if ( ! data[i] | !data[i].url ) {
+        CmdUtils.log("ERROR data[i] is null or something is wrong, skipping", data[i]);
         continue;
       }
+      
+      updateUrlDbWithMd5AndFacets(data[i].url, that.md5(data[i].url), data[i].facets);
       var selector = that.linkSelector(data[i].url, tab);
-      //CmdUtils.log("selector=" + selector);
+      CmdUtils.log("the selector=" + selector);
       var a = jQuery(selector, tab.document);
       if(a.length >= 1){
         var success;
@@ -746,8 +909,11 @@ var ofaceObj = {
         var cluster;
         
         [success, entry  ] = that.findAndTagByClass(a,'entry', data[i].facets);
-        CmdUtils.log("updateDisplayWithFacets entry " + " " + success + " " + entry);
-        if(! success ){
+        CmdUtils.log("updateDisplayWithFacets entry",success, entry);
+        if( success ){
+          entry.addClass('entry-facet-widget-root');
+          entry.data('entry-oface-url', data[i].url);
+        } else {
           //Flickr uses tr as it's container...
           CmdUtils.log("WARNING, might have found an entry div for anchor tag " + data[i].url);
         }
@@ -784,6 +950,8 @@ var ofaceObj = {
         
       } //if(a.length == 1){
     } // for(var i=0; i < data.length; i++){
+    CmdUtils.log('Triggering clustersfaceted');
+    jQuery(tab.document).trigger('clustersfaceted');
   },
   updateDisplayWithOtherFacets: function(data, currentFacet, tab, that){
     var facets = [];
@@ -818,7 +986,7 @@ var ofaceObj = {
     jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
-        var cluster = element;//.parent();
+        var cluster = element;
         while( cluster.length && ! matchFn(cluster)){      
           cluster = cluster.parent();
         }
@@ -947,17 +1115,26 @@ var ofaceObj = {
     }
   }
 };
-/*
+/**
+ * You can use fetch- command  during development (comment out pageLoad_fetchFeedOface )
+ * or uncomment pageLoad_fetchFeedOface for auto load
+ */
 function pageLoad_fetchFeedOface(){
+  /* Not needed any more ?
   var loc = Application.activeWindow.activeTab.document.location;
-  
-  var enabledFor = 'http://oface.ubuntu/static/test_files/ff-pattyok.html';
-  if(loc.href.indexOf(enabledFor) != -1){
-      ofaceObj.preview.call(ofaceObj);
+  var enabledFor = ['http://oface.ubuntu/static/test_files/ff-pattyok.html',
+                   'http://oface.ubuntu/static/test_files/ozten_home.html'];
+  for(var i=0; i < enabledFor.length; i++){
+      if(loc.href.indexOf(enabledFor[i]) != -1){
+  */
+          ofaceObj.preview.call(ofaceObj);
+          /*
+          break;
+      }
   }
-
+  */
 }
-*/
+
 ;(function(){
 
 //Growl displayMessage
