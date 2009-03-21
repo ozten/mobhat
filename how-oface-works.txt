@@ -1,0 +1,53 @@
+= How OFace Works =
+01234567900123456790012345679001234567900123456790012345679001234567900123456790
+== Parts ==
+On a Page is a LifeStream. A User has an OFaceAccount which stores their CurrentFacets,  all of their previous facets (AllFacets), and a database of faceted LifeStreamEntries. The Page has an OFaceToggler which will enable and disable the OFace feature.
+
+When viewing a page, the Lifestream portion is filtered down into FacetGroups based on the Users CurrentFacets. The User sees only items that are Unknown or which are in their CurrentFacets. The User can switch to a different Facet using one of the following methods:
+  UserFacetSwitcher
+  PageFacetSwitcher
+  FacetGroupLabel
+
+The difference between the two is that the UserFacetSwitcher has only AllFacets for the User. The PageFacetSwitcher has Facets for the LifestreamEntires on the page.
+
+When a User switches Facets, they change the filtering of the Page to show this new FacetGroup as hide the previous FacetGroup. The also change their CurrentFacets in OFace. A FacetGroup has a FacetGroupLabel which indicates the state of the Facet (current or filtered) has is clickable to switch Facets.
+
+As new LifeStreamEntries are discovered that where created by the User, they are faceted with the CurrentFacet of the user (at that time). The user can correct wrong Facet information using the LifestreamEntryFacetDropDown. This change affects only the LifestreamEntry, but does not affect the Users CurrentFacet.
+
+== Lifecycle ==
+=== Page Load ===
+On every page load, the oface script:
+*pageloading*
+PageHasFacetableLifestream?
+*pageloaded*
+  Show the OFaceToggler
+  WhoAmI (User)
+    Known or AskForLogin
+*userinfoavailable*
+    Get CurrentFacet
+*userallfacetsavailable*    
+    Get AllFacets
+      Show UserFacetSwitcher
+  FindAllLifestreamEntries and foreach
+    CalculateMD5, GetFacetInfo, GetUserInfo
+*lifestreamentryfinfovailable*    
+    Put entry into FacetGroup
+      Show PageFacetSwitcher
+      Show FacetGroupLabels
+  FindsRemainingUnknownEntries
+    Reports failures and foreach
+      Put entry into UnknownGroup
+      Show UnknownGroupLabel
+      
+=== Switching CurrentFacets ===
+*currentfacetswitched*
+
+=== New LifestreamEntries Discovered ===
+*lifestreamentryfinfovailable*
+
+=== LifestreamEntries Refaceted ===
+*lifestreamentryfinfovailable*
+
+=== User disables OFace ===
+*ofaceenabled*
+*ofacedisabled*
