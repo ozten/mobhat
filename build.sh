@@ -19,6 +19,8 @@ cat model.js >> ../ubiquity-scripts/oface.js
 cat view.js >> ../ubiquity-scripts/oface.js
 cat controllers/oface.js >> ../ubiquity-scripts/oface.js #new
 cat controllers/page_facet_toggler.js >> ../ubiquity-scripts/oface.js #new
+cat controllers/lifestream_entry_facet_chooser.js >> ../ubiquity-scripts/oface.js #new
+cat controllers/facet_groups.js >> ../ubiquity-scripts/oface.js #new
 cat controller.js >> ../ubiquity-scripts/oface.js
 cat toggler.js >> ../ubiquity-scripts/oface.js
 cat commands/fetch-feed-oface.js >> ../ubiquity-scripts/oface.js

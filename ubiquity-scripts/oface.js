@@ -142,13 +142,14 @@ Oface.Views.addPageFacetTogglerAddFacet = function(facet, count, tab) {
     });
     });
 }
+//TODO urlDb is a.... Model?
 var urlDb = {};
 /**
  * @param url {string} The url for the item
  * @param md5 {string} hash of the url
  * @param facets {Array of Strings} A list of Facets
  */
-function updateUrlDbWithMd5AndFacets(url, md5, facets) {
+function updateUrlDbWithMd5AndFacets(url, md5, facets, username) {
     if( urlDb[url] ) {
       CmdUtils.log("Already seen ", url);
     } else {
@@ -157,6 +158,9 @@ function updateUrlDbWithMd5AndFacets(url, md5, facets) {
         md5: md5,
         facets: facets
       };
+      if(username) {
+        urlDb[url]['username'] = username;
+      }
     }
 }
 var Oface = Oface || {};
@@ -319,22 +323,22 @@ Oface.Views.Facet = Oface.Views.Facet || {
 };
 Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.Oface = Oface.Controllers.Facet || {
-    main: function(context){
+    main: function(contexty){
         //TODO... we should check current page first
         // also we should make next step explicit? or
         // is the too much coupling?
-        Oface.Models.UserDB.whoAmI(context, function(data, status){
+        Oface.Models.UserDB.whoAmI(contexty, function(data, status){
           //TODO jQuery json ... data is a string and not an oject...why?
             CmdUtils.log("whoAmI success with: ", data);
             //TODO identity is global object... belongs in the Models module?
             identity = data;
             jQuery('#oface-login-form', Application.activeWindow.activeTab.document).hide();
-            context.continueEnablingOface();
+            contexty.continueEnablingOface();
         }, function(xhr, status, error){
           CmdUtils.log(xhr);
           CmdUtils.log(xhr.status);
             if (xhr.status == 401) {
-                askForLogin(context);
+                askForLogin(contexty);
             } 
             CmdUtils.log("whoAmI ERROR with: ");
             CmdUtils.log(xhr);
@@ -346,10 +350,12 @@ Oface.Controllers.Oface = Oface.Controllers.Facet || {
         //Register Events and their controllers
         whenWeSee('lifestream-entries-infos-available',
                   Oface.Controllers.PageFacetToggle.handleLifestreamEntriesInfosAvailable);
+        whenWeSee('clustersfaceted', Oface.Controllers.EntryFacetChooser.handleClustersFaceted);
+                //TODO register and handle 'oface-url-refaceted'
     }
 };Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {        
-        handleLifestreamEntriesInfosAvailable: function(event, params){
+        handleLifestreamEntriesInfosAvailable: function(event, params){                
             var tab = Application.activeWindow.activeTab;            
             var data = params.urlInfos;
 
@@ -371,88 +377,46 @@ Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {
                 var li = Oface.Views.addPageFacetTogglerAddFacet(facets[i], counts[i], tab);
                 var fn = (function(){
                             var newFacet = facets[i];
-                            return function(){ofaceObj.doFacetSwitch(identity.username, newFacet); ofaceObj.switchDisplayWithOtherFacets(newFacet, tab);};
+                            return function(){ofaceObj.doFacetSwitch(identity.username, newFacet);
+                                              Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(newFacet, tab);};
                         })();
                 li.click(fn);
             }            
-            ofaceObj.switchDisplayWithOtherFacets(identity['facets'][0]['description'], tab);
-        }
+            Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(identity['facets'][0]['description'], tab);            
+    },
+    switchDisplayWithOtherFacets: function(currentFacet, tab){
+        /**
+         * Changes the visible state of the various FacetGroups in the Lifestream
+         * currentFacet string - the new facet
+         */
+        jQuery('#oface-other-facets li:hidden', tab.document).show();
+        jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
+    }
 };
-Oface.Controllers = Oface.Controllers || {};
-Oface.Controllers.Facet = Oface.Controllers.Facet || {
-        username: "Unknown",
-        server: "http://oface.ubuntu", 
-        initialize: function(){
-                
-                //CmdUtils.log(this);
-                //CmdUtils.log('xx');
-                var that = this;
-                var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                $('head', doc).append('<link rel="stylesheet" href="http://oface.ubuntu/static/css/stylo.css" type="text/css" media="screen" />');
-                var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none; background-color: #CCC;'>
-						<div id="all-facets">
-								<h4>All Facets</h4>
+var $ = jQuery;
+var doc = Application.activeWindow.activeTab.document;
 
-								<ul id='switcher-facetlist' style="list-style-type: none;">                                
-										<li style="float: left; margin-right: 5px"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
-								</ul>
-                          <div style="clear:left">
-						    <label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
-						    <button id="all-facets-close">Close</button>
-                          </div>
-						</div>				        
-				</div>.toXMLString();
-                CmdUtils.log(switcherXml);
-                $('#oface-enabler', doc).after(switcherXml);
-                //TODO is this duplicated between orig oface and the switcher?
-                $.get(this.server + '/facets/current/' + this.username, {},
-                    function(json) {
-                      
-                        Oface.Models.Facet.updateCurrent(json);
-                        
-                        //TODO using call here isn't necissary
-                        var curFacetView = Oface.Views.Facet.createCurrent.call(Oface.Views.Facet);
-                        
-                        var currentFacets = Oface.Models.Facet.currentFacets;
-                        for (var i = 0; i < currentFacets.length; i++) {
-                                curFacetView(currentFacets[i]['weight'],
-                                     currentFacets[i]['description']);                               
-                        }
-                        $('#switcher-current-facets li', doc).click(Oface.Views.Facet.showAll);
-                        Oface.Views.Facet.showCurrent();
-                        
-                        }, "json");
-                $.get(this.server + '/facets/weighted/' + that.username, {},
-                        function(json) {
-                                Oface.Models.Facet.updateAll(json);
-                                CmdUtils.log("got facets");
-                                that.updateAllView();
-                        },
-                "json");
-                var context = {username: Oface.Controllers.Facet.username};
-                //CmdUtils.log("preparing username");
-                //CmdUtils.log(context);
-                /* add behaviors */
-                Oface.Views.Facet.newFacetInput().bind('blur', context, Oface.Controllers.Facet.handleNewFacetCreated);
-                $('#all-facets-close', doc).bind('click', context, Oface.Controllers.Facet.allFacetsCloseHandler);
-                
-                $(doc).bind('clustersfaceted', function(){
-                    $('.entry-facet-widget-root', doc)
-                        .bind('mouseover', {controller: that}, that.mouseEnterFacetedCluster)
-                        .bind('mouseout', {controller: that}, that.mouseOutFacetedCluster)
-                });
-                //TODO register and handle 'oface-url-refaceted'
-        },
-        //Idea Actor model -> Series of Actor objects with eventHandlers which bootstrap themselfs back into the object
-        // They know about callers, and callees which they've called
-        // backbone of the system is catalog of events and event handlers
-        // An actor may switch it's behavior to handle the next event...
-        // Actor - mailbox(es?) Tasks Behaviors
-        //Task - tag, address, content
-        //Mailbox - FIFO Queue - jQuery event system
-        //Behavior - function to process task, returns the next Behavior. Behaviors can see related actors
-        mouseEnterFacetedCluster: function(event){
-          var $ = jQuery, cluster = event.target, that = event.data.controller;
+Oface = Oface || {};
+Oface.Controllers = Oface.Controllers || {};
+Oface.Controllers.EntryFacetChooser = {
+    handleClustersFaceted: function(){
+        that = Oface.Controllers.EntryFacetChooser;
+        $('.entry-facet-widget-root', doc).each(function(i, el){
+            var url = $(el).data('lifestream-entry-url')
+            if(url && urlDb[url]) {
+                var username = urlDb[url].username;
+                if(identity.username == username) {
+                    CmdUtils.log("Enabling  EntryFacetChooser for ",username, "on", url);
+                    $(el).bind('mouseover', {controller: that}, that.mouseEnterFacetedCluster)
+                         .bind('mouseout', {controller: that}, that.mouseOutFacetedCluster);
+                } else {
+                    CmdUtils.log("WARNING Skipping " + username);
+                }
+            }
+        });
+    },
+    mouseEnterFacetedCluster: function(event){
+        var $ = jQuery, cluster = event.target, that = event.data.controller;
           
           if ($(cluster).data('entry-oface-url') === undefined) {
             return;
@@ -556,6 +520,95 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
               $(cluster).data('oface.faceted.cluster.widget.timer', timer);              
               
           }
+        }
+};;var $ = jQuery;
+var doc = Application.activeWindow.activeTab.document;
+
+Oface = Oface || {};
+Oface.Controllers = Oface.Controllers || {};
+Oface.Controllers.FacetGroups = {
+    t: null,
+    prepareLabel: function(prevFacet, currentFacet, prevItemCount, cluster) {
+        if(prevFacet != currentFacet){          
+          if(this.t) jQuery('span.count', this.t).text(prevItemCount);
+          prevItemCount = 0;
+          this.t = jQuery("<h4 class='facet " + currentFacet +
+                     "' style='clear:left'><span class='facet-name'>" + (currentFacet) + "</span> <span class='count'>x</span></h4> ", doc);
+          this.t.css({
+             'class': 'toggler',
+            'border': 'solid 1px grey',
+            'float' : 'left',
+            'margin-right': '10px'
+          });
+          cluster.before(this.t);
+          
+          var facetGroupLabelFn = (function(){
+              var facet = currentFacet;              
+              return function(){                  
+                  ofaceObj.doFacetSwitch(identity.username, facet);
+              };
+          })();
+          this.t.click(facetGroupLabelFn);          
+          
+        }
+    }
+};Oface.Controllers = Oface.Controllers || {};
+Oface.Controllers.Facet = Oface.Controllers.Facet || {
+        username: "Unknown",
+        server: "http://oface.ubuntu", 
+        initialize: function(){
+                
+                //CmdUtils.log(this);
+                //CmdUtils.log('xx');
+                var that = this;
+                var $ = jQuery, doc = Application.activeWindow.activeTab.document;
+                $('head', doc).append('<link rel="stylesheet" href="http://oface.ubuntu/static/css/stylo.css" type="text/css" media="screen" />');
+                var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none; background-color: #CCC;'>
+						<div id="all-facets">
+								<h4>All Facets</h4>
+
+								<ul id='switcher-facetlist' style="list-style-type: none;">                                
+										<li style="float: left; margin-right: 5px"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
+								</ul>
+                          <div style="clear:left">
+						    <label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
+						    <button id="all-facets-close">Close</button>
+                          </div>
+						</div>				        
+				</div>.toXMLString();
+                CmdUtils.log(switcherXml);
+                $('#oface-enabler', doc).after(switcherXml);
+                //TODO is this duplicated between orig oface and the switcher?
+                $.get(this.server + '/facets/current/' + this.username, {},
+                    function(json) {
+                      
+                        Oface.Models.Facet.updateCurrent(json);
+                        
+                        //TODO using call here isn't necissary
+                        var curFacetView = Oface.Views.Facet.createCurrent.call(Oface.Views.Facet);
+                        
+                        var currentFacets = Oface.Models.Facet.currentFacets;
+                        for (var i = 0; i < currentFacets.length; i++) {
+                                curFacetView(currentFacets[i]['weight'],
+                                     currentFacets[i]['description']);                               
+                        }
+                        $('#switcher-current-facets li', doc).click(Oface.Views.Facet.showAll);
+                        Oface.Views.Facet.showCurrent();
+                        
+                        }, "json");
+                $.get(this.server + '/facets/weighted/' + that.username, {},
+                        function(json) {
+                                Oface.Models.Facet.updateAll(json);
+                                CmdUtils.log("got facets");
+                                that.updateAllView();
+                        },
+                "json");
+                var contextx = {username: Oface.Controllers.Facet.username};
+                //CmdUtils.log("preparing username");
+                //CmdUtils.log(context);
+                /* add behaviors */
+                Oface.Views.Facet.newFacetInput().bind('blur', contextx, Oface.Controllers.Facet.handleNewFacetCreated);
+                $('#all-facets-close', doc).bind('click', contextx, Oface.Controllers.Facet.allFacetsCloseHandler);
         },
         updateAllView: function(){
                 CmdUtils.log("updateAllView called");
@@ -679,11 +732,8 @@ function ofaceToggler(){
     $('#oface-other-facets', doc).show();
     lastSeenFacetHeadings.show();
     lastHiddenItems.hide();
-    CmdUtils.log(lastHiddenSubItems);
     lastHiddenSubItems.hide();
     jQuery('div.cluster', doc).not('.oface').hide();
-    //TODO finish disabling oface
-    
     oFaceIsEnabled = true;
   }
 }
@@ -843,7 +893,8 @@ function ofaceToggler(){
               //TODO we are throwing away id, created date
               data[i] = {
                 facets: [jsn[i]['facets'][0]['description']],
-                url: unescape(jsn[i]['url']) };
+                url: unescape(jsn[i]['url']),
+                username: aUsername};
             }
             that.addOfaceEnabled();
             try{
@@ -852,6 +903,7 @@ function ofaceToggler(){
               CmdUtils.log('caught error while in getFacetsForUser');
               CmdUtils.log(e);
             }
+            
             triggerA('lifestream-entries-infos-available', {urlInfos: data});
             var missed = jQuery('div.cluster', tab.document).not('.oface');            
             //jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');
@@ -895,14 +947,14 @@ function ofaceToggler(){
        function(jsn, status){
           if(status == 'success'){
             var data = [];
-            
             for(var i=0; i<jsn.length; i++){
               try{
                 if (jsn[i]['facets']) {
                   //TODO we are throwing away id and create data, etc
                   data.push({
                     facets: [jsn[i]['facets'][0]['description']],
-                    url: unescape(jsn[i]['url'])
+                    url: unescape(jsn[i]['url']),
+                    username: jsn[i]['username']
                   });
                 }
               } catch(error){
@@ -952,7 +1004,6 @@ function ofaceToggler(){
   },
   updateDisplayWithFacets: function(data, tab, that){
     var prevFacet = "";
-    var t = null;
     var prevItemCount = 0;
     //[CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
     CmdUtils.log(data);
@@ -966,7 +1017,7 @@ function ofaceToggler(){
         continue;
       }
       
-      updateUrlDbWithMd5AndFacets(data[i].url, that.md5(data[i].url), data[i].facets);
+      updateUrlDbWithMd5AndFacets(data[i].url, that.md5(data[i].url), data[i].facets, data[i].username);
       var selector = that.linkSelector(data[i].url, tab);
       CmdUtils.log("the selector=" + selector);
       var a = jQuery(selector, tab.document);
@@ -978,6 +1029,7 @@ function ofaceToggler(){
         [success, entry  ] = that.findAndTagByClass(a,'entry', data[i].facets);
         CmdUtils.log("updateDisplayWithFacets entry",success, entry);
         if( success ){
+          entry.data('lifestream-entry-url', data[i].url);
           entry.addClass('entry-facet-widget-root');
           entry.data('entry-oface-url', data[i].url);
         } else {
@@ -991,50 +1043,23 @@ function ofaceToggler(){
         }
         if(! cluster.hasClass('oface')){
           cluster.addClass('oface');
-        }        
-        if(prevFacet != data[i].facets[0]){          
-          if(t) jQuery('span.count', t).text(prevItemCount);
-          prevItemCount = 0;
-          t = jQuery("<h4 class='facet " + data[i].facets[0] +
-                     "' style='clear:left'><span class='facet-name'>" + (data[i].facets[0]) + "</span> <span class='count'>x</span></h4> ", tab.document);
-          t.css({
-             'class': 'toggler',
-            'border': 'solid 1px grey',
-            'float' : 'left',
-            'margin-right': '10px'
-          });
-          cluster.before(t);
-          
-          var facetGroupLabelFn = (function(){
-              var facet = data[i]['facets'][0];              
-              return function(){                  
-                  that.doFacetSwitch(identity.username, facet);
-              };
-          })();
-          t.click(facetGroupLabelFn);          
-          jQuery('div.cluster, div.pager', tab.document).css('clear', 'left');
         }
+        CmdUtils.log("Looking to call prepareLabel");
+        Oface.Controllers.FacetGroups.prepareLabel(prevFacet, data[i].facets[0], prevItemCount, cluster);
+        CmdUtils.log("Looking to called prepareLabel");
         prevFacet = data[i].facets[0];
         prevItemCount++;
       }
       if(a.length != 1){
         //href=http://www.flickr.com/photos/wigfur/3229310456/
-        //CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
+        CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
         //TODO send a report back to home base???
         
       } //if(a.length == 1){
     } // for(var i=0; i < data.length; i++){
+    jQuery('div.cluster, div.pager', tab.document).css('clear', 'left');
     CmdUtils.log('Triggering clustersfaceted');
     jQuery(tab.document).trigger('clustersfaceted');
-  },
-  switchDisplayWithOtherFacets: function(currentFacet, tab){
-    /**
-     * Changes the visible state of the various FacetGroups in the Lifestream
-     * currentFacet string - the new facet
-     */
-    jQuery('#oface-other-facets li:hidden', tab.document).show();
-    jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
-    CmdUtils.log("TODO ver ya we did")
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
         var cluster = element;
@@ -1059,6 +1084,7 @@ function ofaceToggler(){
   },
   doFacetSwitch: function(username, facet){
     /**
+     * TODO replace this with an event, pull code below out into a model db
      * username string the username
      * facet string a facet description
      */
@@ -1087,7 +1113,7 @@ function ofaceToggler(){
     
     //jQuery('div.cluster', doc).not('.oface').hide('slow');
     
-    ofaceObj.switchDisplayWithOtherFacets(facet, Application.activeWindow.activeTab);
+    Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(facet, Application.activeWindow.activeTab);
   },  
   md5: function(str){
     // https://developer.mozilla.org/en/nsICryptoHash

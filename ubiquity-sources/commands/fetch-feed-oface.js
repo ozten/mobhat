@@ -151,7 +151,8 @@
               //TODO we are throwing away id, created date
               data[i] = {
                 facets: [jsn[i]['facets'][0]['description']],
-                url: unescape(jsn[i]['url']) };
+                url: unescape(jsn[i]['url']),
+                username: aUsername};
             }
             that.addOfaceEnabled();
             try{
@@ -160,6 +161,7 @@
               CmdUtils.log('caught error while in getFacetsForUser');
               CmdUtils.log(e);
             }
+            
             triggerA('lifestream-entries-infos-available', {urlInfos: data});
             var missed = jQuery('div.cluster', tab.document).not('.oface');            
             //jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');
@@ -203,14 +205,14 @@
        function(jsn, status){
           if(status == 'success'){
             var data = [];
-            
             for(var i=0; i<jsn.length; i++){
               try{
                 if (jsn[i]['facets']) {
                   //TODO we are throwing away id and create data, etc
                   data.push({
                     facets: [jsn[i]['facets'][0]['description']],
-                    url: unescape(jsn[i]['url'])
+                    url: unescape(jsn[i]['url']),
+                    username: jsn[i]['username']
                   });
                 }
               } catch(error){
@@ -260,7 +262,6 @@
   },
   updateDisplayWithFacets: function(data, tab, that){
     var prevFacet = "";
-    var t = null;
     var prevItemCount = 0;
     //[CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
     CmdUtils.log(data);
@@ -274,7 +275,7 @@
         continue;
       }
       
-      updateUrlDbWithMd5AndFacets(data[i].url, that.md5(data[i].url), data[i].facets);
+      updateUrlDbWithMd5AndFacets(data[i].url, that.md5(data[i].url), data[i].facets, data[i].username);
       var selector = that.linkSelector(data[i].url, tab);
       CmdUtils.log("the selector=" + selector);
       var a = jQuery(selector, tab.document);
@@ -286,6 +287,7 @@
         [success, entry  ] = that.findAndTagByClass(a,'entry', data[i].facets);
         CmdUtils.log("updateDisplayWithFacets entry",success, entry);
         if( success ){
+          entry.data('lifestream-entry-url', data[i].url);
           entry.addClass('entry-facet-widget-root');
           entry.data('entry-oface-url', data[i].url);
         } else {
@@ -299,50 +301,23 @@
         }
         if(! cluster.hasClass('oface')){
           cluster.addClass('oface');
-        }        
-        if(prevFacet != data[i].facets[0]){          
-          if(t) jQuery('span.count', t).text(prevItemCount);
-          prevItemCount = 0;
-          t = jQuery("<h4 class='facet " + data[i].facets[0] +
-                     "' style='clear:left'><span class='facet-name'>" + (data[i].facets[0]) + "</span> <span class='count'>x</span></h4> ", tab.document);
-          t.css({
-             'class': 'toggler',
-            'border': 'solid 1px grey',
-            'float' : 'left',
-            'margin-right': '10px'
-          });
-          cluster.before(t);
-          
-          var facetGroupLabelFn = (function(){
-              var facet = data[i]['facets'][0];              
-              return function(){                  
-                  that.doFacetSwitch(identity.username, facet);
-              };
-          })();
-          t.click(facetGroupLabelFn);          
-          jQuery('div.cluster, div.pager', tab.document).css('clear', 'left');
         }
+        CmdUtils.log("Looking to call prepareLabel");
+        Oface.Controllers.FacetGroups.prepareLabel(prevFacet, data[i].facets[0], prevItemCount, cluster);
+        CmdUtils.log("Looking to called prepareLabel");
         prevFacet = data[i].facets[0];
         prevItemCount++;
       }
       if(a.length != 1){
         //href=http://www.flickr.com/photos/wigfur/3229310456/
-        //CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
+        CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
         //TODO send a report back to home base???
         
       } //if(a.length == 1){
     } // for(var i=0; i < data.length; i++){
+    jQuery('div.cluster, div.pager', tab.document).css('clear', 'left');
     CmdUtils.log('Triggering clustersfaceted');
     jQuery(tab.document).trigger('clustersfaceted');
-  },
-  switchDisplayWithOtherFacets: function(currentFacet, tab){
-    /**
-     * Changes the visible state of the various FacetGroups in the Lifestream
-     * currentFacet string - the new facet
-     */
-    jQuery('#oface-other-facets li:hidden', tab.document).show();
-    jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
-    CmdUtils.log("TODO ver ya we did")
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
         var cluster = element;
@@ -367,6 +342,7 @@
   },
   doFacetSwitch: function(username, facet){
     /**
+     * TODO replace this with an event, pull code below out into a model db
      * username string the username
      * facet string a facet description
      */
@@ -395,7 +371,7 @@
     
     //jQuery('div.cluster', doc).not('.oface').hide('slow');
     
-    ofaceObj.switchDisplayWithOtherFacets(facet, Application.activeWindow.activeTab);
+    Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(facet, Application.activeWindow.activeTab);
   },  
   md5: function(str){
     // https://developer.mozilla.org/en/nsICryptoHash

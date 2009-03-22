@@ -30,11 +30,8 @@ function ofaceToggler(){
     $('#oface-other-facets', doc).show();
     lastSeenFacetHeadings.show();
     lastHiddenItems.hide();
-    CmdUtils.log(lastHiddenSubItems);
     lastHiddenSubItems.hide();
     jQuery('div.cluster', doc).not('.oface').hide();
-    //TODO finish disabling oface
-    
     oFaceIsEnabled = true;
   }
 }

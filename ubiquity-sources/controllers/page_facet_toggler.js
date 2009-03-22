@@ -1,6 +1,6 @@
 Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {        
-        handleLifestreamEntriesInfosAvailable: function(event, params){
+        handleLifestreamEntriesInfosAvailable: function(event, params){                
             var tab = Application.activeWindow.activeTab;            
             var data = params.urlInfos;
 
@@ -22,10 +22,19 @@ Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {
                 var li = Oface.Views.addPageFacetTogglerAddFacet(facets[i], counts[i], tab);
                 var fn = (function(){
                             var newFacet = facets[i];
-                            return function(){ofaceObj.doFacetSwitch(identity.username, newFacet); ofaceObj.switchDisplayWithOtherFacets(newFacet, tab);};
+                            return function(){ofaceObj.doFacetSwitch(identity.username, newFacet);
+                                              Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(newFacet, tab);};
                         })();
                 li.click(fn);
             }            
-            ofaceObj.switchDisplayWithOtherFacets(identity['facets'][0]['description'], tab);
-        }
+            Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(identity['facets'][0]['description'], tab);            
+    },
+    switchDisplayWithOtherFacets: function(currentFacet, tab){
+        /**
+         * Changes the visible state of the various FacetGroups in the Lifestream
+         * currentFacet string - the new facet
+         */
+        jQuery('#oface-other-facets li:hidden', tab.document).show();
+        jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
+    }
 };
