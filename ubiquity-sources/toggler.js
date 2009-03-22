@@ -13,7 +13,7 @@ function ofaceToggler(){
     //TODO show/hide is broken here... why?
     $('.current-facet', doc).hide();
     $('#oface-other-facets', doc).hide();
-    lastSeenFacetHeadings = $('h4.facet:visible', doc).hide();
+    lastSeenFacetHeadings = $('h4.group-facet:visible', doc).hide();
     lastHiddenSubItems = $('.entry:hidden',doc);
     lastHiddenItems = $('div.oface:hidden', doc).show();
     //TODO rename class oface to oface-cluster and add a new one oface-entry

@@ -136,6 +136,7 @@
     /* urls [{id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     var query = { urls: urls };
     var dataPayload = "q=" + Utils.encodeJson(query);
+    CmdUtils.log("preparing continueWithFacets");
     
     var h = {
       url: 'http://oface.ubuntu/resources/user/' + aUsername + '/query_facets',
@@ -144,30 +145,31 @@
       cache: false, // REMOVE FOR PROD
       data: dataPayload,
       success: function(jsn, status){
-        CmdUtils.log(jsn);
-          if(status == 'success'){
-            var data = [];
-            for(var i=0; i<jsn.length; i++){
+          CmdUtils.log(jsn);
+          
+          var data = [];
+          for(var i=0; i<jsn.length; i++){
               //TODO we are throwing away id, created date
               data[i] = {
                 facets: [jsn[i]['facets'][0]['description']],
                 url: unescape(jsn[i]['url']),
-                username: aUsername};
-            }
-            that.addOfaceEnabled();
-            
-            triggerA('lifestream-entries-infos-available', {urlInfos: data});
-            that.updateDisplayWithFacets(data, tab, that);
-            var missed = jQuery('div.cluster', tab.document).not('.oface');            
-            //jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');
-            missed.hide();      
+                username: aUsername
+                };                        
           }
+          Oface.Controllers.Oface.continueWithFacets(data, tab);     
       },
       error: function(xhr, status, err){
-          CmdUtils.log("Ouch trouble fetching facet info for urls during getFacetsForUser ");
-          CmdUtils.log(xhr);          
-          CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);          
-          CmdUtils.log(err);
+        CmdUtils.log("status=", status);
+        CmdUtils.log("err=", err);
+          if(parseInt(xhr.status) == 404) {
+              CmdUtils.log("User", aUsername, "is not an OFace user");
+              Oface.Controllers.Oface.continueWithFacets([], tab);
+          } else {
+              CmdUtils.log("Ouch trouble fetching facet info for urls during getFacetsForUser ");
+              CmdUtils.log(xhr);          
+              CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);          
+              CmdUtils.log(err);  
+          }
       }
   };
    
@@ -215,14 +217,7 @@
               }
             }
             //TODO this could happen earlier? Why here?
-            that.addOfaceEnabled();
-            
-            triggerA('lifestream-entries-infos-available', {urlInfos: data});
-            that.updateDisplayWithFacets(data, tab, that);
-            var missed = jQuery('div.cluster', tab.document).not('.oface');
-            CmdUtils.log("Missed " + missed.length + "items, turning em red");
-            //jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');
-            missed.hide();
+            Oface.Controllers.Oface.continueWithFacets(data, tab);
           }
       }, function(xhr, status, err){
           CmdUtils.log("Ouch trouble fetching facet info for urls during getFacetsForManyUsers ");
@@ -342,16 +337,8 @@
      */
     CmdUtils.log('Switching Current Facet in Database');
     var doc = Application.activeWindow.activeTab.document;
-    /*
-    jQuery.ajax({
-                        url: 'http://oface.ubuntu/facets/current/' + username,
-                        type: 'PUT',
-                        data: '["' + facet + '"]',
-                        dataType: "json"                        
-                }, doc);
-    */
-    jQuery('h4.facet', doc).show();
-    jQuery('h4.facet.' + facet, doc).hide('slow');
+    jQuery('h4.group-facet', doc).show();
+    jQuery('h4.group-facet.' + facet, doc).hide('slow');
     
     //TODO Bug off by 1 error? cluster vs entry?
     var itemCount = jQuery('.entry.oface-' + facet + '-facet', doc).length;

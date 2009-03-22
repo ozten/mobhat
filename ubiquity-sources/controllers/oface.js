@@ -29,5 +29,15 @@ Oface.Controllers.Oface = Oface.Controllers.Facet || {
                   Oface.Controllers.PageFacetToggle.handleLifestreamEntriesInfosAvailable);
         whenWeSee('clustersfaceted', Oface.Controllers.EntryFacetChooser.handleClustersFaceted);
                 //TODO register and handle 'oface-url-refaceted'
+    },
+    continueWithFacets: function(data, tab){
+        ofaceObj.addOfaceEnabled();
+            
+        triggerA('lifestream-entries-infos-available', {urlInfos: data});
+        ofaceObj.updateDisplayWithFacets(data, tab, ofaceObj);
+        var missed = jQuery('div.cluster', tab.document).not('.oface')
+                           .css('background-color', '#CCC')
+                           .addClass('unknown-entry');
+        //missed.hide();
     }
 };

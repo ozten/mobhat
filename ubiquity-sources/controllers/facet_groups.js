@@ -10,7 +10,7 @@ Oface.Controllers.FacetGroups = {
         if(prevFacet != currentFacet){          
           if(this.t) jQuery('span.count', this.t).text(prevItemCount);
           prevItemCount = 0;
-          this.t = jQuery("<h4 class='facet " + currentFacet +
+          this.t = jQuery("<h4 class='group-facet " + currentFacet +
                      "' style='clear:left'><span class='facet-name'>" + (currentFacet) + "</span> <span class='count'>x</span></h4> ", doc);
           this.t.css({
              'class': 'toggler',
@@ -23,7 +23,6 @@ Oface.Controllers.FacetGroups = {
           var facetGroupLabelFn = (function(){
               var facet = currentFacet;
                return function(){
-//                  ofaceObj.doFacetSwitch(identity.username, facet);
                     CmdUtils.log("Looking at runtime it's now", facet);
                     Oface.Models.Facet.facetsChosen(identity.username, [facet], function(json, status){
                         ofaceObj.doFacetSwitch(identity.username, facet);

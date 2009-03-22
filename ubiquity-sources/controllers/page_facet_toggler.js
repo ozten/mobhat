@@ -20,14 +20,7 @@ Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {
             Oface.Views.pageFacetTogglerResetLabel(tab);
             for (var i=0; i< facets.length; i++){      
                 var li = Oface.Views.addPageFacetTogglerAddFacet(facets[i], counts[i], tab);
-                var fn = (function(){
-/*                        
-                            var newFacet = facets[i];
-                            return function(){ofaceObj.doFacetSwitch(identity.username, newFacet);
-                                              Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(newFacet, tab);};
-*/
-                        
-                        
+                var fn = (function(){                        
                         var newFacet = facets[i];
                         return function(){Oface.Models.Facet.facetsChosen(identity.username, [newFacet], function(json, status){
                             ofaceObj.doFacetSwitch(identity.username, newFacet);

@@ -13,7 +13,7 @@ Oface.Views.pageFacetTogglerResetLabel = function(tab){
 };
   
 Oface.Views.addPageFacetTogglerAddFacet = function(facet, count, tab) {
-    var li = jQuery("<li class='oface-enabler-" + facet + "-other facet " + facet +
+    var li = jQuery("<li class='oface-enabler-" + facet + "-other page-facet " + facet +
                     "' style='display: inline; margin-right: 2em'><span class='facet-name'>" +
                     facet + "</span> <span class='count'>" + count + "</span></li>", tab.document);
     jQuery('#oface-other-facets', tab.document).append(li);

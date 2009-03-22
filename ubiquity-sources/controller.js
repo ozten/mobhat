@@ -118,8 +118,6 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
         handleOtherFacetChosen: function(event) {
                 that = this;
                 var data = event.data;
-                //CmdUtils.log("We're expecting a facet here under description");
-                //CmdUtils.log(event.data);
                 Oface.Models.Facet.facetsChosen(Oface.Controllers.Facet.username, [data['description']],
                     function(json, status){                        
                         Oface.Controllers.Facet.chooseFacetCallback(json, status);
