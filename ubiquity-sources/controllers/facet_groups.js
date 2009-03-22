@@ -6,6 +6,7 @@ Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.FacetGroups = {
     t: null,
     prepareLabel: function(prevFacet, currentFacet, prevItemCount, cluster) {
+        CmdUtils.log("Looking at prepareLabel", currentFacet);
         if(prevFacet != currentFacet){          
           if(this.t) jQuery('span.count', this.t).text(prevItemCount);
           prevItemCount = 0;
@@ -20,9 +21,13 @@ Oface.Controllers.FacetGroups = {
           cluster.before(this.t);
           
           var facetGroupLabelFn = (function(){
-              var facet = currentFacet;              
-              return function(){                  
-                  ofaceObj.doFacetSwitch(identity.username, facet);
+              var facet = currentFacet;
+               return function(){
+//                  ofaceObj.doFacetSwitch(identity.username, facet);
+                    CmdUtils.log("Looking at runtime it's now", facet);
+                    Oface.Models.Facet.facetsChosen(identity.username, [facet], function(json, status){
+                        ofaceObj.doFacetSwitch(identity.username, facet);
+                        }, Oface.Util.noOp);
               };
           })();
           this.t.click(facetGroupLabelFn);          

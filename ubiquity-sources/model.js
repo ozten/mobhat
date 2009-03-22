@@ -51,9 +51,6 @@ Oface.Models.Facet = Oface.Models.Facet || {
          */
         facetsChosen: function(username, facets, forTheWin, fail) {
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                //CmdUtils.log("facetsChosen");
-                //CmdUtils.log(facets);
-                CmdUtils.log("JSON test" + Utils.encodeJson(facets) );
                 $.ajax({
                         url: Oface.Controllers.Facet.server + '/facets/current/' + username,
                         type: 'PUT',

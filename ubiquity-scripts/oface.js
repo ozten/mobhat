@@ -6,7 +6,22 @@
  *
  * See build.js
  */
-/**
+;
+CmdUtils.onPageLoad(function(){
+    CmdUtils.injectCss(".cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}");
+});
+function logError(msg, debugObjects) {
+  CmdUtils.log("ERROR:" + msg);
+  for(var i=0; i <= debugObjects.length; i++) {
+    CmdUtils.log(debugObjects[i]);
+  }
+};
+var Oface = Oface || {};
+Oface.Util = Oface.Util || {
+        noOp: function(event) {
+                //no op
+        }
+};/**
 * Event System consumers listen for events and
 * producers create events
             whenWeSee('lifestream-entries-info-available', function(event, urlInfos){
@@ -216,9 +231,6 @@ Oface.Models.Facet = Oface.Models.Facet || {
          */
         facetsChosen: function(username, facets, forTheWin, fail) {
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                //CmdUtils.log("facetsChosen");
-                //CmdUtils.log(facets);
-                CmdUtils.log("JSON test" + Utils.encodeJson(facets) );
                 $.ajax({
                         url: Oface.Controllers.Facet.server + '/facets/current/' + username,
                         type: 'PUT',
@@ -376,9 +388,19 @@ Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {
             for (var i=0; i< facets.length; i++){      
                 var li = Oface.Views.addPageFacetTogglerAddFacet(facets[i], counts[i], tab);
                 var fn = (function(){
+/*                        
                             var newFacet = facets[i];
                             return function(){ofaceObj.doFacetSwitch(identity.username, newFacet);
                                               Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(newFacet, tab);};
+*/
+                        
+                        
+                        var newFacet = facets[i];
+                        return function(){Oface.Models.Facet.facetsChosen(identity.username, [newFacet], function(json, status){
+                            ofaceObj.doFacetSwitch(identity.username, newFacet);
+                            Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(newFacet, tab);
+                            }, Oface.Util.noOp);};
+
                         })();
                 li.click(fn);
             }            
@@ -529,6 +551,7 @@ Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.FacetGroups = {
     t: null,
     prepareLabel: function(prevFacet, currentFacet, prevItemCount, cluster) {
+        CmdUtils.log("Looking at prepareLabel", currentFacet);
         if(prevFacet != currentFacet){          
           if(this.t) jQuery('span.count', this.t).text(prevItemCount);
           prevItemCount = 0;
@@ -543,9 +566,13 @@ Oface.Controllers.FacetGroups = {
           cluster.before(this.t);
           
           var facetGroupLabelFn = (function(){
-              var facet = currentFacet;              
-              return function(){                  
-                  ofaceObj.doFacetSwitch(identity.username, facet);
+              var facet = currentFacet;
+               return function(){
+//                  ofaceObj.doFacetSwitch(identity.username, facet);
+                    CmdUtils.log("Looking at runtime it's now", facet);
+                    Oface.Models.Facet.facetsChosen(identity.username, [facet], function(json, status){
+                        ofaceObj.doFacetSwitch(identity.username, facet);
+                        }, Oface.Util.noOp);
               };
           })();
           this.t.click(facetGroupLabelFn);          
@@ -897,14 +924,9 @@ function ofaceToggler(){
                 username: aUsername};
             }
             that.addOfaceEnabled();
-            try{
-                that.updateDisplayWithFacets(data, tab, that);            
-            } catch(e){
-              CmdUtils.log('caught error while in getFacetsForUser');
-              CmdUtils.log(e);
-            }
             
             triggerA('lifestream-entries-infos-available', {urlInfos: data});
+            that.updateDisplayWithFacets(data, tab, that);
             var missed = jQuery('div.cluster', tab.document).not('.oface');            
             //jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');
             missed.hide();      
@@ -965,7 +987,6 @@ function ofaceToggler(){
             that.addOfaceEnabled();
             
             triggerA('lifestream-entries-infos-available', {urlInfos: data});
-            //updateDisplayWithFacets - this makes facetGroups
             that.updateDisplayWithFacets(data, tab, that);
             var missed = jQuery('div.cluster', tab.document).not('.oface');
             CmdUtils.log("Missed " + missed.length + "items, turning em red");
@@ -1089,13 +1110,15 @@ function ofaceToggler(){
      * facet string a facet description
      */
     CmdUtils.log('Switching Current Facet in Database');
-    var doc = Application.activeWindow.activeTab.document;    
+    var doc = Application.activeWindow.activeTab.document;
+    /*
     jQuery.ajax({
                         url: 'http://oface.ubuntu/facets/current/' + username,
                         type: 'PUT',
                         data: '["' + facet + '"]',
                         dataType: "json"                        
                 }, doc);
+    */
     jQuery('h4.facet', doc).show();
     jQuery('h4.facet.' + facet, doc).hide('slow');
     

@@ -155,14 +155,9 @@
                 username: aUsername};
             }
             that.addOfaceEnabled();
-            try{
-                that.updateDisplayWithFacets(data, tab, that);            
-            } catch(e){
-              CmdUtils.log('caught error while in getFacetsForUser');
-              CmdUtils.log(e);
-            }
             
             triggerA('lifestream-entries-infos-available', {urlInfos: data});
+            that.updateDisplayWithFacets(data, tab, that);
             var missed = jQuery('div.cluster', tab.document).not('.oface');            
             //jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');
             missed.hide();      
@@ -223,7 +218,6 @@
             that.addOfaceEnabled();
             
             triggerA('lifestream-entries-infos-available', {urlInfos: data});
-            //updateDisplayWithFacets - this makes facetGroups
             that.updateDisplayWithFacets(data, tab, that);
             var missed = jQuery('div.cluster', tab.document).not('.oface');
             CmdUtils.log("Missed " + missed.length + "items, turning em red");
@@ -347,13 +341,15 @@
      * facet string a facet description
      */
     CmdUtils.log('Switching Current Facet in Database');
-    var doc = Application.activeWindow.activeTab.document;    
+    var doc = Application.activeWindow.activeTab.document;
+    /*
     jQuery.ajax({
                         url: 'http://oface.ubuntu/facets/current/' + username,
                         type: 'PUT',
                         data: '["' + facet + '"]',
                         dataType: "json"                        
                 }, doc);
+    */
     jQuery('h4.facet', doc).show();
     jQuery('h4.facet.' + facet, doc).hide('slow');
     

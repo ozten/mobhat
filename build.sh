@@ -7,6 +7,7 @@
 cd /home/aking/oface/ubiquity-sources
 
 cp _build_warning.js ../ubiquity-scripts/oface.js
+cat utils.js >> ../ubiquity-scripts/oface.js
 cat utils/event.js >> ../ubiquity-scripts/oface.js
 cat identity.js >> ../ubiquity-scripts/oface.js
 cat models/user_db.js >> ../ubiquity-scripts/oface.js
