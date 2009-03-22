@@ -7,47 +7,102 @@
  * See build.js
  */
 ;
-CmdUtils.injectCss(".cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}");
+CmdUtils.onPageLoad(function(){
+    CmdUtils.injectCss(".cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}");
+});
 function logError(msg, debugObjects) {
   CmdUtils.log("ERROR:" + msg);
   for(var i=0; i <= debugObjects.length; i++) {
     CmdUtils.log(debugObjects[i]);
   }
-}
-var identity = null;
+}/**
+* Event System consumers listen for events and
+* producers create events
+            whenWeSee('lifestream-entries-info-available', function(event, urlInfos){
+              CmdUtils.log("We're golden BRO ", urlInfos);
+              });
+            whenWeSee('lifestream-entries-info-available', {foo: 'bar'}, function(event, urlInfos){
+              CmdUtils.log("We're golden BRO and we've got foo", event.data.foo, urlInfos);
+              });
+            triggerA('lifestream-entries-info-available', {urlInfos: data});
+*/
 
-//TODO namespace this...
-function whoAmI(oface){
-    //get userame and current facets... force login if need be
-    
-    jQuery.ajax({
-        type: "GET",
-        url: "http://oface.ubuntu/users/whoami?cache_bust=" + escape(new Date()),
-        async: false,
-        cache: false,
-        dataType: "json",
-        success: function(data, status){
-          //TODO jQuery json ... data is a string and not an oject...why?
-            CmdUtils.log("whoAmI success with: " + data['id'] + " " + data['username']);
-            identity = data;
-            jQuery('#oface-login-form', Application.activeWindow.activeTab.document).hide();
-            oface.continueEnablingOface();
-        },
-        error: function(xhr, status, error){
-          CmdUtils.log(xhr);
-          CmdUtils.log(xhr.status);
-            if (xhr.status == 401) {
-                askForLogin(oface);
-            } 
-            CmdUtils.log("whoAmI ERROR with: ");
-            CmdUtils.log(xhr);
-            CmdUtils.log(status);
-            CmdUtils.log(error);
-            
-        }
-    });
+function whenWeSee(eventName, eventData, fn){
+    if(eventData) {
+        jQuery(Application.activeWindow.activeTab.document).bind(eventName, eventData, fn);
+    } else {
+        jQuery(Application.activeWindow.activeTab.document).bind(eventName, fn);
+    }
 }
-function askForLogin(oface){
+
+function triggerA(eventName, callbackParam){
+    callbackParam = callbackParam || {};
+    jQuery(Application.activeWindow.activeTab.document).trigger(eventName, callbackParam);
+};var identity = null;
+;var Oface = Oface || {};
+Oface.Models = Oface.Models || {};
+Oface.Models.UserDB = {
+    whoAmI: function(oface, FTW, FAIL){
+        /**
+         * TODO get rid of oface argmument which is a acontext object
+         */
+        jQuery.ajax({
+            type: "GET",
+            url: "http://oface.ubuntu/users/whoami?cache_bust=" + escape(new Date()),
+            async: false,
+            cache: false,
+            dataType: "json",
+            success: FTW,
+            error: FAIL
+        }, Application.activeWindow.activeTab.document);
+    }
+}
+;var Oface = Oface || {};
+Oface.Models = Oface.Models || {};
+Oface.Models.ResourceDB = {
+    queryFacets: function(urls, FTW, FAIL) {
+        var query = { urls: urls };
+        var dataPayload = "q=" + Utils.encodeJson(query);
+    
+        jQuery.ajax({
+            url: 'http://oface.ubuntu/resources/query_facets',
+            type: 'POST',
+            dataType: 'json',
+            cache: false, // REMOVE FOR PROD
+            data: dataPayload,
+            success: FTW,
+            error: FAIL      
+        }, Application.activeWindow.activeTab.document);
+    }
+};var Oface = Oface || {};
+Oface.Views = Oface.Views || {};
+Oface.Views.userFacetToggler =
+<div><h3 id='oface-enabler' style='float: left' title='Click to Change'>Oface is
+    <span class='status'>Enabled</span>
+    <img src='http://oface.ubuntu/static/images/dell_icon-power-button.gif'
+         style='vertical-align: bottom' width='16' height='16' />
+                               
+    </h3>
+                              
+    <div class='current-facet' ><div style="margin-top:17px; margin-left: 3px; float:left"></div>
+        <div class='switcher-arrow' style='margin-top:20px; float: left; height:6px; width:7px; margin-left:3px; font-size:0; vertical-align:middle; background:transparent url(http://oface.ubuntu/static/images/gmail_downarros.png) no-repeat scroll -36px 50%;'> x</div>
+    </div>
+</div>.children();;var Oface = Oface || {};
+Oface.Views = Oface.Views || {};
+Oface.Views.pageFacetToggler =
+  <ul id='oface-other-facets' style='float: left; list-style-type: none;'></ul>;
+
+Oface.Views.pageFacetTogglerLabel =
+  <li style='display: inline; margin-right: 0.2em'>Filtered Out of Page:</li>;
+  
+Oface.Views.addPageFacetTogglerAddFacet = function(facet, count, tab) {
+    var li = jQuery("<li class='oface-enabler-" + facet + "-other facet " + facet +
+                    "' style='display: inline; margin-right: 2em'><span class='facet-name'>" +
+                    facet + "</span> <span class='count'>" + count + "</span></li>", tab.document);
+    jQuery('#oface-other-facets', tab.document).append(li);
+    return li;
+};
+CmdUtils.log("LOADING Views");;function askForLogin(oface){
   
   var doc = Application.activeWindow.activeTab.document;
   var $ = jQuery;
@@ -75,11 +130,11 @@ function askForLogin(oface){
         cache: false,
         dataType: "json",
         data: formData,
-        beforeSend: function(xhr){
+        beforeSend: function(xhr){            
             $('#oface-login-form #message', doc).text("Checking Username and Password.");
         },
         success: function(data, status){
-            whoAmI(oface);
+            Oface.Models.UserDB.whoAmI(oface);
         },
         error: function(xhr, status, error){          
             $('#oface-login-form #message', doc).text("Username or Password were incorrect. Please try again.");
@@ -101,7 +156,7 @@ function updateUrlDbWithMd5AndFacets(url, md5, facets) {
     if( urlDb[url] ) {
       CmdUtils.log("Already seen ", url);
     } else {
-      CmdUtils.log("Seeing ", url, "for the first time");
+      //CmdUtils.log("Seeing ", url, "for the first time");
       urlDb[url] = {
         md5: md5,
         facets: facets
@@ -274,6 +329,76 @@ Oface.Util = Oface.Util || {
 
 /* Controller */
 Oface.Controllers = Oface.Controllers || {};
+Oface.Controllers.Oface = Oface.Controllers.Facet || {
+    main: function(context){
+        //TODO... we should check current page first
+        // also we should make next step explicit? or
+        // is the too much coupling?
+        Oface.Models.UserDB.whoAmI(context, function(data, status){
+          //TODO jQuery json ... data is a string and not an oject...why?
+            CmdUtils.log("whoAmI success with: ", data);
+            //TODO identity is global object... belongs in the Models module?
+            identity = data;
+            jQuery('#oface-login-form', Application.activeWindow.activeTab.document).hide();
+            context.continueEnablingOface();
+        }, function(xhr, status, error){
+          CmdUtils.log(xhr);
+          CmdUtils.log(xhr.status);
+            if (xhr.status == 401) {
+                askForLogin(context);
+            } 
+            CmdUtils.log("whoAmI ERROR with: ");
+            CmdUtils.log(xhr);
+            CmdUtils.log(status);
+            CmdUtils.log(error);
+            
+        });
+        
+        //Register Events and their controllers
+        whenWeSee('lifestream-entries-infos-available',
+                  Oface.Controllers.PageFacetToggle.handleLifestreamEntriesInfosAvailable);
+    }
+};
+
+Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {
+        handleLifestreamEntriesInfosAvailable: function(event, params){
+            var tab = Application.activeWindow.activeTab;
+            var aUsername    = identity.username;
+            var currentFacet = identity.facets[0];
+            var data = params.urlInfos;
+            CmdUtils.log("TODO Test params", params);
+            //simulate click on facet heading
+            //updateDisplayWithOtherFacets: function(data, currentFacet, tab, that){
+            var facets = [];
+            var counts = [];
+            for (var i=0; i< data.length; i++){
+                var facet = data[i].facets[0];
+                var facetIndex = facets.indexOf(facet);
+                if (facetIndex == -1) {
+                    facets[facets.length] = facet;
+                    counts[counts.length] = 1;
+                } else {
+                    counts[facetIndex] += 1;
+                }
+            }
+            //TODO, get it working, then move htis all into the view
+            // reloadPageFacetToggler...
+            jQuery('#oface-other-facets li', tab.document).remove();
+            jQuery('#oface-other-facets', tab.document).append(Oface.Views.pageFacetTogglerLabel.toXMLString());
+            for (var i=0; i< facets.length; i++){      
+                var li = Oface.Views.addPageFacetTogglerAddFacet(facets[i], counts[i], tab);
+                var fn = (function(){
+                            var newFacet = facets[i];
+                            return function(){ofaceObj.doFacetSwitch(identity.username, newFacet); ofaceObj.switchDisplayWithOtherFacets(newFacet, tab);};
+                        })();
+                li.click(fn);
+            }
+            CmdUtils.log("TODO Test me Switching to ", currentFacet['description']);
+            //huh? that.switchFacetDisplay.call(currentFacet['description'], aUsername);
+            ofaceObj.switchDisplayWithOtherFacets(currentFacet['description'], tab);
+        }
+};
+
 Oface.Controllers.Facet = Oface.Controllers.Facet || {
         username: "Unknown",
         server: "http://oface.ubuntu", 
@@ -362,9 +487,6 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
               //eventually a sqlite db with in memory caching
                 var url = $($(cluster).parents('.cluster'));
                 var urlInfo = urlDb[theUrl];
-                CmdUtils.log("URL DB", urlDb);
-                CmdUtils.log("URL INFO", urlInfo);
-                CmdUtils.log("URL man", urlDb['http://twitter.com/pattyok/statuses/1101336763']);
                 var clusterWidget =
                   $(cluster).append(<div class="cluster-facet-widget-panel"><a class="cluster-facet-widget-link" href="#">Change Facet</a><form class="cluster-facet-widget" style="position: absolute; z-index: 666; top: -5px; right: 0px">
                                     <input type="hidden" name="md5sum" value="TODO" />
@@ -379,9 +501,6 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                 $('select', cluster).append($options);
                 $('.cluster-facet-widget', cluster).hide().bind('submit', function(){
                     var theForm = this;
-                    CmdUtils.log("form", theForm);
-                    CmdUtils.log("options=", $('option', theForm));
-                    CmdUtils.log("option sel=", $('option[selected]', theForm));
                     var options = $('option[selected]', theForm);
                     var f;
                     //HACK ALERT: jQuery is acting weird here...
@@ -436,14 +555,10 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
             }
             $('.cluster-facet-widget-link', cluster).show();
             //clear Timeout if exists
-            if ( $(cluster).data('oface.faceted.cluster.widget.timer') ) {
-              CmdUtils.log("Clearing Timeout ");
-              CmdUtils.log($(cluster).data('oface.faceted.cluster.widget.timer'));
+            if ( $(cluster).data('oface.faceted.cluster.widget.timer') ) {              
               Utils.clearTimeout($(cluster).data('oface.faceted.cluster.widget.timer'));
               $(cluster).data('oface.faceted.cluster.widget.timer', null)
-            } else {
-              CmdUtils.log("Nothing to clear ");
-            }
+            } 
         },
         mouseOutFacetedCluster: function(event){
           var $ = jQuery, cluster = event.target;
@@ -458,17 +573,9 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
             var timer = Utils.setTimeout(function(){
                   $('.cluster-facet-widget-link', cluster).hide();  
               }, 1000);
-              $(cluster).data('oface.faceted.cluster.widget.timer', timer);
-              CmdUtils.log("Setting Timeout ");
-              CmdUtils.log($(cluster).data('oface.faceted.cluster.widget.timer'));
+              $(cluster).data('oface.faceted.cluster.widget.timer', timer);              
               
           }
-            //if(jQuery(event.target).data('oface.faceted.cluster.widget')) {
-              
-            //}
-            
-            //CmdUtils.log('mouseOutFacetedCluster');
-            //CmdUtils.log(arguments);
         },
         updateAllView: function(){
                 CmdUtils.log("updateAllView called");
@@ -603,7 +710,7 @@ function ofaceToggler(){
 
 
 
-var ofaceObj = {
+;var ofaceObj = {
   name: "fetch-feed-oface",
   env: "http://friendfeed.com",
   testenv: "http://oface.ubuntu/static/test_files/",
@@ -616,27 +723,32 @@ var ofaceObj = {
     }
   },
   preview: function(pblock, input){
-    whoAmI(this);
+    /**
+     * Either via Ubiquity command or pageLoad preview is our first stop...
+     */
+    //TODO get ride of this - context object
+    Oface.Controllers.Oface.main(this);
   },
   continueEnablingOface: function(){
+      /**
+       * TODO this method belongs on OFace.main controller
+       */
         var tab = Application.activeWindow.activeTab;    
     var url = this.envFor(tab.document.location.href) + jQuery('link[type=application/atom+xml]', tab.document).attr('href');
-    CmdUtils.log('URL=' + url);
     var that = this;
     
     page = Oface.WhatPageIsThis.really.call(Oface.WhatPageIsThis);
     if (! page.isKnown) {
       CmdUtils.log("Unknown page type... Skipping");
     } else {      
-      
       if ( ! Oface.WhatPageIsThis.isSupportedPage(page.type)){
         CmdUtils.log("Page type " + page.type + " Skipping");
       } else {
- 
         var sucessFn;
+        var username;
         CmdUtils.log("I think I am on a " + page.type + " page");
         if( page.type == Oface.WhatPageIsThis.PROFILE_PAGE ) {
-          var username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
+          username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
           successFn = function(data, status){            
             CmdUtils.log("atom feed XHR call status " + status);
             CmdUtils.log(data);
@@ -647,6 +759,7 @@ var ofaceObj = {
           };          
         } else {
           // Home, or other mixed username page... not in the url
+          username = identity.username;
           successFn = function(data, status){
             CmdUtils.log("atom feed XHR call status " + status);
             CmdUtils.log(data);
@@ -700,8 +813,6 @@ var ofaceObj = {
         try{
           //TODO brittle          
           var selector = that.linkSelector(url, tab);
-          CmdUtils.log("Selector = " + selector);
-          //'a[href=' + url + ']'
           
           var entry = $(selector, tab.document);
           if (entry.length == 0) {
@@ -713,14 +824,11 @@ var ofaceObj = {
               }
               if(cluster.length > 0){
                  //update this div...
-                  var userHref = $('div.summary a.l_person', cluster).attr('href');
-                  
-                  CmdUtils.log(userHref);
+                  var userHref = $('div.summary a.l_person', cluster).attr('href');                  
                   if ( userHref ) {
                       var pieces = userHref.split('/');
                       // http://friendfeed.com/draarong
-                      item['username'] = pieces[pieces.length -1];
-                      CmdUtils.log('USERNAME: ' + item['username']);
+                      item['username'] = pieces[pieces.length -1];                      
                   } else {
                      CmdUtils.log("WARNING can't find username for " + url);
                  }
@@ -738,7 +846,6 @@ var ofaceObj = {
   },
   getFacetsForUser: function(that, tab, aUsername, urls){
     /* urls [{id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
-    CmdUtils.log(urls);
     var query = { urls: urls };
     var dataPayload = "q=" + Utils.encodeJson(query);
     
@@ -753,24 +860,19 @@ var ofaceObj = {
           if(status == 'success'){
             var data = [];
             for(var i=0; i<jsn.length; i++){
-              CmdUtils.log(jsn[i]['facets'][0]['description']);
               //TODO we are throwing away id, created date
               data[i] = {
                 facets: [jsn[i]['facets'][0]['description']],
                 url: unescape(jsn[i]['url']) };
             }
             that.addOfaceEnabled();
-            CmdUtils.log('here but');
             try{
                 that.updateDisplayWithFacets(data, tab, that);            
             } catch(e){
               CmdUtils.log('caught error while in getFacetsForUser');
               CmdUtils.log(e);
             }
-            var currentFacet = 'art';//TODO does this duplicate efforts of the Switcher
-            that.updateDisplayWithOtherFacets(data, currentFacet, tab, that);
-            //simulate click on facet heading
-            that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0), aUsername);
+            triggerA('lifestream-entries-infos-available', {urlInfos: data});
             var missed = jQuery('div.cluster', tab.document).not('.oface');            
             //jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');
             missed.hide();      
@@ -781,9 +883,6 @@ var ofaceObj = {
           CmdUtils.log(xhr);          
           CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);          
           CmdUtils.log(err);
-      },
-      complete: function(){
-          CmdUtils.log("woot");
       }
   };
    
@@ -792,7 +891,8 @@ var ofaceObj = {
     /*
     //after async
     var data = urls.slice(0);
-    var facets = [["webdev"],["art"],["family"]];
+    var facets = [["w
+    "],["art"],["family"]];
     for(var i = 0; i < data.length; i++){
       if(i == 0 || i == 6){
         data[i].facets = facets[0];
@@ -811,16 +911,8 @@ var ofaceObj = {
   getFacetsForManyUsers: function(that, tab, urls){
     /* urls [{username: 'pattyok', id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     CmdUtils.log('getFacetsForManyUsers');
-    var query = { urls: urls };
-    var dataPayload = "q=" + Utils.encodeJson(query);
-    
-    var h = {
-      url: 'http://oface.ubuntu/resources/query_facets',
-      type: 'POST',
-      dataType: 'json',
-      cache: false, // REMOVE FOR PROD
-      data: dataPayload,
-      success: function(jsn, status){
+    Oface.Models.ResourceDB.queryFacets(urls, 
+       function(jsn, status){
           if(status == 'success'){
             var data = [];
             
@@ -837,38 +929,26 @@ var ofaceObj = {
                 CmdUtils.log(error);
               }
             }
-            CmdUtils.log("Setting up ofaceenabled widget");
+            //TODO this could happen earlier? Why here?
             that.addOfaceEnabled();
             
-            that.updateDisplayWithFacets(data, tab, that);            
-            var currentFacet = identity.facets[0];
-            var aUsername    = identity.username;
-            that.updateDisplayWithOtherFacets(data, currentFacet, tab, that);
-            //simulate click on facet heading
-            that.switchFacetDisplay.call(jQuery('h4.facet.' + currentFacet, tab.document).get(0), aUsername);
+            triggerA('lifestream-entries-infos-available', {urlInfos: data});
+            //updateDisplayWithFacets - this makes facetGroups
+            that.updateDisplayWithFacets(data, tab, that);
             var missed = jQuery('div.cluster', tab.document).not('.oface');
             CmdUtils.log("Missed " + missed.length + "items, turning em red");
             //jQuery('div.cluster', tab.document).not('.oface').css('background-color', 'red');
             missed.hide();
           }
-      },
-      error: function(xhr, status, err){
+      }, function(xhr, status, err){
           CmdUtils.log("Ouch trouble fetching facet info for urls during getFacetsForManyUsers ");
           CmdUtils.log(xhr);
           CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);
           CmdUtils.log(err);
-      },
-      complete: function(){
-          CmdUtils.log("woot");
-      }
-  };
-   
-  
-    jQuery.ajax(h, tab.document);
+      });
   },
   linkSelector: function(link, tab){
     var selector = 'div.title a[href=' + link + ']';
-      CmdUtils.log(selector);
       if(link.indexOf('twitter') >= 0){
         selector = 'div[viewinlink=' + link + ']';
       }else if(link.indexOf('friendfeed.com/e/') >= 0){        
@@ -887,7 +967,6 @@ var ofaceObj = {
         //a[href=http://feedproxy.google.com/~r/slashfilm/~3/vjoxle-72JM/] becomes
         //a[href=http://feedproxy.google.com/%7Er/slashfilm/%7E3/vjoxle-72JM/]
         selector = selector.replace(/~/g, "%7E");
-        CmdUtils.log("feedproxy.google case selector now " + selector);
       }
       return selector;
   },
@@ -945,7 +1024,14 @@ var ofaceObj = {
             'margin-right': '10px'
           });
           cluster.before(t);
-          t.click(that.switchFacetDisplay);
+          
+          var facetGroupLabelFn = (function(){
+              var facet = data[i]['facets'][0];              
+              return function(){                  
+                  that.doFacetSwitch(identity.username, facet);
+              };
+          })();
+          t.click(facetGroupLabelFn);          
           jQuery('div.cluster, div.pager', tab.document).css('clear', 'left');
         }
         prevFacet = data[i].facets[0];
@@ -953,7 +1039,7 @@ var ofaceObj = {
       }
       if(a.length != 1){
         //href=http://www.flickr.com/photos/wigfur/3229310456/
-        CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
+        //CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
         //TODO send a report back to home base???
         
       } //if(a.length == 1){
@@ -961,35 +1047,11 @@ var ofaceObj = {
     CmdUtils.log('Triggering clustersfaceted');
     jQuery(tab.document).trigger('clustersfaceted');
   },
-  updateDisplayWithOtherFacets: function(data, currentFacet, tab, that){
-    var facets = [];
-    var counts = [];
-    for (var i=0; i< data.length; i++){
-      var facet = data[i].facets[0];
-      var facetIndex = facets.indexOf(facet);
-      if (facetIndex == -1) {
-        facets[facets.length] = facet;
-        counts[counts.length] = 1;
-      } else {
-        counts[facetIndex] += 1;
-      }
-    }
-    CmdUtils.log('updateDisplayWithOtherFacets called about to add other facets');
-    jQuery('#oface-other-facets', tab.document).append("<li style='display: inline; margin-right: 0.2em'>Filtered Out of Page:</li>");
-    for (var i=0; i< facets.length; i++){
-      CmdUtils.log('updateDisplayWithOtherFacets adding ');
-      CmdUtils.log(facets[i]);
-      var li = jQuery("<li class='oface-enabler-" + facets[i] + "-other facet " + facets[i] + "' style='display: inline; margin-right: 2em'><span class='facet-name'>" + facets[i] +
-                                                         "</span> <span class='count'>" + counts[i] + "</span></li>", tab.document);
-      li.click(that.switchFacetDisplay);
-      jQuery('#oface-other-facets', tab.document).append(li);
-      
-    }
-    that.switchDisplayWithOtherFacets(currentFacet, tab);
-    //hide currentFacet
-  },
   switchDisplayWithOtherFacets: function(currentFacet, tab){
-    CmdUtils.log('switchDisplayWithOtherFacets');
+    /**
+     * Changes the visible state of the various FacetGroups in the Lifestream
+     * currentFacet string - the new facet
+     */
     jQuery('#oface-other-facets li:hidden', tab.document).show();
     jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
   },
@@ -1014,15 +1076,12 @@ var ofaceObj = {
       return cluster.hasClass(containerClassName);
       });    
   },
-  switchFacetDisplay: function(username){
-    /**
-     * this - is the 6.toggler the user clicked
-    */
-    CmdUtils.log("switchFacetDisplay(" + username + ")");
-    var facet = jQuery('span.facet-name', this).text();
-    ofaceObj.doFacetSwitch(username, facet);        
-  },
   doFacetSwitch: function(username, facet){
+    /**
+     * username string the username
+     * facet string a facet description
+     */
+    CmdUtils.log('Switching Current Facet in Database');
     var doc = Application.activeWindow.activeTab.document;    
     jQuery.ajax({
                         url: 'http://oface.ubuntu/facets/current/' + username,
@@ -1078,39 +1137,23 @@ var ofaceObj = {
     return [toHexString(hash.charCodeAt(i)) for (i in hash)].join("");
   },
   addOfaceEnabled: function(){
-    
+    /**
+     * TODO this is a controller method...
+     */
     var $ = jQuery;
     var doc = Application.activeWindow.activeTab.document;
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
       CmdUtils.log("Adding widget");
-       $('#feed1', doc).prepend($("<ul id='oface-other-facets' style='float: left; list-style-type: none;'></ul>", doc));
+       $('#feed1', doc).prepend($(Oface.Views.pageFacetToggler.toXMLString(), doc));
 
-      var ofaceEnabler = $(<div><h3 id='oface-enabler' style='float: left' title='Click to Change'>Oface is
-                               <span class='status'>Enabled</span>
-                               <img src='http://oface.ubuntu/static/images/dell_icon-power-button.gif'
-                                    style='vertical-align: bottom' width='16' height='16' />
-                               
-                              </h3>
-                              
-                                <div class='current-facet' ><div style="margin-top:17px; margin-left: 3px; float:left">webdev</div>
-                                  <div class='switcher-arrow' style='margin-top:20px; float: left; height:6px; width:7px; margin-left:3px; font-size:0; vertical-align:middle; background:transparent url(http://oface.ubuntu/static/images/gmail_downarros.png) no-repeat scroll -36px 50%;'> x</div>
-                                </div>
-                              </div>.children().toXMLString(), doc);
-
-                        
-                        /*
-                         background:transparent url(images/2/5/chrome/vimages7.png) no-repeat scroll -36px 50%;
-
-
-
-
-
-                        */
+      var ofaceEnabler = $(Oface.Views.userFacetToggler.toXMLString(), doc);
+      
       $('#feed1', doc).prepend(ofaceEnabler);
+      $('.current-facet div:first', doc).text(identity.facets[0]['description']);
+      
       $('#oface-enabler', doc).click(ofaceToggler);
                         
       $('.current-facet', doc).click(function(){
-          CmdUtils.log('click');
           $('#switcher', doc).toggle();
       });
       //TODO AOK
@@ -1118,34 +1161,28 @@ var ofaceObj = {
       Oface.Controllers.Facet.initialize.call(Oface.Controllers.Facet);
       $('h3#oface-enabler span.current-facet', doc).css('margin-left', '30px');
     }else{
-      CmdUtils.log('Already have the widget');
-    
+      CmdUtils.log('Already have the widget');    
     }
   }
 };
 /**
  * You can use fetch- command  during development (comment out pageLoad_fetchFeedOface )
  * or uncomment pageLoad_fetchFeedOface for auto load
- */
+ 
 function pageLoad_fetchFeedOface(){
-  /* Not needed any more ?
-  var loc = Application.activeWindow.activeTab.document.location;
-  var enabledFor = ['http://oface.ubuntu/static/test_files/ff-pattyok.html',
-                   'http://oface.ubuntu/static/test_files/ozten_home.html'];
-  for(var i=0; i < enabledFor.length; i++){
-      if(loc.href.indexOf(enabledFor[i]) != -1){
-  */
+  // Not needed any more ?
+  //var loc = Application.activeWindow.activeTab.document.location;
+  //var enabledFor = ['http://oface.ubuntu/static/test_files/ff-pattyok.html',
+  //                 'http://oface.ubuntu/static/test_files/ozten_home.html'];
+  //for(var i=0; i < enabledFor.length; i++){
+  //    if(loc.href.indexOf(enabledFor[i]) != -1){
           ofaceObj.preview.call(ofaceObj);
-          /*
-          break;
-      }
-  }
-  */
+  //        break;
 }
-
+*/
 ;(function(){
-
-//Growl displayMessage
+CmdUtils.CreateCommand(ofaceObj);
+})();//Growl displayMessage
 //Replace selected text CmdUtils.setSelection("You selected: "+input.html);
 //Application - FUEL Application - http://developer.mozilla.org/en/docs/FUEL 
 /* This is a template command */
@@ -1193,11 +1230,6 @@ CmdUtils.CreateCommand({
     jQuery('div.cluster', doc).css('border', 'solid 1px grey');
   }
 });
-
-
-
-CmdUtils.CreateCommand(ofaceObj);
-
 //Short term FriendFeed Specific stuff
 //Important for proof of concept, not how real service would work
 Oface.WhatPageIsThis = {
@@ -1284,7 +1316,4 @@ Oface.WhatPageIsThis = {
             this.ROOM_PAGE, this.EVERYONE_PAGE, this.FRIENDS_PAGE].indexOf(pageType) != -1;
   }
 }
-
 CmdUtils.CreateCommand(Oface.WhatPageIsThis);
-
-})();

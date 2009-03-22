@@ -140,7 +140,8 @@ class Facets_Controller extends Template_Controller {
   /**
    $.ajax( {url:'/facets/weighted/ozten', type:'GET'});
    */
-  public function weighted($username) {		
+  public function weighted($username) {
+	Kohana::log('info', "METERING " . request::method() . "facets/weighted username=$username");
 	$this->auto_render=false;
     
     $facet = new Facet_Model();

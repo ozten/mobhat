@@ -54,5 +54,34 @@ class Users_Controller extends Controller
             echo $payload;
         }
     }
+    
+    /**
+     * Web viewable, useful for debugging
+     * /users/{username}/{facet}/page/{page=0}
+     * page is option and defaults to 0
+     */
+    public function items($username, $unused, $page=0)
+    {
+        $urlDb = new Url_Model;
+        $this->view = new View('users/items');
+        $this->view->username = $username;
+        $this->view->links = $urlDb->urlsByUsername($username, $page);
+        $this->view->render(TRUE);
+    }
+     
+     /**
+     * Web viewable, useful for debugging
+     * /users/{username}/{facet}/page/{page=0}
+     * page is option and defaults to 0
+     */
+    public function faceted_items($username, $facet, $unused, $page=0)
+    {
+        $urlDb = new Url_Model;
+        $this->view = new View('users/items');
+        $this->view->username = $username;
+        $this->view->facet = $facet;
+        $this->view->links = $urlDb->urlsByUsernameAndFacet($username, $facet, $page);
+        $this->view->render(TRUE);
+    }
 }
 ?>

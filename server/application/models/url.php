@@ -100,5 +100,74 @@ class Url_Model extends Model {
         
         return $this->db->query($sql)->result_array(FALSE);
     }
+    public function updateInfo($hash, $username, $facets)
+    {
+        $id = $facets[0]->facets->id;
+        if ( is_numeric($id) ) {
+            $facetId = intval($id);    
+            Kohana::log('info', "Chaning facet over to $facetId");  
+            $delSql = "
+DELETE FROM facets_urls 
+WHERE url_fk IN (
+  SELECT urls.id FROM urls
+  JOIN users ON users.id = urls.user_fk
+  WHERE urls.hash = '$hash' AND
+  users.username = '$username'
+)";
+
+            $insSql = "
+INSERT INTO facets_urls (facet_fk, url_fk) VALUES ($facetId, (
+  SELECT urls.id FROM urls
+  JOIN users ON users.id = urls.user_fk
+  WHERE urls.hash = '$hash' AND
+  users.username = '$username'
+  )
+);";
+            try{
+                $this->db->query("START TRANSACTION");
+                $this->db->query($delSql);
+                $this->db->query($insSql);
+                $this->db->query("COMMIT");
+            } catch(Exception $e) {
+                Kohana::log('error', $e);
+                $this->db->query("ROLLBACK");
+            }
+            Kohana::log('info', "Updated the db");
+        } else {
+            Kohana::log('alert', "Unable to find a facet id, skipping");
+        }
+    }
+    
+    public function urlsByUsername($username, $page=0)
+    {
+        $num = 100;
+        $offset = $num * $page;
+        
+        $sql = "SELECT urls.id, urls.url, facets.description, urls.hash
+FROM urls 
+JOIN users ON users.id = urls.user_fk
+JOIN facets_urls ON facets_urls.url_fk = urls.id
+JOIN facets ON facets.id = facets_urls.facet_fk
+WHERE users.username = '$username'
+ORDER BY urls.id DESC
+LIMIT $num OFFSET $offset";
+        return $this->db->query($sql);
+    }
+    public function urlsByUsernameAndFacet($username, $facet, $page=0)
+    {
+        $num = 100;
+        $offset = $num * $page;
+        
+        $sql = "SELECT urls.id, urls.url, urls.hash
+FROM urls 
+JOIN users ON users.id = urls.user_fk
+JOIN facets_urls ON facets_urls.url_fk = urls.id
+JOIN facets ON facets.id = facets_urls.facet_fk
+WHERE users.username = '$username'
+AND facets.description = '$facet'
+ORDER BY urls.id DESC
+LIMIT $num OFFSET $offset";
+        return $this->db->query($sql);
+    }
 }
 ?>

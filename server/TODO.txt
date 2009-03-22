@@ -46,6 +46,9 @@
   DELETE facet/{username}/url/facet_id
   Removes a facet from a url
   
+  = Debugging Urls =
+  http://oface.ubuntu/users/items/{username}/page/0
+  http://oface.ubuntu/users/faceted_items/{username}/{facet}/page/0
   
   == Feeds ==
   GET feeds/user/{username} -> opml

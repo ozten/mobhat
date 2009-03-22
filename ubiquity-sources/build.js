@@ -8,13 +8,21 @@ function build(){
     //md5 is aa4649132486a2410f7e63628479f297    
     File.cp(SRC_DIR + '_build_warning.js', DIST_DIR + 'oface.js')        
         .append(SRC_DIR + 'utils.js')
+        .append(SRC_DIR + 'utils/event.js')
         .append(SRC_DIR + 'identity.js')
-        .append(SRC_DIR + 'whoami.js')
+        .append(SRC_DIR + 'models/user_db.js')
+        .append(SRC_DIR + 'models/resource_db.js')
+        .append(SRC_DIR + 'views/user_facet_toggler.js')
+        .append(SRC_DIR + 'views/page_facet_toggler.js')
         .append(SRC_DIR + 'askforlogin.js')
         .append(SRC_DIR + 'urldb.js')
         .append(SRC_DIR + 'model.js')
         .append(SRC_DIR + 'view.js')
-        .append(SRC_DIR + 'controller.js');        
+        .append(SRC_DIR + 'controller.js')
+        .append(SRC_DIR + 'toggler.js')
+        .append(SRC_DIR + 'commands/fetch-feed-oface.js')
+        .append(SRC_DIR + 'commands/discover-feeds-oface.js')
+        .append(SRC_DIR + 'commands/what-page-is-this.js');
 }
 
 var File = {

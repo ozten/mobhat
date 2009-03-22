@@ -51,3 +51,14 @@ PageHasFacetableLifestream?
 === User disables OFace ===
 *ofaceenabled*
 *ofacedisabled*
+
+
+== Architecture ==
+
+
+-----------------------
+Controllers 
+-----------------------
+ModelDBs | View | Events            FriendFeedReader
+-----------------------             -----------------------
+Models |                            LifestreamEntryReader

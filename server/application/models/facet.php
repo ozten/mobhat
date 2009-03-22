@@ -45,7 +45,7 @@ class Facet_Model extends Model {
             Kohana::log('alert', "Skipping " . $facet . ", didn't find it in " . Kohana::debug($facetsToInsert));
           }
         }
-        Kohana::log('info', "new facets so far..." . Kohana::debug($newFacetIds));
+        Kohana::log('info', "model saying new facets so far..." . Kohana::debug($newFacetIds));
         foreach(array_keys($facetsToInsert) as $facet){
           $facetId = $this->_createFacet($facet);
           array_push($newFacetIds, $facetId[0]->id);
@@ -96,7 +96,7 @@ class Facet_Model extends Model {
         Kohana::log('alert', "Skipping " . $facet . ", didn't find it in " . Kohana::debug($facetsToInsert));
       }
     }
-    Kohana::log('info', "new facets so far..." . Kohana::debug($newFacetIds));
+    Kohana::log('info', "again model saying new facets so far..." . Kohana::debug($newFacetIds));
     foreach(array_keys($facetsToInsert) as $facet){
       $facetId = $this->_createFacet($facet);
       array_push($newFacetIds, $facetId[0]->id);

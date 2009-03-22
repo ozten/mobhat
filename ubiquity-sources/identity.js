@@ -1,1 +1,1 @@
-var identity = null;
+;var identity = null;

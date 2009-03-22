@@ -1,4 +1,4 @@
-function askForLogin(oface){
+;function askForLogin(oface){
   
   var doc = Application.activeWindow.activeTab.document;
   var $ = jQuery;
@@ -26,11 +26,11 @@ function askForLogin(oface){
         cache: false,
         dataType: "json",
         data: formData,
-        beforeSend: function(xhr){
+        beforeSend: function(xhr){            
             $('#oface-login-form #message', doc).text("Checking Username and Password.");
         },
         success: function(data, status){
-            whoAmI(oface);
+            Oface.Models.UserDB.whoAmI(oface);
         },
         error: function(xhr, status, error){          
             $('#oface-login-form #message', doc).text("Username or Password were incorrect. Please try again.");

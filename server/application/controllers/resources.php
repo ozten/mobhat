@@ -199,5 +199,37 @@ class Resources_Controller extends Template_Controller
         }
         return $msg;
     }
+    /**
+     $.ajax( {url:'/resources/resource/{md5}/user/{username}', type:'PUT', data: JSON.stringify([{"facets":{"id":"23","description":"art"}}])
+   */
+    public function resource($hash, $u, $username)
+    {
+        $this->auto_render=false;
+        if (request::method() == "put") {
+            $putdata = fopen("php://input", "r");
+            $thedata = "";
+            while ($data = fread($putdata, 1024)){
+	            $thedata = $thedata . $data;
+            }
+            
+	        Kohana::log('info', "METERING PUT resources/resource/{md5}/user/{username} md5=$hash username=$username data=$thedata");
+            $urlInfo = json_decode($thedata);
+            $this->_updateUrlInfo($hash, $username, $urlInfo);
+            echo json_encode(array("message" => "OK",
+                                   "urlInfo" => $urlInfo));
+        } else {
+            Kohana::log('alert', "Unknown request method " . request::method() . " expected PUT");
+            header("Method Not Allowed", true, 405);
+            echo json_encode(array("errMsg" => "Unknown request type " . rrequest::method() . ", expected PUT"));
+        }
+    }
+    /**
+     * @param Object $facets - A list of facet info obejcts [{id:, description: }]
+     */
+    private function _updateUrlInfo($hash, $username, $facets)
+    {
+        $urlDb = new Url_Model;
+        $urlDb->updateInfo($hash, $username, $facets);
+    }
 }
 ?>

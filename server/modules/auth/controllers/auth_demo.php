@@ -83,7 +83,7 @@ class Auth_Demo_Controller extends Template_Controller {
                   'message' => 'retry-whoami'
 		      ));	
 		  } else {
-				
+			  Kohana::log('info', "HTML request");
               // Login successful, redirect
               url::redirect($this->session->get("requested_url"));
 		  }
@@ -120,7 +120,9 @@ class Auth_Demo_Controller extends Template_Controller {
     private function _isJSON(){
 		$headers = getallheaders();
         $acceptHeader = $headers['Accept'];
-        if (strpos($acceptHeader, "pplication/json")) {
+		//plication - don't fix spelling, makes string pos > 0
+		$pos = stristr($acceptHeader, "plication/json");
+		if ($pos) {
 			return true;
 		} else {
 		    return false;
