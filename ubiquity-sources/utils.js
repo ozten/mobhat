@@ -7,4 +7,10 @@ function logError(msg, debugObjects) {
   for(var i=0; i <= debugObjects.length; i++) {
     CmdUtils.log(debugObjects[i]);
   }
-}
+};
+var Oface = Oface || {};
+Oface.Util = Oface.Util || {
+        noOp: function(event) {
+                //no op
+        }
+};

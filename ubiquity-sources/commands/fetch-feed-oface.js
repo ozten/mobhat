@@ -342,6 +342,7 @@
      */
     jQuery('#oface-other-facets li:hidden', tab.document).show();
     jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
+    CmdUtils.log("TODO ver ya we did")
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
         var cluster = element;

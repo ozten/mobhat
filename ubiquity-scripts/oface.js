@@ -6,16 +6,7 @@
  *
  * See build.js
  */
-;
-CmdUtils.onPageLoad(function(){
-    CmdUtils.injectCss(".cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}");
-});
-function logError(msg, debugObjects) {
-  CmdUtils.log("ERROR:" + msg);
-  for(var i=0; i <= debugObjects.length; i++) {
-    CmdUtils.log(debugObjects[i]);
-  }
-}/**
+/**
 * Event System consumers listen for events and
 * producers create events
             whenWeSee('lifestream-entries-info-available', function(event, urlInfos){
@@ -87,7 +78,8 @@ Oface.Views.userFacetToggler =
     <div class='current-facet' ><div style="margin-top:17px; margin-left: 3px; float:left"></div>
         <div class='switcher-arrow' style='margin-top:20px; float: left; height:6px; width:7px; margin-left:3px; font-size:0; vertical-align:middle; background:transparent url(http://oface.ubuntu/static/images/gmail_downarros.png) no-repeat scroll -36px 50%;'> x</div>
     </div>
-</div>.children();;var Oface = Oface || {};
+</div>.children();; //TODO restructure this...
+var Oface = Oface || {};
 Oface.Views = Oface.Views || {};
 Oface.Views.pageFacetToggler =
   <ul id='oface-other-facets' style='float: left; list-style-type: none;'></ul>;
@@ -95,14 +87,18 @@ Oface.Views.pageFacetToggler =
 Oface.Views.pageFacetTogglerLabel =
   <li style='display: inline; margin-right: 0.2em'>Filtered Out of Page:</li>;
   
+Oface.Views.pageFacetTogglerResetLabel = function(tab){
+    jQuery('#oface-other-facets li', tab.document).remove();
+    return jQuery('#oface-other-facets', tab.document).append(Oface.Views.pageFacetTogglerLabel.toXMLString());
+};
+  
 Oface.Views.addPageFacetTogglerAddFacet = function(facet, count, tab) {
     var li = jQuery("<li class='oface-enabler-" + facet + "-other facet " + facet +
                     "' style='display: inline; margin-right: 2em'><span class='facet-name'>" +
                     facet + "</span> <span class='count'>" + count + "</span></li>", tab.document);
     jQuery('#oface-other-facets', tab.document).append(li);
     return li;
-};
-CmdUtils.log("LOADING Views");;function askForLogin(oface){
+};;function askForLogin(oface){
   
   var doc = Application.activeWindow.activeTab.document;
   var $ = jQuery;
@@ -321,13 +317,6 @@ Oface.Views.Facet = Oface.Views.Facet || {
             $('#switchinput', doc).attr('value', '');      
         }
 };
-Oface.Util = Oface.Util || {
-        noOp: function(event) {
-                //no op
-        }
-}; //END Oface.Util
-
-/* Controller */
 Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.Oface = Oface.Controllers.Facet || {
     main: function(context){
@@ -358,17 +347,12 @@ Oface.Controllers.Oface = Oface.Controllers.Facet || {
         whenWeSee('lifestream-entries-infos-available',
                   Oface.Controllers.PageFacetToggle.handleLifestreamEntriesInfosAvailable);
     }
-};
-
-Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {
+};Oface.Controllers = Oface.Controllers || {};
+Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {        
         handleLifestreamEntriesInfosAvailable: function(event, params){
-            var tab = Application.activeWindow.activeTab;
-            var aUsername    = identity.username;
-            var currentFacet = identity.facets[0];
+            var tab = Application.activeWindow.activeTab;            
             var data = params.urlInfos;
-            CmdUtils.log("TODO Test params", params);
-            //simulate click on facet heading
-            //updateDisplayWithOtherFacets: function(data, currentFacet, tab, that){
+
             var facets = [];
             var counts = [];
             for (var i=0; i< data.length; i++){
@@ -381,10 +365,8 @@ Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {
                     counts[facetIndex] += 1;
                 }
             }
-            //TODO, get it working, then move htis all into the view
-            // reloadPageFacetToggler...
-            jQuery('#oface-other-facets li', tab.document).remove();
-            jQuery('#oface-other-facets', tab.document).append(Oface.Views.pageFacetTogglerLabel.toXMLString());
+            //TODO: pageFacetToggler creation happens elsewhere... should happen here
+            Oface.Views.pageFacetTogglerResetLabel(tab);
             for (var i=0; i< facets.length; i++){      
                 var li = Oface.Views.addPageFacetTogglerAddFacet(facets[i], counts[i], tab);
                 var fn = (function(){
@@ -392,13 +374,11 @@ Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {
                             return function(){ofaceObj.doFacetSwitch(identity.username, newFacet); ofaceObj.switchDisplayWithOtherFacets(newFacet, tab);};
                         })();
                 li.click(fn);
-            }
-            CmdUtils.log("TODO Test me Switching to ", currentFacet['description']);
-            //huh? that.switchFacetDisplay.call(currentFacet['description'], aUsername);
-            ofaceObj.switchDisplayWithOtherFacets(currentFacet['description'], tab);
+            }            
+            ofaceObj.switchDisplayWithOtherFacets(identity['facets'][0]['description'], tab);
         }
 };
-
+Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.Facet = Oface.Controllers.Facet || {
         username: "Unknown",
         server: "http://oface.ubuntu", 
@@ -1054,6 +1034,7 @@ function ofaceToggler(){
      */
     jQuery('#oface-other-facets li:hidden', tab.document).show();
     jQuery('#oface-other-facets li.oface-enabler-' + currentFacet + "-other", tab.document).hide();
+    CmdUtils.log("TODO ver ya we did")
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
         var cluster = element;
