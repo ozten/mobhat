@@ -33,7 +33,7 @@ CmdUtils.CreateCommand({
       if (link.type == "application/atom+xml" || link.type == "application/rss+xml") {
         numFeeds += 1;
         template += "<li ><img src='" + this.feedIcon + "' /> " + " <a href='" + link.href + "'>" + title + "</a> <small>(" + type[links[i].type]  + ")</small></li>";
-        //CmdUtils.log(links[i].title + " " + links[i].href);
+        //Oface.log(links[i].title + " " + links[i].href);
       }
       template += "</ul>";
 

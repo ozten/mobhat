@@ -24,9 +24,7 @@ Oface.Models.Facet = Oface.Models.Facet || {
         /**
          * Adds a facet to the allFacets list
          */
-        addFacet: function(json){
-            CmdUtils.log("addFacet " + this.allFacets.length);
-            CmdUtils.log(json);
+        addFacet: function(json){            
             for(var i=0; i < json.length; i++){
                 this.allFacets[this.allFacets.length] = json[i];
             }
@@ -51,10 +49,12 @@ Oface.Models.Facet = Oface.Models.Facet || {
          */
         facetsChosen: function(username, facets, forTheWin, fail) {
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
+                Oface.log("ENCODEJSON facetsChosen", facets);
+                var payload = Utils.encodeJson(facets);
                 $.ajax({
                         url: Oface.Controllers.Facet.server + '/facets/current/' + username,
                         type: 'PUT',
-                        data: Utils.encodeJson(facets),
+                        data: payload,
                         dataType: "json",
                         success: forTheWin,
                         error: fail

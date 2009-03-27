@@ -3,7 +3,7 @@
   env: "http://friendfeed.com",
   testenv: "http://oface.ubuntu/static/test_files/",
   envFor: function(url){
-    CmdUtils.log(url);
+    Oface.log(url);
     if (/.*oface\.ubuntu.*/.test(url)){
       return this.testenv;
     } else {
@@ -27,30 +27,30 @@
     
     page = Oface.WhatPageIsThis.really.call(Oface.WhatPageIsThis);
     if (! page.isKnown) {
-      CmdUtils.log("Unknown page type... Skipping");
+      Oface.log("Unknown page type... Skipping");
     } else {      
       if ( ! Oface.WhatPageIsThis.isSupportedPage(page.type)){
-        CmdUtils.log("Page type " + page.type + " Skipping");
+        Oface.log("Page type " + page.type + " Skipping");
       } else {
         var sucessFn;
         var username;
-        CmdUtils.log("I think I am on a " + page.type + " page");
+        Oface.log("I think I am on a " + page.type + " page");
         if( page.type == Oface.WhatPageIsThis.PROFILE_PAGE ) {
           username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
           successFn = function(data, status){            
-            CmdUtils.log("atom feed XHR call status " + status);
-            CmdUtils.log(data);
+            Oface.log("atom feed XHR call status " + status);
+            Oface.log(data);
             var urls = that.processFeedForUrls(data.documentElement, tab, that);
-            CmdUtils.log(urls);
-            CmdUtils.log('in preview calling that.getFacetsForUser');
+            
+            Oface.log('in preview calling that.getFacetsForUser');
             that.getFacetsForUser(that, tab, username, urls, false);          
           };          
         } else {
           // Home, or other mixed username page... not in the url
           username = identity.username;
           successFn = function(data, status){
-            CmdUtils.log("atom feed XHR call status " + status);
-            CmdUtils.log(data);
+            Oface.log("atom feed XHR call status " + status);
+            
             var urls = that.processFeedForUrls(data.documentElement, tab, that, true);
             var validItems = [];
             //TODO validate url, published, etc
@@ -59,7 +59,7 @@
                 validItems.push(urls[i]);
               }
             }
-            CmdUtils.log(validItems);
+            Oface.log(validItems);
             that.getFacetsForManyUsers(that, tab, validItems);          
           };   
         }
@@ -74,10 +74,10 @@
         url: url,
         success: successFn,
         error: function(xhr, status, err){
-          CmdUtils.log("Ouch trouble fetching the feed " + url);
-          CmdUtils.log(xhr);
-          CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);
-          CmdUtils.log(err);
+          Oface.log("Ouch trouble fetching the feed " + url);
+          Oface.log(xhr);
+          Oface.log("XHR call status " + status + " responseText=" + xhr.responseText);
+          Oface.log(err);
         }
       };
   },
@@ -88,7 +88,7 @@
   processFeedForUrls: function(feed, tab, that, isEachWithUsername){
     var $ = jQuery;
     isEachWithUsername = isEachWithUsername || false;
-    CmdUtils.log(isEachWithUsername + "== true right?");
+    
     var entries = jQuery('entry', feed);
     var urls = [];
     entries.each(function(i){
@@ -118,14 +118,14 @@
                       // http://friendfeed.com/draarong
                       item['username'] = pieces[pieces.length -1];                      
                   } else {
-                     CmdUtils.log("WARNING can't find username for " + url);
+                     Oface.log("WARNING can't find username for " + url);
                  }
               }else{
                   logError("processFeedForUrls's bubbling up from entry, can't find outter cluster", [entry, cluster]);
               } 
           }
         } catch (error) {
-          CmdUtils.log(error);
+          Oface.log(error);
         }
       }
       urls.push( item);
@@ -135,8 +135,10 @@
   getFacetsForUser: function(that, tab, aUsername, urls){
     /* urls [{id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     var query = { urls: urls };
+    Oface.log("ENCODEJSON getFacetsForUser", query);
     var dataPayload = "q=" + Utils.encodeJson(query);
-    CmdUtils.log("preparing continueWithFacets");
+    Oface.log("Finished Using Utils.encodeJson");
+    Oface.log("preparing continueWithFacets");
     
     var h = {
       url: 'http://oface.ubuntu/resources/user/' + aUsername + '/query_facets',
@@ -145,7 +147,7 @@
       cache: false, // REMOVE FOR PROD
       data: dataPayload,
       success: function(jsn, status){
-          CmdUtils.log(jsn);
+          //Oface.log(jsn);
           
           var data = [];
           for(var i=0; i<jsn.length; i++){
@@ -159,16 +161,16 @@
           Oface.Controllers.Oface.continueWithFacets(data, tab);     
       },
       error: function(xhr, status, err){
-        CmdUtils.log("status=", status);
-        CmdUtils.log("err=", err);
+        Oface.log("status=", status);
+        Oface.log("err=", err);
           if(parseInt(xhr.status) == 404) {
-              CmdUtils.log("User", aUsername, "is not an OFace user");
+              Oface.log("User", aUsername, "is not an OFace user");
               Oface.Controllers.Oface.continueWithFacets([], tab);
           } else {
-              CmdUtils.log("Ouch trouble fetching facet info for urls during getFacetsForUser ");
-              CmdUtils.log(xhr);          
-              CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);          
-              CmdUtils.log(err);  
+              Oface.log("Ouch trouble fetching facet info for urls during getFacetsForUser ");
+              Oface.log(xhr);          
+              Oface.log("XHR call status " + status + " responseText=" + xhr.responseText);          
+              Oface.log(err);  
           }
       }
   };
@@ -197,7 +199,7 @@
   },
   getFacetsForManyUsers: function(that, tab, urls){
     /* urls [{username: 'pattyok', id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
-    CmdUtils.log('getFacetsForManyUsers');
+    Oface.log('getFacetsForManyUsers');
     Oface.Models.ResourceDB.queryFacets(urls, 
        function(jsn, status){
           if(status == 'success'){
@@ -213,17 +215,17 @@
                   });
                 }
               } catch(error){
-                CmdUtils.log(error);
+                Oface.log(error);
               }
             }
             //TODO this could happen earlier? Why here?
             Oface.Controllers.Oface.continueWithFacets(data, tab);
           }
       }, function(xhr, status, err){
-          CmdUtils.log("Ouch trouble fetching facet info for urls during getFacetsForManyUsers ");
-          CmdUtils.log(xhr);
-          CmdUtils.log("XHR call status " + status + " responseText=" + xhr.responseText);
-          CmdUtils.log(err);
+          Oface.log("Ouch trouble fetching facet info for urls during getFacetsForManyUsers ");
+          Oface.log(xhr);
+          Oface.log("XHR call status " + status + " responseText=" + xhr.responseText);
+          Oface.log(err);
       });
   },
   linkSelector: function(link, tab){
@@ -252,21 +254,21 @@
   updateDisplayWithFacets: function(data, tab, that){
     var prevFacet = "";
     var prevItemCount = 0;
-    //[CmdUtils.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
-    CmdUtils.log(data);
+    //[Oface.log(i + " " + data[i].facets[0] + " " + data[i].url) for (i in data)];
+    //Oface.log(data);
     for(var i=0; i < data.length; i++){
       /* Grab an item by url (this varies by webapp)
       *  bubble up the DOM until you reach the FriendFeed container */
-      CmdUtils.log(i);
-      CmdUtils.log(data[i]);
+      //Oface.log(i);
+      //Oface.log(data[i]);
       if ( ! data[i] | !data[i].url ) {
-        CmdUtils.log("ERROR data[i] is null or something is wrong, skipping", data[i]);
+        Oface.log("ERROR data[i] is null or something is wrong, skipping", data[i]);
         continue;
       }
       
       updateUrlDbWithMd5AndFacets(data[i].url, that.md5(data[i].url), data[i].facets, data[i].username);
       var selector = that.linkSelector(data[i].url, tab);
-      CmdUtils.log("the selector=" + selector);
+      Oface.log("the selector=" + selector);
       var a = jQuery(selector, tab.document);
       if(a.length >= 1){
         var success;
@@ -274,38 +276,40 @@
         var cluster;
         
         [success, entry  ] = that.findAndTagByClass(a,'entry', data[i].facets);
-        CmdUtils.log("updateDisplayWithFacets entry",success, entry);
+        Oface.log("updateDisplayWithFacets entry",success, entry);
         if( success ){
           entry.data('lifestream-entry-url', data[i].url);
           entry.addClass('entry-facet-widget-root');
           entry.data('entry-oface-url', data[i].url);
         } else {
           //Flickr uses tr as it's container...
-          CmdUtils.log("WARNING, might have found an entry div for anchor tag " + data[i].url);
+          Oface.log("WARNING, might not have found an entry div for anchor tag " + data[i].url);
         }
         [success, cluster] = that.findAndTagByClass(a,'cluster', data[i].facets);
-        CmdUtils.log("updateDisplayWithFacets cluster " + " " + success + " " + cluster);
+        Oface.log("updateDisplayWithFacets cluster " + " " + success + " " + cluster);
         if(! success ){
-          CmdUtils.log("ERROR, expected to find a cluster div for anchor tag " + data[i].url);
+          Oface.log("ERROR, expected to find a cluster div for anchor tag " + data[i].url);
         }
         if(! cluster.hasClass('oface')){
           cluster.addClass('oface');
         }
-        CmdUtils.log("Looking to call prepareLabel");
+        Oface.log("Looking to call prepareLabel");
         Oface.Controllers.FacetGroups.prepareLabel(prevFacet, data[i].facets[0], prevItemCount, cluster);
-        CmdUtils.log("Looking to called prepareLabel");
+        Oface.log("Looking to called prepareLabel");
         prevFacet = data[i].facets[0];
         prevItemCount++;
       }
       if(a.length != 1){
         //href=http://www.flickr.com/photos/wigfur/3229310456/
-        CmdUtils.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
+        Oface.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
         //TODO send a report back to home base???
         
       } //if(a.length == 1){
     } // for(var i=0; i < data.length; i++){
+    Oface.log("Looking for manually changing the facet");
+    ofaceObj.doFacetSwitch(identity.username, identity.facets[0]['description']);
     jQuery('div.cluster, div.pager', tab.document).css('clear', 'left');
-    CmdUtils.log('Triggering clustersfaceted');
+    Oface.log('Triggering clustersfaceted');
     jQuery(tab.document).trigger('clustersfaceted');
   },
   findAndTag: function(element, containerClassName, facets, matchFn){
@@ -335,14 +339,14 @@
      * username string the username
      * facet string a facet description
      */
-    CmdUtils.log('Switching Current Facet in Database');
+    Oface.log('Switching Current Facet in Display');
     var doc = Application.activeWindow.activeTab.document;
     jQuery('h4.group-facet', doc).show();
     jQuery('h4.group-facet.' + facet, doc).hide('slow');
     
     //TODO Bug off by 1 error? cluster vs entry?
     var itemCount = jQuery('.entry.oface-' + facet + '-facet', doc).length;
-    CmdUtils.log("Switching to a facet with " + itemCount);
+    Oface.log("Switching to a facet with " + itemCount);
     
     jQuery('div.current-facet div', doc).text(facet + " (" + itemCount + ")");
     
@@ -391,32 +395,34 @@
     var $ = jQuery;
     var doc = Application.activeWindow.activeTab.document;
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
-      CmdUtils.log("Adding widget");
+      Oface.log("Adding widget");
        $('#feed1', doc).prepend($(Oface.Views.pageFacetToggler.toXMLString(), doc));
 
       var ofaceEnabler = $(Oface.Views.userFacetToggler.toXMLString(), doc);
       
-      $('#feed1', doc).prepend(ofaceEnabler);
+      $('#feed1', doc).prepend(ofaceEnabler);      
       $('.current-facet div:first', doc).text(identity.facets[0]['description']);
       
       $('#oface-enabler', doc).click(ofaceToggler);
-                        
       $('.current-facet', doc).click(function(){
           $('#switcher', doc).toggle();
       });
+      
+      
+                        
       //TODO AOK
       Oface.Controllers.Facet.username = identity.username;
       Oface.Controllers.Facet.initialize.call(Oface.Controllers.Facet);
       $('h3#oface-enabler span.current-facet', doc).css('margin-left', '30px');
     }else{
-      CmdUtils.log('Already have the widget');    
+      Oface.log('Already have the widget');    
     }
   }
 };
 /**
  * You can use fetch- command  during development (comment out pageLoad_fetchFeedOface )
  * or uncomment pageLoad_fetchFeedOface for auto load
- 
+
 function pageLoad_fetchFeedOface(){
   // Not needed any more ?
   //var loc = Application.activeWindow.activeTab.document.location;
@@ -427,7 +433,7 @@ function pageLoad_fetchFeedOface(){
           ofaceObj.preview.call(ofaceObj);
   //        break;
 }
-*/
+ */ 
 ;(function(){
 CmdUtils.CreateCommand(ofaceObj);
 })();

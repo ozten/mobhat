@@ -16,10 +16,10 @@ Oface.WhatPageIsThis = {
     var url = doc.location.href;
     
     if (url.indexOf("http://oface.ubuntu/static/test_files/ff-pattyok.html") >= 0) {
-      CmdUtils.log('Replacing ' + url + " with hardcoded http://friendfeed.com/pattyok");
+      Oface.log('Replacing ' + url + " with hardcoded http://friendfeed.com/pattyok");
       url = "http://friendfeed.com/pattyok";
     } else if(url.indexOf("http://oface.ubuntu/static/test_files/ozten_home.html") >=0) {
-      CmdUtils.log('Replacing ' + url + " with hardcoded http://friendfeed.com/");
+      Oface.log('Replacing ' + url + " with hardcoded http://friendfeed.com/");
       url = "http://friendfeed.com/";
     }
     var aPageType = this.pageType(url);
@@ -68,11 +68,10 @@ Oface.WhatPageIsThis = {
       if (match.length == 2) {
         return match[1];
       } else {
-        CmdUtils.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ");
-        CmdUtils.log(match);
+        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ");
       }
     } else {
-      CmdUtils.log("ERROR: getUsername(" + url + ", " + pageType + " called. Expected a PROFILE_PAGE types instead.");
+      Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Expected a PROFILE_PAGE types instead.");
     }
     
   },

@@ -25,6 +25,9 @@ class Facet_Model extends Model {
     return $this->db->query($sql)->result_array(FALSE);
   }
     //TODO refactor with set_facets below
+    /**
+     * @param array $theFacets {'description' => theFacet}
+     */
     public function getOrCreateFacets($theFacets)
     {
         $newFacetIds = array();
@@ -38,18 +41,17 @@ class Facet_Model extends Model {
         $existingFacets = $this->_getFacets($theFacetDescs);
     
         foreach($existingFacets as $facet){
-          array_push($newFacetIds, $facet['id']);
-          if( array_key_exists($facet['description'], $facetsToInsert) ){
-           unset($facetsToInsert[$facet['description']]);
-          }else{
-            Kohana::log('alert', "Skipping " . $facet . ", didn't find it in " . Kohana::debug($facetsToInsert));
-          }
+            array_push($newFacetIds, $facet['id']);
+            if( array_key_exists($facet['description'], $facetsToInsert) ){
+                unset($facetsToInsert[$facet['description']]);
+            }else{
+                Kohana::log('alert', "Skipping " . $facet . ", didn't find it in " . Kohana::debug($facetsToInsert));
+            }
         }
         Kohana::log('info', "model saying new facets so far..." . Kohana::debug($newFacetIds));
+        
         foreach(array_keys($facetsToInsert) as $facet){
-          $facetId = $this->_createFacet($facet);
-          array_push($newFacetIds, $facetId[0]->id);
-          Kohana::log('info', "Searching for ids gives us " . Kohana::debug($query));
+            $this->_createFacet($facet);            
         }
     
         return $this->_getFacets($theFacetDescs);
@@ -78,45 +80,64 @@ class Facet_Model extends Model {
         return $this->db->query($sql);
     }
   
-  public function set_facets($username, $newFacets){
-    $newFacetIds = array();
-    $newFacetDescs = array();
-    $facetsToInsert = array();
-    foreach($newFacets as $facet){
-      $facetsToInsert[$facet] = TRUE;
-      array_push($newFacetDescs, $facet);
-    }
-    $existingFacets = $this->_getFacets($newFacetDescs);
-    
-    foreach($existingFacets as $facet){
-      array_push($newFacetIds, $facet['id']);
-      if( array_key_exists($facet['description'], $facetsToInsert) ){
-       unset($facetsToInsert[$facet['description']]);
-      }else{
-        Kohana::log('alert', "Skipping " . $facet . ", didn't find it in " . Kohana::debug($facetsToInsert));
-      }
-    }
-    Kohana::log('info', "again model saying new facets so far..." . Kohana::debug($newFacetIds));
-    foreach(array_keys($facetsToInsert) as $facet){
-      $facetId = $this->_createFacet($facet);
-      array_push($newFacetIds, $facetId[0]->id);
-      Kohana::log('info', "Searching for ids gives us " . Kohana::debug($query));
-    }
-    
-    $userId = User_Model::username_to_id($username, $this->db);
-    $this->remove_old_facets($userId);
-    foreach($newFacetIds as $id){
-      $sql = "INSERT INTO facets_user (facet_id, user_id, username, start_date) VALUES (" . $id . ", " . $userId . ", '" . $username . "', NOW())";
+    public function set_facets($username, $newFacets)
+    {
+        //compare proposedNewFacets with existing facets
+        //create two lists
+        // * facets to put on
+        // * facets to remove
+        // (implicit facets to leave alone)
+        // remove removal facets
+        // getOrCreate ids facetsToPutOn
+        // addThese facets
+        
+        $facetsToInsert = array();
+        $oldFacetsIdsToRemove = array();
+        foreach($newFacets as $facet){
+            $facetsToInsert[$facet] = TRUE;
+        }
+        $existingFacets = $this->current_facets($username);
+        Kohana::log('info', "What is the format of this existingFacets ? " . Kohana::debug($existingFacets));
+        Kohana::log('info', "What is the format of facetsToInsert ? " . Kohana::debug($facetsToInsert));
+        foreach($existingFacets as $facet){
+            //we already have this facet
+            if( array_key_exists($facet['description'], $facetsToInsert) ){
+                Kohana::log('info', "Kicking out " . $facet['description']);
+                unset($facetsToInsert[$facet['description']]);
+            //not a current facet
+            }else{
+                array_push($oldFacetsIdsToRemove, $facet['id']);
+                Kohana::log('alert', "Well be taking off  " . $facet['description']);
+            }
+        }
+        $userId = intval(User_Model::username_to_id($username, $this->db));
+        if (count($oldFacetsIdsToRemove) > 0) {
+            $this->remove_old_facets($userId, $oldFacetsIdsToRemove);  
+        }
+        if (count($facetsToInsert) > 0 ) {
+            $getOrCreateFacets = array();
+            foreach (array_keys($facetsToInsert) as $facet) {
+                array_push($getOrCreateFacets, array('description' => $facet));
+            }
+            $theFacets = $this->getOrCreateFacets($getOrCreateFacets);
+            Kohana::log('info', "About to plugin " . Kohana::debug($theFacets));
+            foreach($theFacets as $facet){
+                $sql = "INSERT INTO facets_user (facet_id, user_id, username, start_date) VALUES (" .
+                        intval($facet['id']) . ", " . $userId . ", '" . $username . "', NOW())";
       
-      $this->db->query($sql);
+                $this->db->query($sql);
+            }
+        }
+        return $newFacets;
     }
-    return $newFacets;
-  }
   
-  public function remove_old_facets($user_id){
-    $this->db->query("UPDATE facets_user SET end_date = NOW() WHERE user_id = " . $user_id . " " .
-                     "AND end_date IS NULL");
-  }
+    public function remove_old_facets($user_id, $oldFacetIds)
+    {
+        $this->db->query(" UPDATE facets_user SET end_date = NOW() WHERE user_id = " . intval($user_id) .
+                         " AND end_date IS NULL " .
+                         " AND facet_id IN (" . implode(", ", $oldFacetIds) . ") ");
+    }
+    
   /**
    * $user - username of the user
    * $facet - facet description

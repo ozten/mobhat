@@ -7,6 +7,7 @@
 cd /home/aking/oface/ubiquity-sources
 
 cp _build_warning.js ../ubiquity-scripts/oface.js
+cat stylo.css >> ../ubiquity-scripts/oface.js
 cat utils.js >> ../ubiquity-scripts/oface.js
 cat utils/event.js >> ../ubiquity-scripts/oface.js
 cat identity.js >> ../ubiquity-scripts/oface.js
@@ -14,6 +15,9 @@ cat models/user_db.js >> ../ubiquity-scripts/oface.js
 cat models/resource_db.js >> ../ubiquity-scripts/oface.js
 cat views/user_facet_toggler.js >> ../ubiquity-scripts/oface.js
 cat views/page_facet_toggler.js >> ../ubiquity-scripts/oface.js
+cat views/login.js >> ../ubiquity-scripts/oface.js
+cat views/new_user.js >> ../ubiquity-scripts/oface.js #new
+cat models/askforlogin.js >> ../ubiquity-scripts/oface.js
 cat askforlogin.js >> ../ubiquity-scripts/oface.js
 cat urldb.js >> ../ubiquity-scripts/oface.js
 cat model.js >> ../ubiquity-scripts/oface.js
@@ -22,6 +26,7 @@ cat controllers/oface.js >> ../ubiquity-scripts/oface.js #new
 cat controllers/page_facet_toggler.js >> ../ubiquity-scripts/oface.js #new
 cat controllers/lifestream_entry_facet_chooser.js >> ../ubiquity-scripts/oface.js #new
 cat controllers/facet_groups.js >> ../ubiquity-scripts/oface.js #new
+cat controllers/new_user.js >> ../ubiquity-scripts/oface.js #new
 cat controller.js >> ../ubiquity-scripts/oface.js
 cat toggler.js >> ../ubiquity-scripts/oface.js
 cat commands/fetch-feed-oface.js >> ../ubiquity-scripts/oface.js

@@ -14,6 +14,7 @@ function build(){
         .append(SRC_DIR + 'models/resource_db.js')
         .append(SRC_DIR + 'views/user_facet_toggler.js')
         .append(SRC_DIR + 'views/page_facet_toggler.js')
+        .append(SRC_DIR + 'views/login.js')
         .append(SRC_DIR + 'askforlogin.js')
         .append(SRC_DIR + 'urldb.js')
         .append(SRC_DIR + 'model.js')

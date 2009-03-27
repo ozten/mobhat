@@ -46,6 +46,9 @@ class Url_Model extends Model {
     {
         $newFacetsForFacetsUrls = array();
         foreach ($facets as $facet) {
+            if ( ! intval($facet['id']) > 0 ) {
+                throw ErrorException("FATAL ERROR in _getOrCreateFacetsUrls... facet has no id " . $facet);
+            }
             $key = "" . $facet['id'];
             $newFacetsForFacetsUrls[$key] = TRUE;
         }
@@ -59,7 +62,6 @@ class Url_Model extends Model {
         foreach (array_keys($newFacetsForFacetsUrls) as $facetId) {
             $this->_createFacetsUrls($facetId, $url['id']);
         }
-        //TODO could we use insert_id here instaed?
         return $this->_getFacetsUrls($facets, $url);
     }
     

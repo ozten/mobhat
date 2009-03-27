@@ -4,8 +4,6 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
         server: "http://oface.ubuntu", 
         initialize: function(){
                 
-                //CmdUtils.log(this);
-                //CmdUtils.log('xx');
                 var that = this;
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
                 $('head', doc).append('<link rel="stylesheet" href="http://oface.ubuntu/static/css/stylo.css" type="text/css" media="screen" />');
@@ -21,8 +19,7 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
 						    <button id="all-facets-close">Close</button>
                           </div>
 						</div>				        
-				</div>.toXMLString();
-                CmdUtils.log(switcherXml);
+				</div>.toXMLString();                
                 $('#oface-enabler', doc).after(switcherXml);
                 //TODO is this duplicated between orig oface and the switcher?
                 $.get(this.server + '/facets/current/' + this.username, {},
@@ -45,27 +42,21 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                 $.get(this.server + '/facets/weighted/' + that.username, {},
                         function(json) {
                                 Oface.Models.Facet.updateAll(json);
-                                CmdUtils.log("got facets");
                                 that.updateAllView();
                         },
                 "json");
                 var contextx = {username: Oface.Controllers.Facet.username};
-                //CmdUtils.log("preparing username");
-                //CmdUtils.log(context);
                 /* add behaviors */
                 Oface.Views.Facet.newFacetInput().bind('blur', contextx, Oface.Controllers.Facet.handleNewFacetCreated);
                 $('#all-facets-close', doc).bind('click', contextx, Oface.Controllers.Facet.allFacetsCloseHandler);
         },
         updateAllView: function(){
-                CmdUtils.log("updateAllView called");
                 var that = this;
                                 var currentFacets = Oface.Models.Facet.currentFacets;
                                 var allFacets = Oface.Models.Facet.allFacets;
-                                CmdUtils.log(allFacets);
+
                                 var view = Oface.Views.Facet.createAll(that.username);
                                 for (var i = 0; i < allFacets.length; i++) {
-                                        CmdUtils.log(allFacets[i]);
-                                    //CmdUtils.log(allFacets[i]['weight'] + " " + allFacets[i]['description']);
                                     var f = view(allFacets[i]['weight'],
                                                  allFacets[i]['description']);
                                         f.bind('click',
@@ -83,7 +74,6 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                                             Oface.Models.Facet.removeUserFacet(that.username, event.data.facet);
                                             //Oface.Views.Facet.showCurrent();
                                             //Oface.Views.Facet.createAll(Oface.Controllers.Facet.username);
-                                            CmdUtils.log('deleted a facet');
                                             that.updateAllView();
                                             Oface.Views.Facet.showAll();
                                             return false;
@@ -92,16 +82,15 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
         },
         chooseNewFacetCallback: function(json, status){                
                 Oface.Models.Facet.addFacet.call(Oface.Models.Facet, json);
-                CmdUtils.log(this);
                 this.updateAllView();
                 this.chooseFacetCallback(json, status);
         },
         chooseFacetCallback: function(json, status) {
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                CmdUtils.log("chooseFacet called");
+                Oface.log("chooseFacet called");
                 //AOK
                 Oface.Models.Facet.updateCurrent(json);
-                //CmdUtils.log("updating current facet");
+                
                 var curFacetView = Oface.Views.Facet.createCurrent.call(Oface.Views.Facet);
                 
                 var currentFacets = Oface.Models.Facet.currentFacets;                        
@@ -122,7 +111,6 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                     function(json, status){                        
                         Oface.Controllers.Facet.chooseFacetCallback(json, status);
                     }, Oface.Util.noOp);
-                CmdUtils.log("Calling doFacetSwitch with " + Oface.Controllers.Facet.username + " " + data['description'])
                 ofaceObj.doFacetSwitch(Oface.Controllers.Facet.username, data['description']);
         },
         /**

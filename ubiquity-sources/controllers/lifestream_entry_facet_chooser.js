@@ -7,28 +7,29 @@ Oface.Controllers.EntryFacetChooser = {
     handleClustersFaceted: function(){
         that = Oface.Controllers.EntryFacetChooser;
         $('.entry-facet-widget-root', doc).each(function(i, el){
-            var url = $(el).data('lifestream-entry-url')
+            Oface.log("Looking 2 for handeling clusters faceted");            
+            var url = $(el).data('lifestream-entry-url');
+            Oface.log("Looking at url", url);
             if(url && urlDb[url]) {
                 var username = urlDb[url].username;
-                if(identity.username == username) {
-                    CmdUtils.log("Enabling  EntryFacetChooser for ",username, "on", url);
+                if(identity.username == username) {                    
                     $(el).bind('mouseover', {controller: that}, that.mouseEnterFacetedCluster)
                          .bind('mouseout', {controller: that}, that.mouseOutFacetedCluster);
+                    Oface.log("Looking Bound to", that.mouseOutFacetedCluster);
                 } else {
-                    CmdUtils.log("WARNING Skipping " + username);
+                    Oface.log("WARNING Skipping " + username);
                 }
             }
         });
+        return true;
+        
     },
     mouseEnterFacetedCluster: function(event){
         var $ = jQuery, cluster = event.target, that = event.data.controller;
           
           if ($(cluster).data('entry-oface-url') === undefined) {
             return;
-          } else {
-            CmdUtils.log("OKAY GET THE URL BACK.>...");
-            CmdUtils.log($(cluster).data('entry-oface-url'));
-          }
+          } 
           var theUrl = $(cluster).data('entry-oface-url');
             if(jQuery(cluster).data('oface.faceted.cluster.widget') == undefined) {
               //Stopped here... we need a global data store... boo.
@@ -63,10 +64,12 @@ Oface.Controllers.EntryFacetChooser = {
                       });
                         
                     if(f) {
-                        CmdUtils.log("User selected", f);
+                        
                         var newFacets = {id: f[1], description: f[0]};
-                        CmdUtils.log(newFacets);
-                        var payload = Utils.encodeJson([{facets: newFacets, urlInfo: urlInfo, url: theUrl}]);
+                        //TODO why is this encoded as a list?
+                        var newResource = [{facets: newFacets, urlInfo: urlInfo, url: theUrl}];
+                        Oface.log("ENCODEJSON mouseEnterFacetedCluster", newResource);
+                        var payload = Utils.encodeJson(newResource);
                         $.ajax({
                           url: 'http://oface.ubuntu/resources/resource/' + urlInfo['md5'] + '/user/' + Oface.Models.username,
                           type: 'PUT',
@@ -83,9 +86,7 @@ Oface.Controllers.EntryFacetChooser = {
                           },
                           cache: false
                         });
-                    } else {
-                        CmdUtils.log("No new facet");
-                    }
+                    } 
                     return false;
                 });
                 $('.cancel', cluster).click(function(){
@@ -100,7 +101,7 @@ Oface.Controllers.EntryFacetChooser = {
             } else {
               var clusterWidget = jQuery(cluster).data('oface.faceted.cluster.widget');
               //TODO
-              CmdUtils.log("TODO show this form again sldkfjsdkjewrj");
+              Oface.log("TODO show this form again sldkfjsdkjewrj");
             }
             $('.cluster-facet-widget-link', cluster).show();
             //clear Timeout if exists

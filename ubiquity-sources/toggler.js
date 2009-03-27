@@ -4,7 +4,7 @@ var lastSeenFacetHeadings = null;
 var lastHiddenItems = null;
 var lastHiddenSubItems = null;
 function ofaceToggler(){
-  CmdUtils.log('Clicked');
+  
   var $ = jQuery;
   var doc = Application.activeWindow.activeTab.document;
 

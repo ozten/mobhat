@@ -21,8 +21,7 @@ class Users_Controller extends Controller
         $this->auth->auto_login();
         if (! $this->auth->logged_in()) {
             
-            $headers = getallheaders();
-            $acceptHeader = $headers['Accept'];
+            $acceptHeader = $_SERVER['HTTP_ACCEPT'];
             if (strpos($acceptHeader, "pplication/json")) {
                 header("Login Required", true, 401);
                 echo json_encode(array(
@@ -39,6 +38,7 @@ class Users_Controller extends Controller
             $this->facetModel = new Facet_Model;
             
             $facets = $this->facetModel->current_facets($this->user->username);
+            
             //Kohana::log('info', "Found user id=" . $this->user->id . " username=" . $this->user->username . " facets=" . var_dump($facets));
             $this->auto_render = FALSE;
             

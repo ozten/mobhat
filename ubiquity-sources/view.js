@@ -41,13 +41,11 @@ Oface.Views.Facet = Oface.Views.Facet || {
                 var that = this;
                 $('#switcher-current-facets li', doc).replaceWith('');
                 liTemplate.attr('class', '');
-                //CmdUtils.log("created li");
-                //CmdUtils.log(this.liTemplate);
                 /**
                  * @param weight {number} weight from 1 to 6
                  */
                 return function(weight, facetName){
-                        //CmdUtils.log(that.liTemplate);
+                        
                         var li = liTemplate.clone();
                         li.addClass('weight' + weight);
                         li.addClass("current");

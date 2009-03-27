@@ -1,6 +1,8 @@
 Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.PageFacetToggle = Oface.Controllers.PageFacetToggle || {        
-        handleLifestreamEntriesInfosAvailable: function(event, params){                
+        handleLifestreamEntriesInfosAvailable: function(event, params){        
+            Oface.Controllers.EntryFacetChooser.handleClustersFaceted(event, params);
+            
             var tab = Application.activeWindow.activeTab;            
             var data = params.urlInfos;
 
