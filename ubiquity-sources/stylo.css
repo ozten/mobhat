@@ -1,0 +1,34 @@
+;Oface = Oface || {};
+Oface.Page = Oface.Page || {};
+CmdUtils.onPageLoad(function(){
+    Oface.Page.pageLoaded = true;
+    Oface.log("Looking for pageloaded flag, just set it to true");
+    CmdUtils.injectCss("\
+.cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}\
+#welcome-new-user-panel{\
+  position: absolute; top: 0px; border: solid 3px #999;\
+  padding: 25px;\
+  background-color: #DDD;\
+}\
+.group-facet span.count{\
+  background-image: url(http://oface.ubuntu/static/images/ubiquity/BowlerIcon39x27.png);\
+  background-repeat: no-repeat;\
+  display: block;\
+  width: 39px;\
+  right: 42px;\
+  position: relative;\
+  color: rgb(255, 255, 255);\
+  text-align: center;\
+  padding-top: 3px;\
+  height: 27px;\
+  top: -20px;\
+}\
+#oface-other-facets{\
+  margin-top: 18px\
+}\
+.facet-name{\
+  color: blue;\
+  text-decoration: underline;\
+}\
+");
+});
