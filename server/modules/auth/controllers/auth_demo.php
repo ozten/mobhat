@@ -118,8 +118,7 @@ class Auth_Demo_Controller extends Template_Controller {
   }
   
     private function _isJSON(){
-		$headers = getallheaders();
-        $acceptHeader = $headers['Accept'];
+		$acceptHeader = $_SERVER['HTTP_ACCEPT'];
 		//plication - don't fix spelling, makes string pos > 0
 		$pos = stristr($acceptHeader, "plication/json");
 		if ($pos) {
