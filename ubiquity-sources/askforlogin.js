@@ -4,7 +4,7 @@
   var $ = jQuery;
   var form = Oface.Views.loginForm.toXMLString();
   $('#feed1', doc).append(form)
-      .find('#login-signup-url').attr('href', "http://oface.ubuntu/auth_demo/create");
+      .find('#login-signup-url').attr('href', Oface.HOST + "/auth_demo/create");
   
   $('#oface-login-form', doc).submit(function(){
       return Oface.Models.AskForLogin.authDemoLogin(doc, oface, 3);

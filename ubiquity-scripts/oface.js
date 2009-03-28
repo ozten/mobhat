@@ -34,12 +34,21 @@ CmdUtils.onPageLoad(function(){
 #oface-other-facets{\
   margin-top: 18px\
 }\
+#oface-enabler{\
+  cursor: pointer;\
+}\
+#facet-toggler{\
+  cursor: context-menu;\
+}\
 .facet-name{\
   color: blue;\
   text-decoration: underline;\
+  cursor: pointer;\
 }\
 ");
-});;
+});;var Oface = Oface || {};
+Oface.HOST = "http://restservice.org";
+// "http://oface.ubuntu";;
 
 function logError(msg, debugObjects) {
   Oface.log("ERROR:" + msg);
@@ -93,7 +102,7 @@ Oface.Models.UserDB = {
          */
         jQuery.ajax({
             type: "GET",
-            url: "http://oface.ubuntu/users/whoami?cache_bust=" + escape(new Date()),
+            url: Oface.HOST + "/users/whoami?cache_bust=" + escape(new Date()),
             async: false,
             cache: false,
             dataType: "json",
@@ -111,7 +120,7 @@ Oface.Models.ResourceDB = {
         var dataPayload = "q=" + Utils.encodeJson(query);
         Oface.log("Finished querying facets");
         jQuery.ajax({
-            url: 'http://oface.ubuntu/resources/query_facets',
+            url: Oface.HOST + '/resources/query_facets',
             type: 'POST',
             dataType: 'json',
             cache: false, // REMOVE FOR PROD
@@ -131,7 +140,7 @@ Oface.Views.userFacetToggler =
                                
     </h3>
                               
-    <div class='current-facet' ><div style="margin-top:18px; margin-left: 3px; float:left"></div>
+    <div id="facet-toggler" class='current-facet' ><div style="margin-top:18px; margin-left: 3px; float:left"></div>
         <div class='switcher-arrow' style='margin-top:20px; float: left; height:6px; width:7px; margin-left:3px; font-size:0; vertical-align:middle; background:transparent url(http://oface.ubuntu/static/images/gmail_downarros.png) no-repeat scroll -36px 50%;'> x</div>
     </div>
 </div>.children();; //TODO restructure this...
@@ -185,7 +194,7 @@ Oface.Models.AskForLogin = {
                        password: $('#oface-login-form #password', doc).attr('value') };
       $.ajax({
         type: "POST",
-        url: "http://oface.ubuntu/auth_demo/login",
+        url: Oface.HOST + "/auth_demo/login",
         async: false,
         cache: false,
         dataType: "json",
@@ -217,7 +226,7 @@ Oface.Models.AskForLogin = {
   var $ = jQuery;
   var form = Oface.Views.loginForm.toXMLString();
   $('#feed1', doc).append(form)
-      .find('#login-signup-url').attr('href', "http://oface.ubuntu/auth_demo/create");
+      .find('#login-signup-url').attr('href', Oface.HOST + "/auth_demo/create");
   
   $('#oface-login-form', doc).submit(function(){
       return Oface.Models.AskForLogin.authDemoLogin(doc, oface, 3);
@@ -299,7 +308,7 @@ Oface.Models.Facet = Oface.Models.Facet || {
                 Oface.log("ENCODEJSON facetsChosen", facets);
                 var payload = Utils.encodeJson(facets);
                 $.ajax({
-                        url: Oface.Controllers.Facet.server + '/facets/current/' + username,
+                        url: Oface.HOST + '/facets/current/' + username,
                         type: 'PUT',
                         data: payload,
                         dataType: "json",
@@ -315,7 +324,7 @@ Oface.Models.Facet = Oface.Models.Facet || {
         removeUserFacet: function(username, facet) {
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
                 $.ajax({
-                        url: Oface.Controllers.Facet.server + '/facets/u/' + username + '/' + facet,
+                        url: Oface.HOST + '/facets/u/' + username + '/' + facet,
                         type: 'DELETE'
                 }, doc);
                 function notTheFacet(aFacet, index) {
@@ -562,7 +571,7 @@ Oface.Controllers.EntryFacetChooser = {
                         Oface.log("ENCODEJSON mouseEnterFacetedCluster", newResource);
                         var payload = Utils.encodeJson(newResource);
                         $.ajax({
-                          url: 'http://oface.ubuntu/resources/resource/' + urlInfo['md5'] + '/user/' + Oface.Models.username,
+                          url: Oface.HOST + '/resources/resource/' + urlInfo['md5'] + '/user/' + Oface.Models.username,
                           type: 'PUT',
                           data: payload,
                           dataType: 'json',
@@ -679,12 +688,11 @@ Oface.Controllers.WelcomeNewUser = {
 Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.Facet = Oface.Controllers.Facet || {
         username: "Unknown",
-        server: "http://oface.ubuntu", 
         initialize: function(){
                 
                 var that = this;
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                $('head', doc).append('<link rel="stylesheet" href="http://oface.ubuntu/static/css/stylo.css" type="text/css" media="screen" />');
+                $('head', doc).append('<link rel="stylesheet" href="' + Oface.HOST + '/static/css/stylo.css" type="text/css" media="screen" />');
                 var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none; background-color: #CCC;'>
 						<div id="all-facets">
 								<h4>All Facets</h4>
@@ -694,13 +702,14 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
 								</ul>
                           <div style="clear:left">
 						    <label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
-						    <button id="all-facets-close">Close</button>
+						    <button id="all-facets-save">Save</button>
+                            <button id="all-facets-close">Close</button>
                           </div>
 						</div>				        
 				</div>.toXMLString();                
                 $('#oface-enabler', doc).after(switcherXml);
                 //TODO is this duplicated between orig oface and the switcher?
-                $.get(this.server + '/facets/current/' + this.username, {},
+                $.get(Oface.HOST + '/facets/current/' + this.username, {},
                     function(json) {
                       
                         Oface.Models.Facet.updateCurrent(json);
@@ -717,7 +726,7 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                         Oface.Views.Facet.showCurrent();
                         
                         }, "json");
-                $.get(this.server + '/facets/weighted/' + that.username, {},
+                $.get(Oface.HOST + '/facets/weighted/' + that.username, {},
                         function(json) {
                                 Oface.Models.Facet.updateAll(json);
                                 that.updateAllView();
@@ -993,7 +1002,7 @@ function ofaceToggler(){
     Oface.log("preparing continueWithFacets");
     
     var h = {
-      url: 'http://oface.ubuntu/resources/user/' + aUsername + '/query_facets',
+      url: Oface.HOST + '/resources/user/' + aUsername + '/query_facets',
       type: 'POST',
       dataType: 'json',
       cache: false, // REMOVE FOR PROD

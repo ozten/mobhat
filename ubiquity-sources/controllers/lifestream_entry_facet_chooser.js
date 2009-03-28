@@ -71,7 +71,7 @@ Oface.Controllers.EntryFacetChooser = {
                         Oface.log("ENCODEJSON mouseEnterFacetedCluster", newResource);
                         var payload = Utils.encodeJson(newResource);
                         $.ajax({
-                          url: 'http://oface.ubuntu/resources/resource/' + urlInfo['md5'] + '/user/' + Oface.Models.username,
+                          url: Oface.HOST + '/resources/resource/' + urlInfo['md5'] + '/user/' + Oface.Models.username,
                           type: 'PUT',
                           data: payload,
                           dataType: 'json',

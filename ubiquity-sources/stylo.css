@@ -26,9 +26,16 @@ CmdUtils.onPageLoad(function(){
 #oface-other-facets{\
   margin-top: 18px\
 }\
+#oface-enabler{\
+  cursor: pointer;\
+}\
+#facet-toggler{\
+  cursor: context-menu;\
+}\
 .facet-name{\
   color: blue;\
   text-decoration: underline;\
+  cursor: pointer;\
 }\
 ");
 });

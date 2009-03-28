@@ -1,12 +1,11 @@
 Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.Facet = Oface.Controllers.Facet || {
         username: "Unknown",
-        server: "http://oface.ubuntu", 
         initialize: function(){
                 
                 var that = this;
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                $('head', doc).append('<link rel="stylesheet" href="http://oface.ubuntu/static/css/stylo.css" type="text/css" media="screen" />');
+                $('head', doc).append('<link rel="stylesheet" href="' + Oface.HOST + '/static/css/stylo.css" type="text/css" media="screen" />');
                 var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none; background-color: #CCC;'>
 						<div id="all-facets">
 								<h4>All Facets</h4>
@@ -16,13 +15,14 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
 								</ul>
                           <div style="clear:left">
 						    <label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
-						    <button id="all-facets-close">Close</button>
+						    <button id="all-facets-save">Save</button>
+                            <button id="all-facets-close">Close</button>
                           </div>
 						</div>				        
 				</div>.toXMLString();                
                 $('#oface-enabler', doc).after(switcherXml);
                 //TODO is this duplicated between orig oface and the switcher?
-                $.get(this.server + '/facets/current/' + this.username, {},
+                $.get(Oface.HOST + '/facets/current/' + this.username, {},
                     function(json) {
                       
                         Oface.Models.Facet.updateCurrent(json);
@@ -39,7 +39,7 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                         Oface.Views.Facet.showCurrent();
                         
                         }, "json");
-                $.get(this.server + '/facets/weighted/' + that.username, {},
+                $.get(Oface.HOST + '/facets/weighted/' + that.username, {},
                         function(json) {
                                 Oface.Models.Facet.updateAll(json);
                                 that.updateAllView();

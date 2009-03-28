@@ -7,7 +7,7 @@ Oface.Models.UserDB = {
          */
         jQuery.ajax({
             type: "GET",
-            url: "http://oface.ubuntu/users/whoami?cache_bust=" + escape(new Date()),
+            url: Oface.HOST + "/users/whoami?cache_bust=" + escape(new Date()),
             async: false,
             cache: false,
             dataType: "json",

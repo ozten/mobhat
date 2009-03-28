@@ -9,7 +9,7 @@ Oface.Models.AskForLogin = {
                        password: $('#oface-login-form #password', doc).attr('value') };
       $.ajax({
         type: "POST",
-        url: "http://oface.ubuntu/auth_demo/login",
+        url: Oface.HOST + "/auth_demo/login",
         async: false,
         cache: false,
         dataType: "json",

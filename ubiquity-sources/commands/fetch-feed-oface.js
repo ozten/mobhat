@@ -141,7 +141,7 @@
     Oface.log("preparing continueWithFacets");
     
     var h = {
-      url: 'http://oface.ubuntu/resources/user/' + aUsername + '/query_facets',
+      url: Oface.HOST + '/resources/user/' + aUsername + '/query_facets',
       type: 'POST',
       dataType: 'json',
       cache: false, // REMOVE FOR PROD

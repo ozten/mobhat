@@ -7,7 +7,7 @@ Oface.Models.ResourceDB = {
         var dataPayload = "q=" + Utils.encodeJson(query);
         Oface.log("Finished querying facets");
         jQuery.ajax({
-            url: 'http://oface.ubuntu/resources/query_facets',
+            url: Oface.HOST + '/resources/query_facets',
             type: 'POST',
             dataType: 'json',
             cache: false, // REMOVE FOR PROD
