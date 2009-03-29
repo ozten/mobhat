@@ -1,8 +1,6 @@
 ;Oface = Oface || {};
 Oface.Page = Oface.Page || {};
 CmdUtils.onPageLoad(function(){
-    Oface.Page.pageLoaded = true;
-    Oface.log("Looking for pageloaded flag, just set it to true");
     CmdUtils.injectCss("\
 .cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}\
 #welcome-new-user-panel{\

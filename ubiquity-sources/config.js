@@ -1,3 +1,3 @@
 ;var Oface = Oface || {};
-Oface.HOST = "http://restservice.org";
+Oface.HOST = "http://mobhat.restservice.org";
 // "http://oface.ubuntu";

@@ -25,18 +25,22 @@
 .weight3{font-size: 1.15em;}
 .weight2{font-size: 1.0em;}
 .weight1{font-size: 0.9em;}
-
+.mob {
+	font-family: "Lithos Pro", "Futura", sans-serif;
+	font-weight: 900;
+}
+* {
+	font-family: "Helvetica", "Arial", sans-serif;
+}
 	</style>
 
 </head>
 <body>
-
-	<h1><?php echo html::specialchars($title) ?></h1>
 	<?php echo $content ?>
 
-	<p class="copyright">
+	<!-- p class="copyright">
 		Rendered in {execution_time} seconds, using {memory_usage} of memory<br />
-	</p>
+	</p -->
 
 </body>
 </html>

@@ -35,3 +35,5 @@ if (count($links) > 0 &&
 <?php
 }
 ?>
+<p>
+{execution_time} seconds, using {memory_usage} </p>

@@ -9,8 +9,6 @@
 ;Oface = Oface || {};
 Oface.Page = Oface.Page || {};
 CmdUtils.onPageLoad(function(){
-    Oface.Page.pageLoaded = true;
-    Oface.log("Looking for pageloaded flag, just set it to true");
     CmdUtils.injectCss("\
 .cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}\
 #welcome-new-user-panel{\
@@ -47,7 +45,7 @@ CmdUtils.onPageLoad(function(){
 }\
 ");
 });;var Oface = Oface || {};
-Oface.HOST = "http://restservice.org";
+Oface.HOST = "http://mobhat.restservice.org";
 // "http://oface.ubuntu";;
 
 function logError(msg, debugObjects) {
@@ -506,10 +504,8 @@ Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.EntryFacetChooser = {
     handleClustersFaceted: function(){
         that = Oface.Controllers.EntryFacetChooser;
-        $('.entry-facet-widget-root', doc).each(function(i, el){
-            Oface.log("Looking 2 for handeling clusters faceted");            
-            var url = $(el).data('lifestream-entry-url');
-            Oface.log("Looking at url", url);
+        $('.entry-facet-widget-root', doc).each(function(i, el){            
+            var url = $(el).data('lifestream-entry-url');            
             if(url && urlDb[url]) {
                 var username = urlDb[url].username;
                 if(identity.username == username) {                    
@@ -1154,20 +1150,17 @@ function ofaceToggler(){
         if(! cluster.hasClass('oface')){
           cluster.addClass('oface');
         }
-        Oface.log("Looking to call prepareLabel");
         Oface.Controllers.FacetGroups.prepareLabel(prevFacet, data[i].facets[0], prevItemCount, cluster);
-        Oface.log("Looking to called prepareLabel");
         prevFacet = data[i].facets[0];
         prevItemCount++;
       }
       if(a.length != 1){
         //href=http://www.flickr.com/photos/wigfur/3229310456/
-        Oface.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
+        //Oface.log("Looking for 'div.title a[href=" + data[i].url + "]' but found " + a.length + " items");
         //TODO send a report back to home base???
         
       } //if(a.length == 1){
     } // for(var i=0; i < data.length; i++){
-    Oface.log("Looking for manually changing the facet");
     ofaceObj.doFacetSwitch(identity.username, identity.facets[0]['description']);
     jQuery('div.cluster, div.pager', tab.document).css('clear', 'left');
     Oface.log('Triggering clustersfaceted');
@@ -1283,18 +1276,11 @@ function ofaceToggler(){
 /**
  * You can use fetch- command  during development (comment out pageLoad_fetchFeedOface )
  * or uncomment pageLoad_fetchFeedOface for auto load
-
+*/ 
 function pageLoad_fetchFeedOface(){
-  // Not needed any more ?
-  //var loc = Application.activeWindow.activeTab.document.location;
-  //var enabledFor = ['http://oface.ubuntu/static/test_files/ff-pattyok.html',
-  //                 'http://oface.ubuntu/static/test_files/ozten_home.html'];
-  //for(var i=0; i < enabledFor.length; i++){
-  //    if(loc.href.indexOf(enabledFor[i]) != -1){
-          ofaceObj.preview.call(ofaceObj);
-  //        break;
+    ofaceObj.preview.call(ofaceObj);
 }
- */ 
+ 
 ;(function(){
 CmdUtils.CreateCommand(ofaceObj);
 })();//Growl displayMessage

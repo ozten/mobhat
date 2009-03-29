@@ -25,7 +25,7 @@ class Welcome_Controller extends Template_Controller {
 		// You can assign anything variable to a view by using standard OOP
 		// methods. In my welcome view, the $title variable will be assigned
 		// the value I give it here.
-		$this->template->title = 'OFace demo';		
+		$this->template->title = 'MOBhat an experiment in faceting and grouping your Lifestreaming Entries';		
 	}
 
 	public function __call($method, $arguments)

@@ -93,14 +93,14 @@ class Facets_Controller extends Template_Controller {
 	  }
 	  if( count($newFacets) > 0 ){
 		if ($this->_newFacetsAreSameAsCurrent($newFacets, $username, $facetModel)) {
-			header('http_response_code', true, 400);
+			header('HTTP/1.0 400 Bad Request', TRUE, 400);
 			return array(true, "");
 		} else {
 		    return array(true, "");		
 		}
 	  }else{
 		//Bad Request
-		header('http_response_code', true, 400);
+		header('HTTP/1.0 400 Bad Request', TRUE, 400);
 		$msg = "proofing facets, expected atleast on valid facet " . Kohana::debug($newFacets);
 		Kohana::log('alert', $msg);
 		//TODO set response to error code 4xx?
@@ -108,7 +108,7 @@ class Facets_Controller extends Template_Controller {
 	  }
     }else{
 		//Bad Request
-		header('http_response_code', true, 400);
+		header('HTTP/1.0 400 Bad Request', TRUE, 400);
 		$msg = "proofing facets, expected array but got " . Kohana::debug($newFacets);
       Kohana::log('alert', $msg);
       return array(false, $msg);
@@ -164,7 +164,7 @@ class Facets_Controller extends Template_Controller {
 		  $facetDb->remove_user_facet($username, $facet);
 		}else{
 				//Not Implemented
-				header('http_response_code', true, 501);
+				header('HTTP/1.0 501 Not Implemented', TRUE, 501);
 				echo "Unsupported Operation";		
 		}
   }

@@ -65,7 +65,7 @@ class Auth_Demo_Controller extends Template_Controller {
     if (Auth::instance()->logged_in())
     {
 		//TODO JSON unhandled case... login called when already logged in
-      $this->template->title = 'User Logout';
+      $this->template->title = 'Thanks';
       $this->template->content = View::factory('auth_demo/success');
     }else{
       $this->template->title = 'User Login';
@@ -92,7 +92,7 @@ class Auth_Demo_Controller extends Template_Controller {
 		
 		  if ($this->_isJSON()) {
 				Kohana::log('info', "JSON request");
-		      header("Login Required", true, 401);
+		      header("HTTP/1.0 401 Login Required", true, 401);
 			  $this->auto_render = FALSE;
 			  header("Content-type: application/json; charset=utf-8");
               echo json_encode(array(

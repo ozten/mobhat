@@ -6,10 +6,8 @@ Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.EntryFacetChooser = {
     handleClustersFaceted: function(){
         that = Oface.Controllers.EntryFacetChooser;
-        $('.entry-facet-widget-root', doc).each(function(i, el){
-            Oface.log("Looking 2 for handeling clusters faceted");            
-            var url = $(el).data('lifestream-entry-url');
-            Oface.log("Looking at url", url);
+        $('.entry-facet-widget-root', doc).each(function(i, el){            
+            var url = $(el).data('lifestream-entry-url');            
             if(url && urlDb[url]) {
                 var username = urlDb[url].username;
                 if(identity.username == username) {                    

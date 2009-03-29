@@ -1,2 +1,2 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
-<h1>Success</h1>
+<p><a href="/">Back to a <span class="mob">MOB</span>hat</a> with you.</p>

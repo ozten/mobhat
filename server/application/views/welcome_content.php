@@ -1,42 +1,30 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
-<h2>Facet Switcher:</h2>
-		<div class="box">
-				<p>This is the Oface demo page. You may also access this page as <code><?php echo html::anchor('welcome/index', 'welcome/index') ?></code>.</p>
 
-				<p>This demo assumes you are the user pattyo. Here is pattyo's switcher:</p>
+<p>Welcome to <img src="http://mobhat.restservice.org/static/images/ubiquity/mobhat-logo-sm.png" width="97" height="17"
+				   alt="MOBHat Logo"
+                   title="MOBHat" border="0" />, an experiment in faceting your Lifetreaming entries,
+				   based on what &quot;Hats&quot; you wear throughout the day.</p>
 
-				<div id="switcher">
-						<div id="current-facets">
-								<h4>Current Facets</h4>
-								<ul id="switcher-current-facets">
-										<li class=""></li>
-								</ul>
-						</div>
-						<div id="all-facets" style="display: none">
-								<h4>All Facets</h4>
-
-								<ul id='switcher-facetlist'>
-										<li id="template"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
-								</ul>
-						<label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
-						<button id="all-facets-close">Close</button>
-						</div>				        
-				</div>
-		
-				<div id="facet-reader">
-						<form action="http://oface.ubuntu/resources/query_facets"
-							  method="post">
-								<label for="url"></label>
-								<input id="url" name="url" type="text" />
-								<input type="submit" />
-						</form>
-				</div>
-		</div>
-<script src="/static/js/demo.js" type="text/javascript"></script>
-<h2>Test Pages</h2>
-<a href="/static/test_files/ff-pattyok.html">Dev page pattyok Profile FriendFeed</a>
-<a href="/static/test_files/ozten_home.html">Dev page Homepage FriendFeed</a>
-<h2>Other APIs</h2>
-<h3>WhoAmI</h3>
-<p><a href="/users/whoami">/users/whoami</a> - Detects a logged in user and returns a UserInfo resource.
-If the user isn't logged in, then they will be asked to authenticate.</p>
+<h2>What do I need to play?</h2>
+<ol>
+  <li>A <a href="http://friendfeed.com/">FriendFeed</a> Account</li>
+  <li><a href="http://mozilla.org/firefox">Firefox 3.0.8</a> web browser. <span class="mob">MOB</span>hat will only </li>
+  <li>The Firefox Add-on <a href="http://labs.mozilla.com/projects/ubiquity/">Ubiquity</a>.
+      Install <a href="https://ubiquity.mozilla.com/xpi/ubiquity-latest.xpi">0.1.7</a></li>
+  <!--li><a href=""></a></li-->
+</ol>
+<ol>
+  <li>Install the software above.</li>
+  <li><a href="/auth_demo/create">Create a <span class="mob">MOB</span>hat account</a>
+		with the <strong>same username</strong> as your FriendFeed account.</li>
+  <li>Install the <a href="/static/ubiquity/mobhat-ubiquity.html"><span class="mob">MOB</span>hat Ubiquity script</a>.
+      Accepting the security warnings, and you will automatically get updates as I fix bugs in the code.</li>
+  <li>Go use FriendFeed as usual. On certain pages such as the homepage and user pages, you will have
+  <strong>The Power of </strong><img src="http://mobhat.restservice.org/static/images/ubiquity/mobhat-logo-sm.png" width="97" height="17"
+				   alt="MOBHat Logo"
+                   title="MOBHat" border="0" /> slicing and dicing your Activity Stream.</li>
+</ol>
+<div style="text-align: center">
+<img src="/static/images/MobHatLogoBig.png" width="415" height="83" alt="MOBhat Logo" /><br />
+You wear a lot of hats in one day. 
+</div>

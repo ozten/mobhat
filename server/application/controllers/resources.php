@@ -88,7 +88,7 @@ class Resources_Controller extends Template_Controller
             if( $userId <= 0 ) {
                 //TODO if request is for one unknown user... send a 404
                 Kohana::log('alert', "Couldn't find an id for username $username");
-                header('http_response_code', true, 404);                
+                header('HTTP/1.0 404 Not Found', TRUE, 404);
             } else {
                 $currentFacets = $this->facetDb->current_facets($username);
                 $this->_updateFacetInfo($userId, $currentFacets, $items);                
@@ -219,7 +219,7 @@ class Resources_Controller extends Template_Controller
                                    "urlInfo" => $urlInfo));
         } else {
             Kohana::log('alert', "Unknown request method " . request::method() . " expected PUT");
-            header("Method Not Allowed", true, 405);
+            header("HTTP/1.0 405 Method Not Allowed", TRUE, 405);
             echo json_encode(array("errMsg" => "Unknown request type " . rrequest::method() . ", expected PUT"));
         }
     }

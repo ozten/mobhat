@@ -23,7 +23,7 @@ class Users_Controller extends Controller
             
             $acceptHeader = $_SERVER['HTTP_ACCEPT'];
             if (strpos($acceptHeader, "pplication/json")) {
-                header("Login Required", true, 401);
+                header("HTTP/1.0 401 Login Required", true, 401);
                 echo json_encode(array(
                   'status' => 'LOGIN_REQ',
                   'loginAction' => '/auth_demo/login'
