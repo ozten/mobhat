@@ -51,7 +51,7 @@ Oface.Models.Facet = Oface.Models.Facet || {
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
                 Oface.log("ENCODEJSON facetsChosen", facets);
                 var payload = Utils.encodeJson(facets);
-                $.ajax({
+                Oface.Util.ajax({
                         url: Oface.HOST + '/facets/current/' + username,
                         type: 'PUT',
                         data: payload,
@@ -67,7 +67,7 @@ Oface.Models.Facet = Oface.Models.Facet || {
          */
         removeUserFacet: function(username, facet) {
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                $.ajax({
+                Oface.Util.ajax({
                         url: Oface.HOST + '/facets/u/' + username + '/' + facet,
                         type: 'DELETE'
                 }, doc);

@@ -19,32 +19,52 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                             <button id="all-facets-close">Close</button>
                           </div>
 						</div>				        
-				</div>.toXMLString();                
+				</div>.toXMLString();
                 $('#oface-enabler', doc).after(switcherXml);
                 //TODO is this duplicated between orig oface and the switcher?
-                $.get(Oface.HOST + '/facets/current/' + this.username, {},
-                    function(json) {
-                      
-                        Oface.Models.Facet.updateCurrent(json);
+                Oface.Timing.step4CurrentFacets_start = new Date();
+                Oface.Util.ajax({
+                        url: Oface.HOST + '/facets/current/' + this.username,
+                        type: "GET",
+                        beforeSend: function(xhr) {
+                            var switcher = $('#switcher', doc);
+                            var w = switcher.width();
+                            var h = switcher.height();
+                            var offset = switcher.offset();
+                            Oface.Views.Facet.hideAll();
+                            $('#oface-enabler', doc).after(
+                                '<div id="switcher-progress-panel"><img src="http://oface.ubuntu/static/images/ubiquity/progress-icon.gif" /></div>');
+                            var p = $('#switcher-progress-panel', doc).width(w).height(h).offset(offset);
+                        },
+                        complete: function(){$('#switcher-progress-panel', doc).remove(); },
+                        success: function(json) {
+                            Oface.Timing.step4CurrentFacets_complete = new Date();
+                            Oface.log("Finishing with X");
+                            Oface.Models.Facet.updateCurrent(json);
                         
-                        //TODO using call here isn't necissary
-                        var curFacetView = Oface.Views.Facet.createCurrent.call(Oface.Views.Facet);
+                            //TODO using call here isn't necissary
+                            var curFacetView = Oface.Views.Facet.createCurrent.call(Oface.Views.Facet);
                         
-                        var currentFacets = Oface.Models.Facet.currentFacets;
-                        for (var i = 0; i < currentFacets.length; i++) {
-                                curFacetView(currentFacets[i]['weight'],
-                                     currentFacets[i]['description']);                               
-                        }
-                        $('#switcher-current-facets li', doc).click(Oface.Views.Facet.showAll);
-                        Oface.Views.Facet.showCurrent();
-                        
-                        }, "json");
-                $.get(Oface.HOST + '/facets/weighted/' + that.username, {},
-                        function(json) {
+                            var currentFacets = Oface.Models.Facet.currentFacets;
+                            for (var i = 0; i < currentFacets.length; i++) {
+                                    curFacetView(currentFacets[i]['weight'],
+                                         currentFacets[i]['description']);                               
+                            }
+                            $('#switcher-current-facets li', doc).click(Oface.Views.Facet.showAll);
+                            Oface.Views.Facet.showCurrent();                        
+                        },
+                        dataType: "json"});
+                Oface.Timing.step5AllFacets_start = new Date();
+                Oface.Util.ajax({
+                        url: Oface.HOST + '/facets/weighted/' + that.username,
+                        type: "GET",
+                        success: function(json) {
+                                Oface.log("Finishing with Y");
+                                Oface.Timing.step5AllFacets_complete = new Date();
                                 Oface.Models.Facet.updateAll(json);
                                 that.updateAllView();
                         },
-                "json");
+                        dataType: "json"});
                 var contextx = {username: Oface.Controllers.Facet.username};
                 /* add behaviors */
                 Oface.Views.Facet.newFacetInput().bind('blur', contextx, Oface.Controllers.Facet.handleNewFacetCreated);

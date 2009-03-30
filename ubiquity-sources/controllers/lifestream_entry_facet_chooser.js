@@ -5,6 +5,13 @@ Oface = Oface || {};
 Oface.Controllers = Oface.Controllers || {};
 Oface.Controllers.EntryFacetChooser = {
     handleClustersFaceted: function(){
+        jQuery('#oface-enabler', Application.activeWindow.activeTab.document).before("<button class='ls-entry-refacet-turnon'>Refacet</button>");
+        Oface.log("Adding button before");
+        Oface.log(jQuery('.ls-entry-refacet-turnon', Application.activeWindow.activeTab.document));
+        jQuery('.ls-entry-refacet-turnon', Application.activeWindow.activeTab.document).click(
+            Oface.Controllers.EntryFacetChooser.handleClustersFaceted);
+        
+        
         that = Oface.Controllers.EntryFacetChooser;
         $('.entry-facet-widget-root', doc).each(function(i, el){            
             var url = $(el).data('lifestream-entry-url');            
@@ -13,7 +20,6 @@ Oface.Controllers.EntryFacetChooser = {
                 if(identity.username == username) {                    
                     $(el).bind('mouseover', {controller: that}, that.mouseEnterFacetedCluster)
                          .bind('mouseout', {controller: that}, that.mouseOutFacetedCluster);
-                    Oface.log("Looking Bound to", that.mouseOutFacetedCluster);
                 } else {
                     Oface.log("WARNING Skipping " + username);
                 }
@@ -47,7 +53,8 @@ Oface.Controllers.EntryFacetChooser = {
                   $options += "<option value='" + f['description'] + " " + f['id'] + "'" + selectedVal + ">" + f['description']  + "</option>";
                 }
                 $('select', cluster).append($options);
-                $('.cluster-facet-widget', cluster).hide().bind('submit', function(){
+                //.hide()
+                $('.cluster-facet-widget', cluster).bind('submit', function(){
                     var theForm = this;
                     var options = $('option[selected]', theForm);
                     var f;
@@ -68,7 +75,7 @@ Oface.Controllers.EntryFacetChooser = {
                         var newResource = [{facets: newFacets, urlInfo: urlInfo, url: theUrl}];
                         Oface.log("ENCODEJSON mouseEnterFacetedCluster", newResource);
                         var payload = Utils.encodeJson(newResource);
-                        $.ajax({
+                        Oface.Util.ajax({
                           url: Oface.HOST + '/resources/resource/' + urlInfo['md5'] + '/user/' + Oface.Models.username,
                           type: 'PUT',
                           data: payload,

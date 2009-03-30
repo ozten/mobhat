@@ -18,6 +18,7 @@ class Users_Controller extends Controller
     public function whoami()
     {
         Kohana::log('info', "METERING " . request::method() . "users/whoami");
+        
         $this->auth->auto_login();
         if (! $this->auth->logged_in()) {
             

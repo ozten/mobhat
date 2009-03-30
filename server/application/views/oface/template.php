@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<link rel="stylesheet" type="text/css" href="/static/css/stylo.css" media="all" />
+	<link rel="icon" href="/static/images/favicon.gif" type="image/gif">
 	<script src="/static/js/lib/jquery-1.2.6.js"></script>
 	<script src="/static/js/lib/json2.js"></script>	
 	<!-- script src="http://www.google.com/jsapi"></script >

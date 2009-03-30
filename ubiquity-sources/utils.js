@@ -16,7 +16,28 @@ Oface.log = function() {
     }
 }
 Oface.Util = Oface.Util || {
-        noOp: function(event) {
-                //no op
-        }
+    noOp: function(event) {
+        //no op
+    },
+    ajax: function(options) {
+        var numRetry = 5;
+        var origError = options['error'];
+        options['error'] = function(xhr, status, error) {
+            var numRetries = parseInt( numRetry );
+            if(500 == parseInt(xhr.status) && numRetries != NaN && numRetries > 1) {
+                Oface.log("Caught a server error " + numRetry);    
+                numRetry = numRetries - 1;
+                retryAjax();
+            } else {
+                Oface.log('Out of retries, or real error ' + xhr.status);
+                if(origError) {
+                    origError(xhr, status, error);
+                }
+            }
+        };
+        function retryAjax(){
+            jQuery.ajax(options);
+        };
+        retryAjax();
+    }
 };

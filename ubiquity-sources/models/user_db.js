@@ -5,7 +5,8 @@ Oface.Models.UserDB = {
         /**
          * TODO get rid of oface argmument which is a acontext object
          */
-        jQuery.ajax({
+        //jQuery.ajax({
+        Oface.Util.ajax({
             type: "GET",
             url: Oface.HOST + "/users/whoami?cache_bust=" + escape(new Date()),
             async: false,

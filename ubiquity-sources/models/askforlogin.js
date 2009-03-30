@@ -7,7 +7,7 @@ Oface.Models.AskForLogin = {
       //TODO handle bad login...
       var formData = { username: $('#oface-login-form #username', doc).attr('value'),
                        password: $('#oface-login-form #password', doc).attr('value') };
-      $.ajax({
+      Oface.Util.ajax({
         type: "POST",
         url: Oface.HOST + "/auth_demo/login",
         async: false,

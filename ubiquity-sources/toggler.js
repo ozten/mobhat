@@ -3,11 +3,17 @@ var oFaceIsEnabled = true;
 var lastSeenFacetHeadings = null;
 var lastHiddenItems = null;
 var lastHiddenSubItems = null;
+var unknownItems = null;
 function ofaceToggler(){
   
   var $ = jQuery;
   var doc = Application.activeWindow.activeTab.document;
-
+  if (unknownItems === null) {
+    unknownItems = jQuery('.unknown-entry', doc);
+    Oface.log("Looking for unknownitems", unknownItems);
+  } else {
+    Oface.log("Looking for unknownitems - already good");
+  }
   if(oFaceIsEnabled){
     $('h3#oface-enabler span.status', doc).text("Disabled");    
     //TODO show/hide is broken here... why?
@@ -22,8 +28,8 @@ function ofaceToggler(){
     jQuery('div.cluster', doc).not('.oface').show();
     jQuery('.current-facet', doc).show();
     oFaceIsEnabled = false;
-    
-    
+    unknownItems.removeClass("unknown-entry");
+    Oface.log("Removing");
   }else{
     $('h3#oface-enabler span.status', doc).text("Enabled");
     $('.current-facet', doc).show();
@@ -31,8 +37,9 @@ function ofaceToggler(){
     lastSeenFacetHeadings.show();
     lastHiddenItems.hide();
     lastHiddenSubItems.hide();
-    jQuery('div.cluster', doc).not('.oface').hide();
+    //jQuery('div.cluster', doc).not('.oface').hide();
     oFaceIsEnabled = true;
+    unknownItems.addClass("unknown-entry");
   }
 }
 

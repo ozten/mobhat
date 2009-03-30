@@ -5,8 +5,7 @@ Oface.Models.ResourceDB = {
         var query = { urls: urls };
         Oface.log("ENCODEJSON queryFacets", query);        
         var dataPayload = "q=" + Utils.encodeJson(query);
-        Oface.log("Finished querying facets");
-        jQuery.ajax({
+        Oface.Util.ajax({
             url: Oface.HOST + '/resources/query_facets',
             type: 'POST',
             dataType: 'json',

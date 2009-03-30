@@ -35,5 +35,18 @@ CmdUtils.onPageLoad(function(){
   text-decoration: underline;\
   cursor: pointer;\
 }\
+\
+#switcher-progress-panel{\
+  background-color: #FFF;\
+  position: absolute;\
+  text-alighn: center;\
+}\
+#switcher-progress-panel img{\
+  padding: 2.5em;\
+}\
+\
+.unknown-entry{\
+  background-color: red;\
+}\
 ");
 });

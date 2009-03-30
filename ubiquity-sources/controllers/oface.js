@@ -4,7 +4,10 @@ Oface.Controllers.Oface = Oface.Controllers.Facet || {
         //TODO... we should check current page first
         // also we should make next step explicit? or
         // is the too much coupling?
+        Oface.Timing = {};
+        Oface.Timing.start = new Date();
         Oface.Models.UserDB.whoAmI(contexty, function(data, status){
+            Oface.Timing.step1WhoAmI_complete = new Date();
           //TODO jQuery json ... data is a string and not an oject...why?
             
             //TODO identity is global object... belongs in the Models module?
@@ -17,6 +20,7 @@ Oface.Controllers.Oface = Oface.Controllers.Facet || {
                 contexty.continueEnablingOface();    
             }            
         }, function(xhr, status, error){
+          Oface.log("Origional error handler called.")
           Oface.log(xhr);
           Oface.log(xhr.status);
             if (xhr.status == 401) {
@@ -32,8 +36,9 @@ Oface.Controllers.Oface = Oface.Controllers.Facet || {
         //Register Events and their controllers
         whenWeSee('lifestream-entries-infos-available',
                   Oface.Controllers.PageFacetToggle.handleLifestreamEntriesInfosAvailable);
-        //whenWeSee('clustersfaceted', Oface.Controllers.EntryFacetChooser.handleClustersFaceted);
-                //TODO register and handle 'oface-url-refaceted'
+        whenWeSee('clustersfaceted', Oface.Controllers.EntryFacetChooser.handleClustersFaceted);
+        
+                //TODO register and handle 'oface-url-refaceted'        
     },
     continueWithFacets: function(data, tab){
         ofaceObj.addOfaceEnabled();
@@ -42,6 +47,7 @@ Oface.Controllers.Oface = Oface.Controllers.Facet || {
         ofaceObj.updateDisplayWithFacets(data, tab, ofaceObj);
         var missed = jQuery('div.cluster', tab.document).not('.oface')
                            .addClass('unknown-entry');
-        missed.hide();
+        //missed.hide();
+        delete Oface.running;
     }
 };

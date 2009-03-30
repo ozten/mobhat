@@ -15,7 +15,15 @@
      * Either via Ubiquity command or pageLoad preview is our first stop...
      */
     //TODO get ride of this - context object
-    Oface.Controllers.Oface.main(this);
+    
+    if ( Oface.running === undefined || (new Date() - Oface.running) > 3000 ) {
+        Oface.running = new Date();
+        //Oface.log("Starting oface");
+        CmdUtils.log("Starting oface");
+        Oface.Controllers.Oface.main(this);
+    } else {
+        Oface.log("Skipping oface, instance already running");
+    }
   },
   continueEnablingOface: function(){
       /**
@@ -37,7 +45,8 @@
         Oface.log("I think I am on a " + page.type + " page");
         if( page.type == Oface.WhatPageIsThis.PROFILE_PAGE ) {
           username = Oface.WhatPageIsThis.getUsername.call(Oface.WhatPageIsThis, page.url, page.type);
-          successFn = function(data, status){            
+          successFn = function(data, status){
+            Oface.Timing.step2complete = new Date();
             Oface.log("atom feed XHR call status " + status);
             Oface.log(data);
             var urls = that.processFeedForUrls(data.documentElement, tab, that);
@@ -49,6 +58,7 @@
           // Home, or other mixed username page... not in the url
           username = identity.username;
           successFn = function(data, status){
+            Oface.Timing.step2complete = new Date();
             Oface.log("atom feed XHR call status " + status);
             
             var urls = that.processFeedForUrls(data.documentElement, tab, that, true);
@@ -63,8 +73,9 @@
             that.getFacetsForManyUsers(that, tab, validItems);          
           };   
         }
+        Oface.Timing.step2_start = new Date();
         var h = this.fetchFeed(that, tab, username, url, successFn);
-        jQuery.ajax(h, tab);
+        Oface.Util.ajax(h, tab);
         
       }
     }
@@ -132,6 +143,20 @@
       });
     return urls;
   },
+  logTiming: function(){
+    Oface.log("xLogging timing back to home");
+          Oface.Timing.step3queryFacets_complete = new Date();
+          
+          var timingUrl = Oface.HOST + '/static/images/timing.gif?s1=' + Oface.Timing.start.getTime() +
+            '&s1c=' + Oface.Timing.step1WhoAmI_complete.getTime() +
+            '&s2s=' + Oface.Timing.step2_start.getTime() +
+            '&s2c=' + Oface.Timing.step2complete.getTime();
+            
+            timingUrl += '&s3s=' + Oface.Timing.step3queryFacets_start.getTime() +
+            '&s3c=' + Oface.Timing.step3queryFacets_complete.getTime();
+          Oface.log("Looking for " + timingUrl);
+          jQuery.get(timingUrl);
+  },
   getFacetsForUser: function(that, tab, aUsername, urls){
     /* urls [{id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     var query = { urls: urls };
@@ -147,8 +172,7 @@
       cache: false, // REMOVE FOR PROD
       data: dataPayload,
       success: function(jsn, status){
-          //Oface.log(jsn);
-          
+          that.logTiming();
           var data = [];
           for(var i=0; i<jsn.length; i++){
               //TODO we are throwing away id, created date
@@ -175,8 +199,8 @@
       }
   };
    
-  
-    jQuery.ajax(h, tab.document);
+    Oface.Timing.step3queryFacets_start = new Date();
+    Oface.Util.ajax(h, tab.document);
     /*
     //after async
     var data = urls.slice(0);
@@ -200,9 +224,13 @@
   getFacetsForManyUsers: function(that, tab, urls){
     /* urls [{username: 'pattyok', id: 'md5sum', url: 'url', published: '2009-01-28T06:00:29Z'},] */
     Oface.log('getFacetsForManyUsers');
+    Oface.Timing.step3queryFacets_start = new Date();
     Oface.Models.ResourceDB.queryFacets(urls, 
        function(jsn, status){
+          Oface.log("got results for getFacetsForManyUsers");
+          that.logTiming();
           if(status == 'success'){
+            
             var data = [];
             for(var i=0; i<jsn.length; i++){
               try{
@@ -349,11 +377,8 @@
     
     jQuery('#oface-enabler span.current-facet-count', doc).text(itemCount);
     
-    
     jQuery('div.entry.oface-' + facet + '-facet:hidden, div.cluster.oface-' + facet + '-facet', doc).show('slow');    
-    jQuery('div.cluster.oface, div.entry', doc).not('.oface-' + facet + '-facet').hide('slow');
-    
-    //jQuery('div.cluster', doc).not('.oface').hide('slow');
+    jQuery('div.cluster.oface', doc).not('.oface-' + facet + '-facet').hide('slow');
     
     Oface.Controllers.PageFacetToggle.switchDisplayWithOtherFacets(facet, Application.activeWindow.activeTab);
   },  
@@ -411,6 +436,7 @@
       Oface.Controllers.Facet.username = identity.username;
       Oface.Controllers.Facet.initialize.call(Oface.Controllers.Facet);
       $('h3#oface-enabler span.current-facet', doc).css('margin-left', '30px');
+      Oface.log("Finishing with addOfaceEnabed");
     }else{
       Oface.log('Already have the widget');    
     }
@@ -419,12 +445,13 @@
 /**
  * You can use fetch- command  during development (comment out pageLoad_fetchFeedOface )
  * or uncomment pageLoad_fetchFeedOface for auto load
-*/ 
+
 function pageLoad_fetchFeedOface(){
     CmdUtils.log("Starting ");
     ofaceObj.preview.call(ofaceObj);
 }
- 
+*/  
+
 ;(function(){
 CmdUtils.CreateCommand(ofaceObj);
 })();
