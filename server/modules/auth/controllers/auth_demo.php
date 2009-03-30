@@ -69,7 +69,7 @@ class Auth_Demo_Controller extends Template_Controller {
       $this->template->content = View::factory('auth_demo/success');
     }else{
       $this->template->title = 'User Login';
-      Kohana::log('info', "Checking " . $this->input->post("username") . " and " . $this->input->post("password"));
+      Kohana::log('info', "Checking " . $this->input->post("username") . " and password");
       // Load the user
       $user = ORM::factory('user', $this->input->post("username"));
 

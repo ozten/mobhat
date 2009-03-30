@@ -18,7 +18,8 @@ Oface.Models.AskForLogin = {
             $('#oface-login-form #message', doc).text("Checking Username and Password.");
         },
         success: function(data, status){
-            Oface.Models.UserDB.whoAmI(oface);
+            $('#oface-login-form', doc).remove();
+            Oface.Controllers.Oface.main(ofaceObj);
         },
         error: function(xhr, status, error){          
             $('#oface-login-form #message', doc).text("Username or Password were incorrect. Please try again.");

@@ -54,7 +54,9 @@ CmdUtils.onPageLoad(function(){
 }\
 \
 .unknown-entry{\
-  background-color: red;\
+  background-color: #DEF;\
+  background-image: url(http://mobhat.restservice.org/static/images/ubiquity/UnknowFacet.png);\
+  background-repeat: no-repeat;\
 }\
 ");
 });;var Oface = Oface || {};
@@ -239,7 +241,8 @@ Oface.Models.AskForLogin = {
             $('#oface-login-form #message', doc).text("Checking Username and Password.");
         },
         success: function(data, status){
-            Oface.Models.UserDB.whoAmI(oface);
+            $('#oface-login-form', doc).remove();
+            Oface.Controllers.Oface.main(ofaceObj);
         },
         error: function(xhr, status, error){          
             $('#oface-login-form #message', doc).text("Username or Password were incorrect. Please try again.");
@@ -691,7 +694,7 @@ Oface.Controllers.FacetGroups = {
           //again once after outter for loop finishes...
           this.t = jQuery("<h4 class='group-facet " + currentFacet +
                      "' style='clear:left'><span class='facet-name'>" + (currentFacet) + "</span>" + 
-                     " <span class='count c1'>1</span></h4> ", doc);
+                     " <span class='count'>1</span></h4> ", doc);
           this.t.css({
              'class': 'toggler',
              'height': '15px',
@@ -1526,3 +1529,17 @@ Oface.WhatPageIsThis = {
   }
 }
 CmdUtils.CreateCommand(Oface.WhatPageIsThis);
+;CmdUtils.CreateCommand({
+  name: "mobhat-version",
+  homepage: "http://mobhat.restservice.org/",
+  author: {
+    name: "Austin King",
+    email: "shout@ozten.com"
+  },
+  license: "GPL",
+  description: "Shows the version that MOBhat thinks your using ;)",
+  help: "Just run it, preview will show version",
+  preview: function(pblock, input) {
+    pblock.innerHTML = "Version: 1";
+  }
+});

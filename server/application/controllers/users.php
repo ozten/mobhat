@@ -50,7 +50,6 @@ class Users_Controller extends Controller
                              ));
             
             //Kohana::log('info', "Skipping payload " . Kohana::debug($payload));
-            Kohana::log('info', Kohana::debug($payload));
             Kohana::log('info', Kohana::debug(json_decode($payload)));
             echo $payload;
         }

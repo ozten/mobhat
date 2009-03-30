@@ -32,7 +32,7 @@
   background-color: grey;
   color: #FFF;
   padding: 0.3em;
-  border: solid 1px 3px;
+  border: solid 1px #000;
   text-align: center;
 }
 #all-facets h4{

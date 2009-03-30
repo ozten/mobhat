@@ -32,6 +32,7 @@ cat controller.js >>                                 ../server/static/ubiquity/m
 cat toggler.js >>                                    ../server/static/ubiquity/mobhat.js
 cat commands/fetch-feed-oface.js >>                  ../server/static/ubiquity/mobhat.js
 cat commands/discover-feeds-oface.js >>              ../server/static/ubiquity/mobhat.js
-cat commands/what-page-is-this.js >>                 ../server/static/ubiquity/mobhat.js
+cat commands/what-page-is-this.js >>                 ../server/static/ubiquity/mobhat.js #new
+cat commands/mobhat-version.js >>                    ../server/static/ubiquity/mobhat.js
 
 echo 'done'

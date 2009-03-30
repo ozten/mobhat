@@ -46,7 +46,9 @@ CmdUtils.onPageLoad(function(){
 }\
 \
 .unknown-entry{\
-  background-color: red;\
+  background-color: #DEF;\
+  background-image: url(http://mobhat.restservice.org/static/images/ubiquity/UnknowFacet.png);\
+  background-repeat: no-repeat;\
 }\
 ");
 });
