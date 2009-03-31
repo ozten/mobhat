@@ -70,6 +70,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
+Oface.version = 2;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {
@@ -1540,6 +1541,6 @@ CmdUtils.CreateCommand(Oface.WhatPageIsThis);
   description: "Shows the version that MOBhat thinks your using ;)",
   help: "Just run it, preview will show version",
   preview: function(pblock, input) {
-    pblock.innerHTML = "Version: 1";
+    pblock.innerHTML = "Version: " + Oface.version;
   }
 });
