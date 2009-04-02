@@ -9,7 +9,7 @@ CmdUtils.onPageLoad(function(){
   background-color: #DDD;\
 }\
 .group-facet span.count{\
-  background-image: url(http://oface.ubuntu/static/images/ubiquity/BowlerIcon39x27.png);\
+  background-image: url(http://mobhat.restservice.org/static/images/ubiquity/BowlerIcon39x27.png);\
   background-repeat: no-repeat;\
   display: block;\
   width: 39px;\
@@ -49,6 +49,11 @@ CmdUtils.onPageLoad(function(){
   background-color: #DEF;\
   background-image: url(http://mobhat.restservice.org/static/images/ubiquity/UnknowFacet.png);\
   background-repeat: no-repeat;\
+}\
+.ls-entry-facet-menu-item{\
+  background-image:url(http://mobhat.restservice.org/static/images/favicon.gif);\
+  background-repeat:no-repeat;\
+  padding-left:18px;\
 }\
 ");
 });

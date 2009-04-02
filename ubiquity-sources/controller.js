@@ -33,7 +33,7 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                             var offset = switcher.offset();
                             Oface.Views.Facet.hideAll();
                             $('#oface-enabler', doc).after(
-                                '<div id="switcher-progress-panel"><img src="http://oface.ubuntu/static/images/ubiquity/progress-icon.gif" /></div>');
+                                '<div id="switcher-progress-panel"><img src="http://mobhat.restservice.org/static/images/ubiquity/progress-icon.gif" /></div>');
                             var p = $('#switcher-progress-panel', doc).width(w).height(h).offset(offset);
                         },
                         complete: function(){$('#switcher-progress-panel', doc).remove(); },
