@@ -32,7 +32,9 @@
 }
 * {
 	font-family: "Helvetica", "Arial", sans-serif;
+	line-height: 1.5;
 }
+p, li { width: 600px; }
 	</style>
 
 </head>

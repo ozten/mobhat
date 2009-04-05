@@ -13,8 +13,7 @@
  */
 class Auth_Demo_Controller extends Template_Controller {
 
-  // Do not allow to run in production
-  const ALLOW_PRODUCTION = FALSE;
+  const ALLOW_PRODUCTION = TRUE;
 
   // Use the default Kohana template
   public $template = 'kohana/template';
