@@ -28,9 +28,9 @@ Oface.WhatPageIsThis = {
             url: url};
   },
   HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
-  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)$/,
+  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)(#.*)?(\?start.*)?$/,
   LIST_PAGE: "list",            LIST_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/list\/(\w+)$/,
-  ROOMS_LIST_PAGE: "roomslist", ROOMS_LIST_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms$/,
+  ROOMS_LIST_PAGE: "roomslist", ROOMS_LIST_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/?$/,
   ROOM_PAGE: "room",            ROOM_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/(\w+)$/,
   EVERYONE_PAGE: "everyone",    EVERYONE_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/public$/,
   //A User's Profile plus their friends
@@ -79,8 +79,8 @@ Oface.WhatPageIsThis = {
     if(pageType == this.UNKNOWN_PAGE){
       return false;
     }
-    return [this.HOME_PAGE, this.PROFILE_PAGE, this.LIST_PAGE, this.ROOMS_LIST_PAGE,
-            this.ROOM_PAGE, this.EVERYONE_PAGE, this.FRIENDS_PAGE].indexOf(pageType) != -1;
+    return [this.HOME_PAGE, this.PROFILE_PAGE, this.LIST_PAGE,
+            this.EVERYONE_PAGE, this.FRIENDS_PAGE].indexOf(pageType) != -1;
   }
 }
 CmdUtils.CreateCommand(Oface.WhatPageIsThis);

@@ -3,6 +3,7 @@
 ._test
 ._ubiquity-docs
 .DS_Store
+._TestPlans.pages
 database/oface_scratch.sql
 example_feeds
 friendfeedhtml
@@ -23,5 +24,6 @@ server/static/js/lib/._jquery-1.3.js
 server/system/libraries/Database.php
 test-sync.txt
 test
+TestPlans.pages
 ubiquity-docs
 xoop-js-from-internet

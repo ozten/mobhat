@@ -40,5 +40,6 @@ cat commands/fetch-feed-oface-dev.js              >> $MOB_DIR/mobhat-dev.js
 cat commands/discover-feeds-oface.js              | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js
 cat commands/what-page-is-this.js                 | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js #new
 cat commands/mobhat-version.js                    | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js
+cat commands/mobhat-unittest.js                   | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js
 
 echo 'done'
