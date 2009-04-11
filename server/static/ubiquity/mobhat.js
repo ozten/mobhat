@@ -75,7 +75,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
-Oface.version = 13;
+Oface.version = 15;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {
@@ -1509,7 +1509,7 @@ Oface.WhatPageIsThis = {
             url: url};
   },
   HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
-  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)(#.*)?(\?start.*)?$/,
+  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)(?:#.*)?(?:\?start.*)?$/,
   LIST_PAGE: "list",            LIST_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/list\/(\w+)$/,
   ROOMS_LIST_PAGE: "roomslist", ROOMS_LIST_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/?$/,
   ROOM_PAGE: "room",            ROOM_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/(\w+)$/,
@@ -1549,7 +1549,7 @@ Oface.WhatPageIsThis = {
       if (match.length == 2) {
         return match[1];
       } else {
-        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ");
+        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ", match.length);
       }
     } else {
       Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Expected a PROFILE_PAGE types instead.");
@@ -1593,8 +1593,16 @@ CmdUtils.CreateCommand({
             
             assertRegexMatches(ROOMS_LIST_REGEX, "http://friendfeed.com/rooms", "The Rooms list, no slash");
             assertRegexMatches(ROOMS_LIST_REGEX, "http://friendfeed.com/rooms/", "The Rooms list");
+            
+            assertEquals(getUsername("http://friendfeed.com/ozten?start=30", PROFILE_PAGE), "ozten", "We should still find username");
+            assertEquals(getUsername("http://friendfeed.com/pattyok", PROFILE_PAGE), "ozten", "We should still find username");
+            CmdUtils.log('Oh no');
         }
         pblock.innerHTML = "Passes: " + passes + " Faileds: " + fails;
+        function assertEquals(actual, expected, message) {
+            message = message || "";
+            assert(message + "Actual[" + actual + "] Expected[" + expected + "]", actual == expected);
+        }
         function assertRegexMatches(regex, string, message) {
             var msg = message || "";
             assert(msg, regex.test(string));
