@@ -10,7 +10,8 @@ cp _build_warning.js                              $MOB_DIR/mobhat.js
 cp _build_warning.js                              $MOB_DIR/mobhat-dev.js
 
 cat stylo.css                                     | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js
-cat config.js                                     | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js
+cat config.js                                     >> $MOB_DIR/mobhat.js
+cat config-dev.js                                 >> $MOB_DIR/mobhat-dev.js
 cat utils.js                                      | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js
 cat utils/event.js                                | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js
 cat identity.js                                   | tee -a  $MOB_DIR/mobhat.js $MOB_DIR/mobhat-dev.js
