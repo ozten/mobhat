@@ -64,9 +64,10 @@ CmdUtils.onPageLoad(function(){
   padding-left:18px;\
 }\
 ");
-});;var Oface = Oface || {};
-Oface.HOST = "http://mobhat.restservice.org";
-             //"http://oface.ubuntu";;
+});;
+//Note this is ONLY the PROD config file
+var Oface = Oface || {};
+Oface.HOST = "http://mobhat.restservice.org";;
 
 function logError(msg, debugObjects) {
   Oface.log("ERROR:" + msg);
@@ -75,7 +76,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
-Oface.version = 904152049;
+Oface.version = 904162256;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {
@@ -1597,10 +1598,10 @@ CmdUtils.CreateCommand({
             assertRegexMatches(ROOMS_LIST_REGEX, "http://friendfeed.com/rooms", "The Rooms list, no slash");
             assertRegexMatches(ROOMS_LIST_REGEX, "http://friendfeed.com/rooms/", "The Rooms list");
             
-            assertEquals(getUsername("http://friendfeed.com/ozten?start=30", PROFILE_PAGE), "oztenz", "We should still find username");
+            assertEquals(getUsername("http://friendfeed.com/ozten?start=30", PROFILE_PAGE), "ozten", "We should still find username");
             assertEquals(getUsername("http://friendfeed.com/pattyok", PROFILE_PAGE), "pattyok", "We should still find username");
             assertEquals(getUsername("http://friendfeed.com/pattyok?expandlist=pals", PROFILE_PAGE), "pattyok", "We should still find username");
-            assert(null);
+            
         }
         if( parseInt( fails ) > 0 ) {
             pblock.innerHTML = "Passes: " + passes + " Failed: " + fails + "\<br>Look in Error Console for details";            

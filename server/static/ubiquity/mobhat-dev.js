@@ -64,7 +64,10 @@ CmdUtils.onPageLoad(function(){
   padding-left:18px;\
 }\
 ");
-});;var Oface = Oface || {};
+});;
+//Note this is ONLY the DEVELOPMENT config file
+// so we can do dev client prod server, dev client, prod server, etc
+var Oface = Oface || {};
 Oface.HOST = "http://mobhat.restservice.org";
              //"http://oface.ubuntu";;
 
@@ -75,7 +78,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
-Oface.version = 13;
+Oface.version = 904162256;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {
@@ -1128,9 +1131,10 @@ function ofaceToggler(){
             '&s1c=' + Oface.Timing.step1WhoAmI_complete.getTime() +
             '&s2s=' + Oface.Timing.step2_start.getTime() +
             '&s2c=' + Oface.Timing.step2complete.getTime();
-            
             timingUrl += '&s3s=' + Oface.Timing.step3queryFacets_start.getTime() +
-            '&s3c=' + Oface.Timing.step3queryFacets_complete.getTime();
+            '&s3c=' + Oface.Timing.step3queryFacets_complete.getTime() +
+            '&v=' + Oface.version;
+            
           Oface.log("Looking for " + timingUrl);
           jQuery.get(timingUrl);
   },
@@ -1509,7 +1513,7 @@ Oface.WhatPageIsThis = {
             url: url};
   },
   HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
-  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)(#.*)?(\?start.*)?$/,
+  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)(?:\?[^#]*)?(?:#.*)?$/,
   LIST_PAGE: "list",            LIST_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/list\/(\w+)$/,
   ROOMS_LIST_PAGE: "roomslist", ROOMS_LIST_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/?$/,
   ROOM_PAGE: "room",            ROOM_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/(\w+)$/,
@@ -1546,10 +1550,12 @@ Oface.WhatPageIsThis = {
   getUsername: function(url, pageType){
     if (pageType === this.PROFILE_PAGE) {
       var match = this.PROFILE_REGEX.exec(url);
-      if (match.length == 2) {
+      if (! match ) {
+        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Nothing matched");
+      } else if ( match.length == 2) {
         return match[1];
       } else {
-        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ");
+        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ", match.length);
       }
     } else {
       Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Expected a PROFILE_PAGE types instead.");
@@ -1593,8 +1599,21 @@ CmdUtils.CreateCommand({
             
             assertRegexMatches(ROOMS_LIST_REGEX, "http://friendfeed.com/rooms", "The Rooms list, no slash");
             assertRegexMatches(ROOMS_LIST_REGEX, "http://friendfeed.com/rooms/", "The Rooms list");
+            
+            assertEquals(getUsername("http://friendfeed.com/ozten?start=30", PROFILE_PAGE), "ozten", "We should still find username");
+            assertEquals(getUsername("http://friendfeed.com/pattyok", PROFILE_PAGE), "pattyok", "We should still find username");
+            assertEquals(getUsername("http://friendfeed.com/pattyok?expandlist=pals", PROFILE_PAGE), "pattyok", "We should still find username");
+            
         }
-        pblock.innerHTML = "Passes: " + passes + " Faileds: " + fails;
+        if( parseInt( fails ) > 0 ) {
+            pblock.innerHTML = "Passes: " + passes + " Failed: " + fails + "\<br>Look in Error Console for details";            
+        } else {
+            pblock.innerHTML = "Passed: " + passes + " Failed: " + fails;            
+        }
+        
+        function assertEquals(actual, expected, message) {
+            assert(message + "", actual, expected);
+        }
         function assertRegexMatches(regex, string, message) {
             var msg = message || "";
             assert(msg, regex.test(string));
@@ -1604,23 +1623,25 @@ CmdUtils.CreateCommand({
             assert(msg, ! regex.test(string));
         }
         function assert(assertString, value, otherValue) {
+            function pass(){ passes++; }
+            function fail(msg){ fails++;  Utils.reportWarning(msg);}
             switch (typeof value) {
                 case "boolean":
                     if(value){
-                        passes++;
+                        pass();
                     } else {
-                        fails++;
-                        Utils.reportWarning("Expected true but was (false): '" +  assertString + "'");
-                        //throw new AssertFailed("Expected true but was false: " + assertString);
+                        fail("Expected true but was (false): '" +  assertString + "'");
+                    }
+                    break;
+                case "string":
+                    if(value == otherValue) {
+                        pass();
+                    } else {
+                        fail("Actual=(" + value + ") but Expected=(" + otherValue + "): '" +  assertString + "'");
                     }
                     break;
                 default:
-                    Utils.reportWarning("assert programming error, unknown type for " + value);
-                    //throw "assert programming error, unknown type for " + value;
-            }
-            function AssertFailed(message) {
-                this.message = message;
-                this.name = "AssertFailed";
+                    fail("assert programming error, unknown type for actual=" + value + " expected=" + otherValue + "message=" + assertString);
             }
         }
     },

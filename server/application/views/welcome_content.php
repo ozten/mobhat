@@ -10,7 +10,7 @@
   <li>A <a href="http://friendfeed.com/">FriendFeed</a> Account</li>
   <li><a href="http://mozilla.org/firefox">Firefox 3.0.8</a> web browser.</li>
   <li>The Firefox Add-on <a href="http://labs.mozilla.com/projects/ubiquity/">Ubiquity</a>.
-      Install <a href="https://ubiquity.mozilla.com/xpi/ubiquity-latest.xpi">0.1.7</a></li>
+      Install <a href="https://ubiquity.mozilla.com/xpi/ubiquity-latest.xpi">the latest</a></li>
   <!--li><a href=""></a></li-->
 </ul>
 <h2>Okay, I'm ready</h2>

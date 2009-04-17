@@ -12,9 +12,7 @@ php-atompub-server-read-only-patch1.txt
 php-atompub-server-read-only
 server/.DS_Store
 server/application/logs/*
-server/application/config/database.php
-server/application/config/session.php
-server/modules/auth/config/auth.php
+server/application/config/*
 server/static/.DS_Store
 server/static/._test_files
 server/static/._images

@@ -151,9 +151,10 @@
             '&s1c=' + Oface.Timing.step1WhoAmI_complete.getTime() +
             '&s2s=' + Oface.Timing.step2_start.getTime() +
             '&s2c=' + Oface.Timing.step2complete.getTime();
-            
             timingUrl += '&s3s=' + Oface.Timing.step3queryFacets_start.getTime() +
-            '&s3c=' + Oface.Timing.step3queryFacets_complete.getTime();
+            '&s3c=' + Oface.Timing.step3queryFacets_complete.getTime() +
+            '&v=' + Oface.version;
+            
           Oface.log("Looking for " + timingUrl);
           jQuery.get(timingUrl);
   },

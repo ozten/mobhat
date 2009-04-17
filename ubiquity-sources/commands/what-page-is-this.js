@@ -28,7 +28,7 @@ Oface.WhatPageIsThis = {
             url: url};
   },
   HOME_PAGE: "home",            HOME_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/$/,
-  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)(#.*)?(\?start.*)?$/,
+  PROFILE_PAGE: "profile",      PROFILE_REGEX:  /^https?:\/\/w?w?w?\.?friendfeed\.com\/(\w+)(?:\?[^#]*)?(?:#.*)?$/,
   LIST_PAGE: "list",            LIST_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/list\/(\w+)$/,
   ROOMS_LIST_PAGE: "roomslist", ROOMS_LIST_REGEX: /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/?$/,
   ROOM_PAGE: "room",            ROOM_REGEX:     /^https?:\/\/w?w?w?\.?friendfeed\.com\/rooms\/(\w+)$/,
@@ -65,10 +65,12 @@ Oface.WhatPageIsThis = {
   getUsername: function(url, pageType){
     if (pageType === this.PROFILE_PAGE) {
       var match = this.PROFILE_REGEX.exec(url);
-      if (match.length == 2) {
+      if (! match ) {
+        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Nothing matched");
+      } else if ( match.length == 2) {
         return match[1];
       } else {
-        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ");
+        Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Matched didn't have exactly 1 username piece, it had ", match.length);
       }
     } else {
       Oface.log("ERROR: getUsername(" + url + ", " + pageType + " called. Expected a PROFILE_PAGE types instead.");

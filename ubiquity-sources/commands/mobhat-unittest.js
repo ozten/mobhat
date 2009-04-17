@@ -12,8 +12,21 @@ CmdUtils.CreateCommand({
             
             assertRegexMatches(ROOMS_LIST_REGEX, "http://friendfeed.com/rooms", "The Rooms list, no slash");
             assertRegexMatches(ROOMS_LIST_REGEX, "http://friendfeed.com/rooms/", "The Rooms list");
+            
+            assertEquals(getUsername("http://friendfeed.com/ozten?start=30", PROFILE_PAGE), "ozten", "We should still find username");
+            assertEquals(getUsername("http://friendfeed.com/pattyok", PROFILE_PAGE), "pattyok", "We should still find username");
+            assertEquals(getUsername("http://friendfeed.com/pattyok?expandlist=pals", PROFILE_PAGE), "pattyok", "We should still find username");
+            
         }
-        pblock.innerHTML = "Passes: " + passes + " Faileds: " + fails;
+        if( parseInt( fails ) > 0 ) {
+            pblock.innerHTML = "Passes: " + passes + " Failed: " + fails + "\<br>Look in Error Console for details";            
+        } else {
+            pblock.innerHTML = "Passed: " + passes + " Failed: " + fails;            
+        }
+        
+        function assertEquals(actual, expected, message) {
+            assert(message + "", actual, expected);
+        }
         function assertRegexMatches(regex, string, message) {
             var msg = message || "";
             assert(msg, regex.test(string));
@@ -23,23 +36,25 @@ CmdUtils.CreateCommand({
             assert(msg, ! regex.test(string));
         }
         function assert(assertString, value, otherValue) {
+            function pass(){ passes++; }
+            function fail(msg){ fails++;  Utils.reportWarning(msg);}
             switch (typeof value) {
                 case "boolean":
                     if(value){
-                        passes++;
+                        pass();
                     } else {
-                        fails++;
-                        Utils.reportWarning("Expected true but was (false): '" +  assertString + "'");
-                        //throw new AssertFailed("Expected true but was false: " + assertString);
+                        fail("Expected true but was (false): '" +  assertString + "'");
+                    }
+                    break;
+                case "string":
+                    if(value == otherValue) {
+                        pass();
+                    } else {
+                        fail("Actual=(" + value + ") but Expected=(" + otherValue + "): '" +  assertString + "'");
                     }
                     break;
                 default:
-                    Utils.reportWarning("assert programming error, unknown type for " + value);
-                    //throw "assert programming error, unknown type for " + value;
-            }
-            function AssertFailed(message) {
-                this.message = message;
-                this.name = "AssertFailed";
+                    fail("assert programming error, unknown type for actual=" + value + " expected=" + otherValue + "message=" + assertString);
             }
         }
     },
