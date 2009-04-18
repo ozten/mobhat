@@ -7,7 +7,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
-Oface.version = 904181053;
+Oface.version = 904181435;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {

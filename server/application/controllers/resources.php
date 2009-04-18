@@ -111,7 +111,12 @@ class Resources_Controller extends Template_Controller
         Kohana::log('info', "=================");
         $this->urlDb = new Url_Model;
         foreach($items as $i => $item){
+            if (! isset($item['url'])) {
+                Kohana::log('alert', "Skipping (has no url) " . Kohana::debug($item));
+                break;
+            }
             $found = false;
+            
             //TODO check if md5 is set, url is set, validate them...
             //thing about policy during read vs update/set
             $md5sum = md5($item['url']);

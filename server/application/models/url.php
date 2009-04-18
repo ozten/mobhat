@@ -11,19 +11,26 @@ class Url_Model extends Model {
         $this->facetDb = new Facet_Model;
         
         Kohana::log('info', "Saving url... " . Kohana::debug($url) . " facets=" . Kohana::debug($theFacets));
-        $url = $this->_getOrCreateUrl($url, $md5sum, $userId);
-        $facets = $this->facetDb->getOrCreateFacets($theFacets);
-        $facetUrls = $this->_getOrCreateFacetsUrls($facets, $url);
-        return array('url' => $url,
+        $anUrl = $this->_getOrCreateUrl($url, $md5sum, $userId);
+        if( is_null($anUrl) ){
+            return NULL;
+        } else {
+            $url = $anUrl;
+            $facets = $this->facetDb->getOrCreateFacets($theFacets);
+            $facetUrls = $this->_getOrCreateFacetsUrls($facets, $url);
+            
+        
+            return array('url' => $url,
                      'facets' => $facets,
                      'facets_urls' => $facetUrls);
+        }
     }
     
     private function _getOrCreateUrl($url, $md5sum, $userId)
     {
         $existingUrl = $this->_getUrl($md5sum);
         if (count($existingUrl) == 0) {
-            $res = $this->db->query("INSERT INTO urls (url, hash, user_fk) VALUES (?, ?, ?)",
+            $res = $this->db->query("/* getOrCreateUrl */ INSERT INTO urls (url, hash, user_fk) VALUES (?, ?, ?)",
                                                 array($url, $md5sum, $userId));
             Kohana::log('info', "Inserted url into db");
             Kohana::log('info', "insert_id= " . $res->insert_id() . " count=" . $res->count());
@@ -31,12 +38,19 @@ class Url_Model extends Model {
             //TODO make an array that would match output of this call... with insert_id
             $existingUrl = $this->_getUrl($md5sum);
         }
-        return $existingUrl[0];
+        
+        if  (count($existingUrl) > 0) {
+            return $existingUrl[0];    
+        } else {
+        Kohana::log('error', "Unable to getOrCreate url for url $url md5 $md5sum userId $userId" . Kohana::debug($existingUrl));    
+            return NULL;
+        }
+        
     }
     
     private function _getUrl($md5sum)
     {
-        return $this->db->query("SELECT id, url, hash, user_fk FROM urls WHERE hash = ?", array($md5sum))->result_array(FALSE);
+        return $this->db->query("/* _getUrl */ SELECT id, url, hash, user_fk FROM urls WHERE hash = ?", array($md5sum))->result_array(FALSE);
     }
     /**
      * @param Array facetInfos

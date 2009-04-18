@@ -1,0 +1,2 @@
+Install the <a href="/static/ubiquity/mobhat-ubiquity.html"><span class="mob">MOB</span>hat Ubiquity script</a>.
+      Accepting the security warnings, and you will automatically get updates as I fix bugs in the code.

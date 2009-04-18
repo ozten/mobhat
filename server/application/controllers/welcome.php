@@ -19,4 +19,9 @@ class Welcome_Controller extends Template_Controller {
 		$this->template->content = new View('welcome_content');
 		$this->template->title = 'MOBhat an experiment in faceting and grouping your Lifestreaming Entries';		
 	}
+	public function troubleshoot()
+	{
+		$this->template->title = 'Troubleshooting your MOBhat setup';
+		$this->template->content = new View('welcome/troubleshoot');
+	}
 }

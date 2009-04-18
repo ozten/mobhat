@@ -1,0 +1,2 @@
+The Firefox Add-on <a href="http://labs.mozilla.com/projects/ubiquity/">Ubiquity</a>.
+      <b>Install the latest <a href="https://ubiquity.mozilla.com/xpi/ubiquity-latest.xpi">by clicking here</a></b>
