@@ -10,12 +10,12 @@
   <li>A <a href="http://friendfeed.com/">FriendFeed</a> Account</li>
   <li><a href="http://mozilla.org/firefox">Firefox 3.0.8</a> web browser.</li>
   <li>The Firefox Add-on <a href="http://labs.mozilla.com/projects/ubiquity/">Ubiquity</a>.
-      Install <a href="https://ubiquity.mozilla.com/xpi/ubiquity-latest.xpi">the latest</a></li>
+      <b>Install the latest <a href="https://ubiquity.mozilla.com/xpi/ubiquity-latest.xpi">by clicking here</a></b></li>
   <!--li><a href=""></a></li-->
 </ul>
 <h2>Okay, I'm ready</h2>
 <ol>
-  <li><a href="/auth_demo/create">Create a <span class="mob">MOB</span>hat account</a>
+  <li><a href="https://mobhat.restservice.org/auth_demo/create">Create a <span class="mob">MOB</span>hat account</a>
 		with the <strong>same username</strong> as your FriendFeed account.</li>
   <li>Install the <a href="/static/ubiquity/mobhat-ubiquity.html"><span class="mob">MOB</span>hat Ubiquity script</a>.
       Accepting the security warnings, and you will automatically get updates as I fix bugs in the code.</li>
