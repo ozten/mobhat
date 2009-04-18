@@ -1652,18 +1652,8 @@ CmdUtils.CreateCommand({
     execute: function(input) {
     
     }                   
-});;CmdUtils.CreateCommand({
-  name: "mobhat-no-ubiquity",
-  homepage: "http://mobhat.restservice.org/",
-  author: {
-    name: "Austin King",
-    email: "shout@ozten.com"
-  },
-  license: "GPL",
-  description: "On the Troubleshooting page is a no-ubiquity alert. This removes that.",
-  help: "Just run it, preview will show version",
-  preview: function(pblock, input) {
-    CmdUtils.log("hello");
+});;
+function pageLoad_detectNoUbiquity(){
     var doc = Application.activeWindow.activeTab.document;
     var url = doc.location.href;
     var troubleshoot = "/welcome/troubleshoot";
@@ -1675,5 +1665,4 @@ CmdUtils.CreateCommand({
         CmdUtils.log(Oface.HOST + troubleshoot);
     }
     pblock.innerHTML = "Version: " + Oface.version;
-  }
-});
+}
