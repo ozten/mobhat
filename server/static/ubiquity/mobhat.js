@@ -67,7 +67,10 @@ CmdUtils.onPageLoad(function(){
 });;
 //Note this is ONLY the PROD config file
 var Oface = Oface || {};
-Oface.HOST = "http://mobhat.restservice.org";;
+Oface.HOST = "http://mobhat.restservice.org";
+Oface.SECURE_HOST = "https://mobhat.restservice.org";
+
+;
 
 function logError(msg, debugObjects) {
   Oface.log("ERROR:" + msg);
@@ -76,7 +79,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
-Oface.version = 904162256;
+Oface.version = 904181053;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {
@@ -90,6 +93,7 @@ Oface.Util = Oface.Util || {
         //no op
     },
     ajax: function(options) {
+        //CmdUtils.log("ajax called on " + options['url']);
         var numRetry = 5;
         var origError = options['error'];
         options['error'] = function(xhr, status, error) {
@@ -239,7 +243,7 @@ Oface.Models.AskForLogin = {
                        password: $('#oface-login-form #password', doc).attr('value') };
       Oface.Util.ajax({
         type: "POST",
-        url: Oface.HOST + "/auth_demo/login",
+        url: Oface.SECURE_HOST + "/auth_demo/login",
         async: false,
         cache: false,
         dataType: "json",
@@ -272,7 +276,7 @@ Oface.Models.AskForLogin = {
   var $ = jQuery;
   var form = Oface.Views.loginForm.toXMLString();
   $('#feed1', doc).append(form)
-      .find('#login-signup-url').attr('href', Oface.HOST + "/auth_demo/create");
+      .find('#login-signup-url').attr('href', Oface.SECURE_HOST + "/auth_demo/create");
   
   $('#oface-login-form', doc).submit(function(){
       return Oface.Models.AskForLogin.authDemoLogin(doc, oface, 3);

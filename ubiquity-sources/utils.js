@@ -7,7 +7,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
-Oface.version = 904162256;
+Oface.version = 904181053;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {
@@ -21,6 +21,7 @@ Oface.Util = Oface.Util || {
         //no op
     },
     ajax: function(options) {
+        //CmdUtils.log("ajax called on " + options['url']);
         var numRetry = 5;
         var origError = options['error'];
         options['error'] = function(xhr, status, error) {

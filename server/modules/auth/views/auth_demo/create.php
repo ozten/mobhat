@@ -23,6 +23,6 @@ echo form::close() ?>
 Play it safe and make up a MOBhat only password.</p>
 <h3>What's my FriendFeed Nickname?</h3>
 <div style="position: relative">
-<iframe src="http://friendfeed.com/account" width="600" height="600"></iframe>
+<iframe src="https://friendfeed.com/account" width="600" height="600"></iframe>
 <img src="/static/ubiquity/where-nickname.png" style="position: absolute; top: 140px; left: 150px;" />
 </div>

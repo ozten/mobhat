@@ -27,12 +27,12 @@ class Users_Controller extends Controller
                 header("HTTP/1.0 401 Login Required", true, 401);
                 echo json_encode(array(
                   'status' => 'LOGIN_REQ',
-                  'loginAction' => '/auth_demo/login'
+                  'loginAction' => 'https://mobhat.restservice.org/auth_demo/login'
 				));        
             } else {
                 $this->session->set("requested_url","/". url::current() );
                 Kohana::log('info', "Noone logged in... sending to auth. requested_url /" . url::current());
-                url::redirect('/auth_demo/login_form');
+                url::redirect('https://mobhat.restservice.org/auth_demo/login_form');
             }
         } else {            
             $this->user = Session::instance()->get('auth_user');
