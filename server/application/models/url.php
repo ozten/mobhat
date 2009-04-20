@@ -32,17 +32,17 @@ class Url_Model extends Model {
         if (count($existingUrl) == 0) {
             $res = $this->db->query("/* getOrCreateUrl */ INSERT INTO urls (url, hash, user_fk) VALUES (?, ?, ?)",
                                                 array($url, $md5sum, $userId));
-            Kohana::log('info', "Inserted url into db");
-            Kohana::log('info', "insert_id= " . $res->insert_id() . " count=" . $res->count());
-            //TODO check output
-            //TODO make an array that would match output of this call... with insert_id
-            $existingUrl = $this->_getUrl($md5sum);
+            
+            array_push($existingUrl, array('id' => $res->insert_id(),
+                                 'url' => $url,
+                                 'hash' => $md5sum,
+                                 'user_fk' => $userId));
         }
         
         if  (count($existingUrl) > 0) {
             return $existingUrl[0];    
         } else {
-        Kohana::log('error', "Unable to getOrCreate url for url $url md5 $md5sum userId $userId" . Kohana::debug($existingUrl));    
+            Kohana::log('error', "Unable to getOrCreate url for url $url md5 $md5sum userId $userId" . Kohana::debug($existingUrl));    
             return NULL;
         }
         
@@ -74,15 +74,17 @@ class Url_Model extends Model {
             }
         }
         foreach (array_keys($newFacetsForFacetsUrls) as $facetId) {
-            $this->_createFacetsUrls($facetId, $url['id']);
+            array_push($facetsUrls, array('id' => $this->_createFacetsUrls($facetId, $url['id']),
+                                          'facet_fk' => $facetId,
+                                          'url_fk' => $url['id']));
         }
-        return $this->_getFacetsUrls($facets, $url);
+        return $facetsUrls;
     }
     
     private function _createFacetsUrls($facetId, $urlId)
     {
         return $this->db->query("INSERT INTO facets_urls (facet_fk, url_fk) VALUES (?, ?)",
-                                array($facetId, $urlId));
+                                array($facetId, $urlId))->insert_id();
     }
     
     private function _getFacetsUrls($facetInfos, $urlInfo)

@@ -15,7 +15,7 @@ Oface.Controllers.FacetGroups = {
           //again once after outter for loop finishes...
           this.t = jQuery("<h4 class='group-facet " + currentFacet +
                      "' style='clear:left'><span class='facet-name'>" + (currentFacet) + "</span>" + 
-                     " <span class='count'>1</span></h4> ", doc);
+                     " items hidden. <a href='#' class='group-facet-link'>Show Them</a> <span class='count'>1</span></h4> ", doc);
           this.t.css({
              'class': 'toggler',
              'height': '15px',
@@ -31,10 +31,11 @@ Oface.Controllers.FacetGroups = {
                     Oface.Models.Facet.facetsChosen(identity.username, [facet], function(json, status){
                         ofaceObj.doFacetSwitch(identity.username, facet);
                         }, Oface.Util.noOp);
+                    return false;
               };
           })();
           this.t.click(facetGroupLabelFn);          
-          
+          jQuery('.group-facet-link', this.t).click(facetGroupLabelFn);
         }
     }
 };

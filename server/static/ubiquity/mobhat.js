@@ -63,6 +63,52 @@ CmdUtils.onPageLoad(function(){
   background-repeat:no-repeat;\
   padding-left:18px;\
 }\
+#switcher-current-facets{\
+    width: 100px;\
+    overflow: hidden;\
+}\
+#switcher{\
+    background-color: #FFF;\
+}\
+#switcher-facetlist, #switcher-current-facets{\
+    list-style-type: none;\
+    border: solid 1px #333;\
+    margin: 0px;\
+    background-color: #666;\
+    color: #FFF;\
+}\
+#switcher-facetlist li, #switcher-current-facets li{\
+    display: inline;\
+    padding: 0em 0.2em;\
+    background-color: #DDD;\
+    color: #333;\
+    border-top: solid 1px #666;\
+    border-right: solid 2px #333;\
+    border-bottom: solid 2px #333;\
+    border-left: solid 1px #666;\
+}\
+#switcher{\
+    background-color: #FFF;\
+}\
+#all-facets{\
+  background-color: grey;\
+  color: #FFF;\
+  padding: 0.3em;\
+  border: solid 1px #000;\
+  text-align: center;\
+}\
+#all-facets h4{\
+    margin: 0px auto;\
+    width: 100%;\
+}\
+#all-facets-close{\
+    position: absolute;\
+    top: 0px;\
+    right: 0px;\
+}\
+.add-facet-panel{\
+    border-top: solid 1px #333;\
+}\
 ");
 });;
 //Note this is ONLY the PROD config file
@@ -735,7 +781,7 @@ Oface.Controllers.FacetGroups = {
           //again once after outter for loop finishes...
           this.t = jQuery("<h4 class='group-facet " + currentFacet +
                      "' style='clear:left'><span class='facet-name'>" + (currentFacet) + "</span>" + 
-                     " <span class='count'>1</span></h4> ", doc);
+                     " items hidden. <a href='#' class='group-facet-link'>Show Them</a> <span class='count'>1</span></h4> ", doc);
           this.t.css({
              'class': 'toggler',
              'height': '15px',
@@ -751,10 +797,11 @@ Oface.Controllers.FacetGroups = {
                     Oface.Models.Facet.facetsChosen(identity.username, [facet], function(json, status){
                         ofaceObj.doFacetSwitch(identity.username, facet);
                         }, Oface.Util.noOp);
+                    return false;
               };
           })();
           this.t.click(facetGroupLabelFn);          
-          
+          jQuery('.group-facet-link', this.t).click(facetGroupLabelFn);
         }
     }
 };;Oface = Oface || {};
@@ -789,13 +836,13 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                 $('head', doc).append('<link rel="stylesheet" href="' + Oface.HOST + '/static/css/stylo.css" type="text/css" media="screen" />');
                 var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none; background-color: #CCC;'>
 						<div id="all-facets">
-								<h4>All Facets</h4>
+								<h4>All Your SocialTags</h4>
 
 								<ul id='switcher-facetlist' style="list-style-type: none;">                                
 										<li style="float: left; margin-right: 5px"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
 								</ul>
-                          <div style="clear:left">
-						    <label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
+                          <div class="add-facet-panel" style="clear:left">
+						    <label for="switchinput">Create A New SocialTag:</label> <input id="switchinput" value="" />
 						    <button id="all-facets-save">Save</button>
                             <button id="all-facets-close">Close</button>
                           </div>

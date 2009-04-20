@@ -38,8 +38,7 @@ class Facet_Model extends Model {
             $facetsToInsert[$facet['description']] = TRUE;
             array_push($theFacetDescs, $facet['description']);
         }
-        $existingFacets = $this->_getFacets($theFacetDescs);
-    
+        $existingFacets = $this->_getFacets($theFacetDescs);        
         foreach($existingFacets as $facet){
             array_push($newFacetIds, $facet['id']);
             if( array_key_exists($facet['description'], $facetsToInsert) ){
@@ -51,10 +50,11 @@ class Facet_Model extends Model {
         Kohana::log('info', "model saying new facets so far..." . Kohana::debug($newFacetIds));
         
         foreach(array_keys($facetsToInsert) as $facet){
-            $this->_createFacet($facet);            
+            array_push($existingFacets, array('id' => $this->_createFacet($facet),
+                                              'description' => $facet));
         }
     
-        return $this->_getFacets($theFacetDescs);
+        return $existingFacets;
     }
     /**
      * @param Array string - a list of facet descriptions
@@ -72,12 +72,7 @@ class Facet_Model extends Model {
     private function _createFacet($facet)
     {
         $sql = "INSERT INTO facets (description) VALUES('" . $facet . "')";
-        
-        $this->db->query($sql);
-        //TODO can we use insert_id?
-        $sql = "SELECT id FROM facets WHERE description = '" . $facet . "'";
-        
-        return $this->db->query($sql);
+        return $this->db->query($sql)->insert_id();        
     }
   
     public function set_facets($username, $newFacets)
@@ -97,8 +92,6 @@ class Facet_Model extends Model {
             $facetsToInsert[$facet] = TRUE;
         }
         $existingFacets = $this->current_facets($username);
-        Kohana::log('info', "What is the format of this existingFacets ? " . Kohana::debug($existingFacets));
-        Kohana::log('info', "What is the format of facetsToInsert ? " . Kohana::debug($facetsToInsert));
         foreach($existingFacets as $facet){
             //we already have this facet
             if( array_key_exists($facet['description'], $facetsToInsert) ){

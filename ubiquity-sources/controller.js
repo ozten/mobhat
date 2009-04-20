@@ -8,13 +8,13 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                 $('head', doc).append('<link rel="stylesheet" href="' + Oface.HOST + '/static/css/stylo.css" type="text/css" media="screen" />');
                 var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none; background-color: #CCC;'>
 						<div id="all-facets">
-								<h4>All Facets</h4>
+								<h4>All Your SocialTags</h4>
 
 								<ul id='switcher-facetlist' style="list-style-type: none;">                                
 										<li style="float: left; margin-right: 5px"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
 								</ul>
-                          <div style="clear:left">
-						    <label for="switchinput">Add A New Facet:</label> <input id="switchinput" value="" />
+                          <div class="add-facet-panel" style="clear:left">
+						    <label for="switchinput">Create A New SocialTag:</label> <input id="switchinput" value="" />
 						    <button id="all-facets-save">Save</button>
                             <button id="all-facets-close">Close</button>
                           </div>
