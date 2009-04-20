@@ -79,7 +79,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
-Oface.version = 904181415;
+Oface.version = 904192030;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {
@@ -1159,11 +1159,13 @@ function ofaceToggler(){
           var data = [];
           for(var i=0; i<jsn.length; i++){
               //TODO we are throwing away id, created date
-              data[i] = {
-                facets: [jsn[i]['facets'][0]['description']],
-                url: unescape(jsn[i]['url']),
-                username: aUsername
-                };                        
+              if (jsn[i]['facets'] && jsn[i]['facets'].length > 0){
+                data[i] = {
+                  facets: [jsn[i]['facets'][0]['description']],
+                  url: unescape(jsn[i]['url']),
+                  username: aUsername
+                  };
+              }
           }
           Oface.Controllers.Oface.continueWithFacets(data, tab);     
       },
