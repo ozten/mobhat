@@ -42,7 +42,7 @@ Oface.Controllers.EntryFacetChooser = {
         var url = entry.data('entry-oface-url');
         if (urlDb[url]['username'] == identity.username) {
             Oface.log('doing url=', url);
-            var link = jQuery("<div class='ls-entry-facet-menu-item'><a href='#'>Refacet this entry</a></div>");
+            var link = jQuery("<div class='ls-entry-facet-menu-item'><a href='#'>Retag this entry</a></div>");
             jQuery('a', link).click(Oface.Controllers.EntryFacetChooser.createHandleRefacetLink(entry, url));
             Utils.setTimeout(
                 function(){

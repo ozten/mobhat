@@ -2,6 +2,10 @@
 Oface.Page = Oface.Page || {};
 CmdUtils.onPageLoad(function(){
     CmdUtils.injectCss("\
+/* FriendFeed Fixups */\
+.feedformats{\
+  clear: left;\
+}\
 .cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}\
 #welcome-new-user-panel{\
   position: absolute; top: 0px; border: solid 3px #999;\
@@ -22,13 +26,20 @@ CmdUtils.onPageLoad(function(){
   top: -20px;\
 }\
 #oface-other-facets{\
-  margin-top: 18px\
+  border: solid 1px #AAA;\
+  -moz-border-radius: 5px;\
+  padding: 5px;\
+  margin-left: 10px;\
+  width: 300px;\
 }\
 #oface-enabler{\
   cursor: pointer;\
 }\
 #facet-toggler{\
   cursor: context-menu;\
+}\
+#facet-toggler-label, #facet-toggler-display{\
+  margin-top:18px; margin-left: 3px; float:left;\
 }\
 .facet-name{\
   color: blue;\
@@ -79,15 +90,21 @@ CmdUtils.onPageLoad(function(){
     border-bottom: solid 2px #333;\
     border-left: solid 1px #666;\
 }\
+.weight6{ font-size: 1.5em; }\
+.weight5{ font-size: 1.3em; }\
+.weight4{ font-size: 1.1em; }\
+.weight3{ font-size: 1.0em; }\
+.weight2{ font-size: 0.9em; }\
+.weight1{ font-size: 0.8em; }\
 #switcher{\
     background-color: #FFF;\
 }\
 #all-facets{\
-  background-color: grey;\
-  color: #FFF;\
-  padding: 0.3em;\
+  background-color: #CCC;\
+  color: #000;\
+  padding: 1.3em;\
   border: solid 1px #000;\
-  text-align: center;\
+  -moz-border-radius: 15px;\
 }\
 #all-facets h4{\
     margin: 0px auto;\
@@ -95,11 +112,21 @@ CmdUtils.onPageLoad(function(){
 }\
 #all-facets-close{\
     position: absolute;\
-    top: 0px;\
-    right: 0px;\
+    top: 10px;\
+    right: 10px;\
 }\
 .add-facet-panel{\
     border-top: solid 1px #333;\
+    margin: 0.5em auto;\
+    padding: 0.3em auto;\
+}\
+.all-facets-sort-header{\
+    float: left;\
+    width: auto;\
+    margin-right: 1em;\
+}\
+.all-facets-sort-panel{\
+    float: left;\
 }\
 ");
 });

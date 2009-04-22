@@ -376,7 +376,7 @@
     var itemCount = jQuery('.entry.oface-' + facet + '-facet', doc).length;
     Oface.log("Switching to a facet with " + itemCount);
     
-    jQuery('div.current-facet div', doc).text(facet + " (" + itemCount + ")");
+    jQuery('div#facet-toggler-display', doc).text(facet + " (" + itemCount + ")");
     
     jQuery('#oface-enabler span.current-facet-count', doc).text(itemCount);
     
@@ -421,19 +421,18 @@
     var doc = Application.activeWindow.activeTab.document;
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
       Oface.log("Adding widget");
+      $('#feed1', doc).prepend('<br id="asdf" style="clear: both;" />');
        $('#feed1', doc).prepend($(Oface.Views.pageFacetToggler.toXMLString(), doc));
 
       var ofaceEnabler = $(Oface.Views.userFacetToggler.toXMLString(), doc);
       
       $('#feed1', doc).prepend(ofaceEnabler);      
-      $('.current-facet div:first', doc).text(identity.facets[0]['description']);
+      $('#facet-toggler-display', doc).text(identity.facets[0]['description']);
       
       $('#oface-enabler', doc).click(ofaceToggler);
       $('.current-facet', doc).click(function(){
           $('#switcher', doc).toggle();
       });
-      
-      
                         
       //TODO AOK
       Oface.Controllers.Facet.username = identity.username;

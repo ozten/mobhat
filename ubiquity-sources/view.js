@@ -23,7 +23,7 @@ Oface.Views.Facet = Oface.Views.Facet || {
         },
         showAll: function() {
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                var p = $('#current-facets', doc).position();
+                var p = $('.current-facet', doc).position();
                 $('#switcher', doc).css({
                         position: 'absolute',
                         'top': p.top,
@@ -50,7 +50,8 @@ Oface.Views.Facet = Oface.Views.Facet || {
                         li.addClass('weight' + weight);
                         li.addClass("current");
                         li.text(facetName);
-                        $('#switcher-current-facets', doc).append(li);
+                        $('#switcher-current-facets', doc).append(li);                        
+
                         //$('#switcher-current-facets', doc).append("<li>foo</li>");
                 };
         },
@@ -62,9 +63,9 @@ Oface.Views.Facet = Oface.Views.Facet || {
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
             $('#switcher-current-facets', doc).hide();
         },
-        newFacetInput: function(){
+        newFacetSubmit: function(){
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-            return  $('#switchinput', doc);     
+            return  $('#all-facets-save', doc);     
         },
         clearInput: function(){
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;

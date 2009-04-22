@@ -9,7 +9,8 @@ Oface.Views.userFacetToggler =
                                
     </h3>
                               
-    <div id="facet-toggler" class='current-facet' ><div style="margin-top:18px; margin-left: 3px; float:left"></div>
+    <div id="facet-toggler" class='current-facet'>
+        <div id='facet-toggler-label'>Now Wearing: </div><div id='facet-toggler-display'></div>
         <div class='switcher-arrow' style='margin-top:20px; float: left; height:6px; width:7px; margin-left:3px; font-size:0; vertical-align:middle; background:transparent url(http://mobhat.restservice.org/static/images/gmail_downarros.png) no-repeat scroll -36px 50%;'> x</div>
     </div>
 </div>.children();

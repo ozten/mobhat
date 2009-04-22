@@ -10,6 +10,10 @@
 Oface.Page = Oface.Page || {};
 CmdUtils.onPageLoad(function(){
     CmdUtils.injectCss("\
+/* FriendFeed Fixups */\
+.feedformats{\
+  clear: left;\
+}\
 .cluster-facet-widget-panel{float: right; position: relative; top: -25px; width: 300px;}\
 #welcome-new-user-panel{\
   position: absolute; top: 0px; border: solid 3px #999;\
@@ -30,13 +34,20 @@ CmdUtils.onPageLoad(function(){
   top: -20px;\
 }\
 #oface-other-facets{\
-  margin-top: 18px\
+  border: solid 1px #AAA;\
+  -moz-border-radius: 5px;\
+  padding: 5px;\
+  margin-left: 10px;\
+  width: 300px;\
 }\
 #oface-enabler{\
   cursor: pointer;\
 }\
 #facet-toggler{\
   cursor: context-menu;\
+}\
+#facet-toggler-label, #facet-toggler-display{\
+  margin-top:18px; margin-left: 3px; float:left;\
 }\
 .facet-name{\
   color: blue;\
@@ -87,15 +98,21 @@ CmdUtils.onPageLoad(function(){
     border-bottom: solid 2px #333;\
     border-left: solid 1px #666;\
 }\
+.weight6{ font-size: 1.5em; }\
+.weight5{ font-size: 1.3em; }\
+.weight4{ font-size: 1.1em; }\
+.weight3{ font-size: 1.0em; }\
+.weight2{ font-size: 0.9em; }\
+.weight1{ font-size: 0.8em; }\
 #switcher{\
     background-color: #FFF;\
 }\
 #all-facets{\
-  background-color: grey;\
-  color: #FFF;\
-  padding: 0.3em;\
+  background-color: #CCC;\
+  color: #000;\
+  padding: 1.3em;\
   border: solid 1px #000;\
-  text-align: center;\
+  -moz-border-radius: 15px;\
 }\
 #all-facets h4{\
     margin: 0px auto;\
@@ -103,11 +120,21 @@ CmdUtils.onPageLoad(function(){
 }\
 #all-facets-close{\
     position: absolute;\
-    top: 0px;\
-    right: 0px;\
+    top: 10px;\
+    right: 10px;\
 }\
 .add-facet-panel{\
     border-top: solid 1px #333;\
+    margin: 0.5em auto;\
+    padding: 0.3em auto;\
+}\
+.all-facets-sort-header{\
+    float: left;\
+    width: auto;\
+    margin-right: 1em;\
+}\
+.all-facets-sort-panel{\
+    float: left;\
 }\
 ");
 });;
@@ -127,7 +154,7 @@ function logError(msg, debugObjects) {
   }
 };
 var Oface = Oface || {};
-Oface.version = 904192030;
+Oface.version = 904212149;
 Oface.log = function() {
     var args = Array.prototype.slice.call(arguments);
     try {
@@ -234,7 +261,8 @@ Oface.Views.userFacetToggler =
                                
     </h3>
                               
-    <div id="facet-toggler" class='current-facet' ><div style="margin-top:18px; margin-left: 3px; float:left"></div>
+    <div id="facet-toggler" class='current-facet'>
+        <div id='facet-toggler-label'>Now Wearing: </div><div id='facet-toggler-display'></div>
         <div class='switcher-arrow' style='margin-top:20px; float: left; height:6px; width:7px; margin-left:3px; font-size:0; vertical-align:middle; background:transparent url(http://mobhat.restservice.org/static/images/gmail_downarros.png) no-repeat scroll -36px 50%;'> x</div>
     </div>
 </div>.children();; //TODO restructure this...
@@ -244,7 +272,7 @@ Oface.Views.pageFacetToggler =
   <ul id='oface-other-facets' style='float: left; list-style-type: none;'></ul>;
 
 Oface.Views.pageFacetTogglerLabel =
-  <li style='display: inline; margin-right: 0.5em; float: left'>Hidden Below:</li>;
+  <li style='display: inline; margin-right: 0.5em; float: left'>Hidden SocialTags:</li>;
   
 Oface.Views.pageFacetTogglerResetLabel = function(tab){
     jQuery('#oface-other-facets li', tab.document).remove();
@@ -457,7 +485,7 @@ Oface.Views.Facet = Oface.Views.Facet || {
         },
         showAll: function() {
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                var p = $('#current-facets', doc).position();
+                var p = $('.current-facet', doc).position();
                 $('#switcher', doc).css({
                         position: 'absolute',
                         'top': p.top,
@@ -484,7 +512,8 @@ Oface.Views.Facet = Oface.Views.Facet || {
                         li.addClass('weight' + weight);
                         li.addClass("current");
                         li.text(facetName);
-                        $('#switcher-current-facets', doc).append(li);
+                        $('#switcher-current-facets', doc).append(li);                        
+
                         //$('#switcher-current-facets', doc).append("<li>foo</li>");
                 };
         },
@@ -496,9 +525,9 @@ Oface.Views.Facet = Oface.Views.Facet || {
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
             $('#switcher-current-facets', doc).hide();
         },
-        newFacetInput: function(){
+        newFacetSubmit: function(){
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-            return  $('#switchinput', doc);     
+            return  $('#all-facets-save', doc);     
         },
         clearInput: function(){
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
@@ -646,7 +675,7 @@ Oface.Controllers.EntryFacetChooser = {
         var url = entry.data('entry-oface-url');
         if (urlDb[url]['username'] == identity.username) {
             Oface.log('doing url=', url);
-            var link = jQuery("<div class='ls-entry-facet-menu-item'><a href='#'>Refacet this entry</a></div>");
+            var link = jQuery("<div class='ls-entry-facet-menu-item'><a href='#'>Retag this entry</a></div>");
             jQuery('a', link).click(Oface.Controllers.EntryFacetChooser.createHandleRefacetLink(entry, url));
             Utils.setTimeout(
                 function(){
@@ -782,13 +811,14 @@ Oface.Controllers.FacetGroups = {
           //I think it is structured wrong and prepareLabel should be called
           //again once after outter for loop finishes...
           this.t = jQuery("<h4 class='group-facet " + currentFacet +
-                     "' style='clear:left'><span class='facet-name'>" + (currentFacet) + "</span>" + 
-                     " items hidden. <a href='#' class='group-facet-link'>Show Them</a> <span class='count'>1</span></h4> ", doc);
+                     "' style='clear:none'><span class='facet-name'>" + (currentFacet) + "</span>" + 
+                     " <!--a href='#' class='group-facet-link'>Show Them</a--> <span class='count'>1</span></h4> ", doc);
           this.t.css({
              'class': 'toggler',
              'height': '15px',
             'float' : 'left',
-            'margin-right': '10px'
+            'margin-right': '10px',
+            'margin-left': '33px'
           });
           cluster.before(this.t);
           
@@ -836,21 +866,33 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                 var that = this;
                 var $ = jQuery, doc = Application.activeWindow.activeTab.document;
                 $('head', doc).append('<link rel="stylesheet" href="' + Oface.HOST + '/static/css/stylo.css" type="text/css" media="screen" />');
-                var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none; background-color: #CCC;'>
+                var switcherXml = <div id="switcher" style='position:absolute; z-index: 2; width: 600px; display: none;'>
 						<div id="all-facets">
-								<h4>All Your SocialTags</h4>
-
+                                Your Current SocialTag: <strong class="all-facet-current-facet"></strong>
+                                <button id="all-facets-close">Close</button>
+							<div class="add-facet-panel" style="clear:left">
+						      <label for="switchinput">Create A New SocialTag:</label> <input id="switchinput" value="" />
+						      <button id="all-facets-save">Save</button>
+                            
+                            </div>
+                            	<h4 class='all-facets-sort-header'>All Your SocialTags</h4>
+                                <div class="all-facets-sort-panel">Sorted By:
+                                    <input type="radio" name="all-facet-sort" value="frequency" checked='true' disabled='disabled' /> Frequency
+                                    <input type="radio" name="all-facet-sortx" value="alphabetic" disabled="disabled" />  A-Z (todo)
+                                </div>
+                                <br style="clear: both" />
+                                
 								<ul id='switcher-facetlist' style="list-style-type: none;">                                
 										<li style="float: left; margin-right: 5px"><span class="facetitem"></span> <a href="#" class="remove-facet-a">x</a></li>
 								</ul>
-                          <div class="add-facet-panel" style="clear:left">
-						    <label for="switchinput">Create A New SocialTag:</label> <input id="switchinput" value="" />
-						    <button id="all-facets-save">Save</button>
-                            <button id="all-facets-close">Close</button>
-                          </div>
+                            <br style="clear: both" />
 						</div>				        
 				</div>.toXMLString();
                 $('#oface-enabler', doc).after(switcherXml);
+                //var resort = function(type){};
+                //$('input[name=all-facet-sort]', $('#oface-enabler', doc)).bind('change', function(){ resort($(this).attr('value')); });
+                
+                
                 //TODO is this duplicated between orig oface and the switcher?
                 Oface.Timing.step4CurrentFacets_start = new Date();
                 Oface.Util.ajax({
@@ -869,16 +911,18 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                         complete: function(){$('#switcher-progress-panel', doc).remove(); },
                         success: function(json) {
                             Oface.Timing.step4CurrentFacets_complete = new Date();
-                            Oface.log("Finishing with X");
                             Oface.Models.Facet.updateCurrent(json);
                         
                             //TODO using call here isn't necissary
                             var curFacetView = Oface.Views.Facet.createCurrent.call(Oface.Views.Facet);
                         
-                            var currentFacets = Oface.Models.Facet.currentFacets;
+                            var currentFacets = Oface.Models.Facet.currentFacets;                           
                             for (var i = 0; i < currentFacets.length; i++) {
                                     curFacetView(currentFacets[i]['weight'],
-                                         currentFacets[i]['description']);                               
+                                         currentFacets[i]['description']);
+                                    if(i == 0) {
+                                        $('#all-facets .all-facet-current-facet', doc).text(currentFacets[i]['description']);
+                                    }
                             }
                             $('#switcher-current-facets li', doc).click(Oface.Views.Facet.showAll);
                             Oface.Views.Facet.showCurrent();                        
@@ -889,7 +933,6 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                         url: Oface.HOST + '/facets/weighted/' + that.username,
                         type: "GET",
                         success: function(json) {
-                                Oface.log("Finishing with Y");
                                 Oface.Timing.step5AllFacets_complete = new Date();
                                 Oface.Models.Facet.updateAll(json);
                                 that.updateAllView();
@@ -897,8 +940,23 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                         dataType: "json"});
                 var contextx = {username: Oface.Controllers.Facet.username};
                 /* add behaviors */
-                Oface.Views.Facet.newFacetInput().bind('blur', contextx, Oface.Controllers.Facet.handleNewFacetCreated);
+                //Oface.Views.Facet.newFacetInput().bind('blur', contextx, Oface.Controllers.Facet.handleNewFacetCreated);
+                Oface.Views.Facet.newFacetSubmit().bind('click', contextx, Oface.Controllers.Facet.handleNewFacetCreated);
+                
                 $('#all-facets-close', doc).bind('click', contextx, Oface.Controllers.Facet.allFacetsCloseHandler);
+        },
+        /**
+         * Adapted from the code in Mozilla PriorArt app/model/tags.php MPL GPL
+         */
+        scaleWeight: function(count, maxCount){
+            if( count > 0 && count <= 6 ){
+                return count;
+            } else {
+                var weights = [1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5, 6];
+			    var scale = ( count * 20 ) / maxCount;
+                scale = scale > 18.5 ? 19 : scale;
+			    return weights[Math.round(scale)];
+            }
         },
         updateAllView: function(){
                 var that = this;
@@ -906,8 +964,14 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
                                 var allFacets = Oface.Models.Facet.allFacets;
 
                                 var view = Oface.Views.Facet.createAll(that.username);
+                                var maxWeight = 0;
                                 for (var i = 0; i < allFacets.length; i++) {
-                                    var f = view(allFacets[i]['weight'],
+                                    if( maxWeight < parseInt(allFacets['weight'])) {
+                                        maxWeight = parseInt(allFacets['weight']);
+                                    }
+                                }
+                                for (var i = 0; i < allFacets.length; i++) {
+                                    var f = view(that.scaleWeight(allFacets[i]['weight'], maxWeight),
                                                  allFacets[i]['description']);
                                         f.bind('click',
                                                 {username: Oface.Controllers.Facet.username,
@@ -937,12 +1001,10 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
         },
         chooseFacetCallback: function(json, status) {
           var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                Oface.log("chooseFacet called");
-                //AOK
                 Oface.Models.Facet.updateCurrent(json);
                 
                 var curFacetView = Oface.Views.Facet.createCurrent.call(Oface.Views.Facet);
-                
+                //TODO apply scaling weight here too?
                 var currentFacets = Oface.Models.Facet.currentFacets;                        
                         for (var i = 0; i < currentFacets.length; i++) {
                                 curFacetView(currentFacets[i]['weight'],
@@ -967,14 +1029,22 @@ Oface.Controllers.Facet = Oface.Controllers.Facet || {
          * handleNewFacetCreated is called only with potentially new facets
          */
         handleNewFacetCreated: function(event) {
-          var $ = jQuery, doc = Application.activeWindow.activeTab.document;
-                Oface.Models.Facet.facetsChosen(event.data.username, $('#switchinput', doc).attr('value').split(','), function(json, status){
+            var $ = jQuery, doc = Application.activeWindow.activeTab.document;
+            var newFacets =  $('#switchinput', doc).attr('value').split(',');
+            var tmpNewFacets = [];
+            for(var i = 0; i< newFacets.length; i++) {
+                if(newFacets[i].trim().length > 2) {
+                    tmpNewFacets.push(newFacets[i].trim());
+                }
+            }
+            if(tmpNewFacets.length > 0) {
+                Oface.Models.Facet.facetsChosen(event.data.username, tmpNewFacets, function(json, status){
                     Oface.Controllers.Facet.chooseNewFacetCallback.call(Oface.Controllers.Facet, json, status);
                     //Oface.Controllers.Facet.chooseNewFacetCallback(json, status);
                 }, Oface.Util.noOp);
                 ofaceObj.doFacetSwitch(Oface.Controllers.Facet.username, ($('#switchinput', doc).attr('value').split(','))[0]);
                 Oface.Views.Facet.clearInput();
-                
+                }
         },
         allFacetsCloseHandler: function() {
                 Oface.Views.Facet.hideAll();
@@ -1407,7 +1477,7 @@ function ofaceToggler(){
     var itemCount = jQuery('.entry.oface-' + facet + '-facet', doc).length;
     Oface.log("Switching to a facet with " + itemCount);
     
-    jQuery('div.current-facet div', doc).text(facet + " (" + itemCount + ")");
+    jQuery('div#facet-toggler-display', doc).text(facet + " (" + itemCount + ")");
     
     jQuery('#oface-enabler span.current-facet-count', doc).text(itemCount);
     
@@ -1452,19 +1522,18 @@ function ofaceToggler(){
     var doc = Application.activeWindow.activeTab.document;
     if( $('#' + divId + ' h3#oface-enabler', doc).length == 0){
       Oface.log("Adding widget");
+      $('#feed1', doc).prepend('<br id="asdf" style="clear: both;" />');
        $('#feed1', doc).prepend($(Oface.Views.pageFacetToggler.toXMLString(), doc));
 
       var ofaceEnabler = $(Oface.Views.userFacetToggler.toXMLString(), doc);
       
       $('#feed1', doc).prepend(ofaceEnabler);      
-      $('.current-facet div:first', doc).text(identity.facets[0]['description']);
+      $('#facet-toggler-display', doc).text(identity.facets[0]['description']);
       
       $('#oface-enabler', doc).click(ofaceToggler);
       $('.current-facet', doc).click(function(){
           $('#switcher', doc).toggle();
       });
-      
-      
                         
       //TODO AOK
       Oface.Controllers.Facet.username = identity.username;
@@ -1640,7 +1709,7 @@ CmdUtils.CreateCommand(Oface.WhatPageIsThis);
 });
 ;
 CmdUtils.CreateCommand({
-    name: "mobhat-unittest",
+    name: "oface-unittest",
     help: "Run the Oface unit tests",
     preview: function(pblock, input) {
         pblock.innerHTML = "Running unit tests " + Oface.version;
@@ -1656,7 +1725,17 @@ CmdUtils.CreateCommand({
             assertEquals(getUsername("http://friendfeed.com/ozten?start=30", PROFILE_PAGE), "ozten", "We should still find username");
             assertEquals(getUsername("http://friendfeed.com/pattyok", PROFILE_PAGE), "pattyok", "We should still find username");
             assertEquals(getUsername("http://friendfeed.com/pattyok?expandlist=pals", PROFILE_PAGE), "pattyok", "We should still find username");
+            var scaleWeight = Oface.Controllers.Facet.scaleWeight;
+            assertEquals(scaleWeight(2, 2), 2, "Below 6 is itself");
             
+            
+            assertEquals(scaleWeight(10, 14), 3, "Weak algorythm when maxCount is 6 or less, just returns the count");
+            assertEquals(scaleWeight(20, 58), 1, "Should fall somewhere in long tail.");
+            assertEquals(scaleWeight(19, 20), 6); assertEquals(scaleWeight(18, 20), 5); assertEquals(scaleWeight(17, 20), 4);
+            assertEquals(scaleWeight(10, 20), 2, "Half the max count is still only 1/3 the wieght");
+            assertEquals(scaleWeight(0, 58), 1,  "Edge case lower.");
+            assertEquals(scaleWeight(58, 58), 6, "Edge case upper");
+            assertEquals(scaleWeight(13, 10), 6, "Edge cases, If the count is higher than the known max, return known max");
         }
         if( parseInt( fails ) > 0 ) {
             pblock.innerHTML = "Passes: " + passes + " Failed: " + fails + "\<br>Look in Error Console for details";            
@@ -1693,8 +1772,15 @@ CmdUtils.CreateCommand({
                         fail("Actual=(" + value + ") but Expected=(" + otherValue + "): '" +  assertString + "'");
                     }
                     break;
+                case "number":
+                    if(value == otherValue) {
+                        pass();
+                    } else {
+                        fail("Actual=(" + value + ") but Expected=(" + otherValue + "): '" +  assertString + "'");
+                    }
+                    break;
                 default:
-                    fail("assert programming error, unknown type for actual=" + value + " expected=" + otherValue + "message=" + assertString);
+                    fail("assert programming error, unknown type=" + (typeof value) + " for actual=" + value + " expected=" + otherValue + "message=" + assertString);
             }
         }
     },

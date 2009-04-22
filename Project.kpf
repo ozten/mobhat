@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Komodo Project File - DO NOT EDIT -->
 <project id="a5c70ce9-cf10-9e4e-9b1a-5f50d09a2322" kpf_version="4" name="Project.kpf">
+<file id="1ef7799c-839d-1843-a73f-985f81a6a7d7" idref="a5c70ce9-cf10-9e4e-9b1a-5f50d09a2322" name="build.sh" url="build.sh">
+</file>
 <file id="e835518d-f8cd-cd4e-b640-04b8ad0d4724" idref="a5c70ce9-cf10-9e4e-9b1a-5f50d09a2322/ubiquity-sources/views" name="build.sh" url="build.sh">
 </file>
 <preference-set idref="a5c70ce9-cf10-9e4e-9b1a-5f50d09a2322">

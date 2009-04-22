@@ -1,6 +1,6 @@
 ;
 CmdUtils.CreateCommand({
-    name: "mobhat-unittest",
+    name: "oface-unittest",
     help: "Run the Oface unit tests",
     preview: function(pblock, input) {
         pblock.innerHTML = "Running unit tests " + Oface.version;
@@ -16,7 +16,17 @@ CmdUtils.CreateCommand({
             assertEquals(getUsername("http://friendfeed.com/ozten?start=30", PROFILE_PAGE), "ozten", "We should still find username");
             assertEquals(getUsername("http://friendfeed.com/pattyok", PROFILE_PAGE), "pattyok", "We should still find username");
             assertEquals(getUsername("http://friendfeed.com/pattyok?expandlist=pals", PROFILE_PAGE), "pattyok", "We should still find username");
+            var scaleWeight = Oface.Controllers.Facet.scaleWeight;
+            assertEquals(scaleWeight(2, 2), 2, "Below 6 is itself");
             
+            
+            assertEquals(scaleWeight(10, 14), 3, "Weak algorythm when maxCount is 6 or less, just returns the count");
+            assertEquals(scaleWeight(20, 58), 1, "Should fall somewhere in long tail.");
+            assertEquals(scaleWeight(19, 20), 6); assertEquals(scaleWeight(18, 20), 5); assertEquals(scaleWeight(17, 20), 4);
+            assertEquals(scaleWeight(10, 20), 2, "Half the max count is still only 1/3 the wieght");
+            assertEquals(scaleWeight(0, 58), 1,  "Edge case lower.");
+            assertEquals(scaleWeight(58, 58), 6, "Edge case upper");
+            assertEquals(scaleWeight(13, 10), 6, "Edge cases, If the count is higher than the known max, return known max");
         }
         if( parseInt( fails ) > 0 ) {
             pblock.innerHTML = "Passes: " + passes + " Failed: " + fails + "\<br>Look in Error Console for details";            
@@ -53,8 +63,15 @@ CmdUtils.CreateCommand({
                         fail("Actual=(" + value + ") but Expected=(" + otherValue + "): '" +  assertString + "'");
                     }
                     break;
+                case "number":
+                    if(value == otherValue) {
+                        pass();
+                    } else {
+                        fail("Actual=(" + value + ") but Expected=(" + otherValue + "): '" +  assertString + "'");
+                    }
+                    break;
                 default:
-                    fail("assert programming error, unknown type for actual=" + value + " expected=" + otherValue + "message=" + assertString);
+                    fail("assert programming error, unknown type=" + (typeof value) + " for actual=" + value + " expected=" + otherValue + "message=" + assertString);
             }
         }
     },
