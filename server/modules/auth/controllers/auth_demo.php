@@ -38,7 +38,7 @@ class Auth_Demo_Controller extends Template_Controller {
     Kohana::log('info', "METERING " . request::method() . "auth_demo/save");
     $user = ORM::factory('user');
     $user->email = $this->input->post("email");
-    $user->username = $this->input->post("username");
+    $user->username = strtolower($this->input->post("username"));
     $user->password = $this->input->post("password");
     if ($user->save() AND $user->add(ORM::factory('role', 'login')))
     {
@@ -70,7 +70,7 @@ class Auth_Demo_Controller extends Template_Controller {
       $this->template->title = 'User Login';
       Kohana::log('info', "Checking " . $this->input->post("username") . " and password");
       // Load the user
-      $user = ORM::factory('user', $this->input->post("username"));
+      $user = ORM::factory('user', strtolower($this->input->post("username")));
 
       if (Auth::instance()->login($user, $this->input->post("password"), true)) {
 		  if ($this->_isJSON()) {
