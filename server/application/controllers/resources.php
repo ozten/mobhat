@@ -73,6 +73,7 @@ class Resources_Controller extends Template_Controller
      */
     public function user($username, $action)
     {
+        $username = strtolower($username);
         $this->auto_render=false;
         if (request::method() == "post" && $action == "query_facets") {
             $post = $this->input->post();
@@ -209,6 +210,7 @@ class Resources_Controller extends Template_Controller
    */
     public function resource($hash, $u, $username)
     {
+        $username = strtolower($username);
         $this->auto_render=false;
         if (request::method() == "put") {
             $putdata = fopen("php://input", "r");

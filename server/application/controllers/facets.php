@@ -42,6 +42,7 @@ class Facets_Controller extends Template_Controller {
    */
   public function current($username) {		
     //Kohana::log('info', "Looks like they are logged in " . $this->user->id . " " . $this->user->username);
+	$username = strtolower($username);
     $this->auto_render=false;
     Kohana::log('info', request::method());
     $facet = new Facet_Model();
@@ -141,6 +142,7 @@ class Facets_Controller extends Template_Controller {
    $.ajax( {url:'/facets/weighted/ozten', type:'GET'});
    */
   public function weighted($username) {
+	$username = strtolower($username);
 	Kohana::log('info', "METERING " . request::method() . "facets/weighted username=$username");
 	$this->auto_render=false;
     
@@ -156,6 +158,7 @@ class Facets_Controller extends Template_Controller {
    $.ajax( {url:'/facets/u/ozten/foo', type:'DELETE'});
   */
   public function u($username, $facet){
+	  $username = strtolower($username);
 		Kohana::log('info', "METERING " . request::method() . "facets/u username=$username facet=$facet");
 		$this->auto_render=false;
 		$facetDb = new Facet_Model();

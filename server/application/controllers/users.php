@@ -62,6 +62,7 @@ class Users_Controller extends Controller
      */
     public function items($username, $unused, $page=0)
     {
+		$username = strtolower($username);
         $urlDb = new Url_Model;
         $this->view = new View('users/items');
         $this->view->username = $username;
@@ -76,6 +77,7 @@ class Users_Controller extends Controller
      */
     public function faceted_items($username, $facet, $unused, $page=0)
     {
+		$username = strtolower($username);
         $urlDb = new Url_Model;
         $this->view = new View('users/items');
         $this->view->username = $username;
